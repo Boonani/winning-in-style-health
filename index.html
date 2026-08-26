@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>✨ Winning in Style ✨ - Cube Health</title>
   <style>
     :root {
@@ -21,13 +21,19 @@
       --good: #68c392;
       --warn: #e0ad4f;
       --bad: #ef7668;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body { min-height: 100vh; min-height: 100dvh; margin: 0; background: var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     button, input, select { font: inherit; letter-spacing: 0; }
+    button, label, select { touch-action: manipulation; }
     button { cursor: pointer; }
-    header { position: sticky; top: 0; z-index: 20; background: rgba(13,15,17,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(18px); }
-    .top { max-width: 1600px; margin: auto; min-height: 66px; display: flex; gap: 20px; align-items: center; padding: 10px 22px; }
+    header { position: sticky; top: 0; z-index: 20; padding-top: var(--safe-top); background: rgba(13,15,17,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+    .top { max-width: 1600px; margin: auto; min-height: 66px; display: flex; gap: 20px; align-items: center; padding: 10px max(22px, var(--safe-right)) 10px max(22px, var(--safe-left)); }
     h1 { margin: 0; font-size: 20px; line-height: 1.2; letter-spacing: 0; }
     .subtitle { color: var(--muted); font-size: 12px; margin-top: 4px; }
     .header-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
@@ -35,10 +41,11 @@
     .metric { min-width: 72px; }
     .metric strong { display: block; font-size: 19px; }
     .metric span { color: var(--muted); font-size: 11px; }
-    nav { max-width: 1600px; margin: auto; display: flex; overflow-x: auto; padding: 0 22px; }
+    nav { max-width: 1600px; margin: auto; display: flex; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; padding: 0 max(22px, var(--safe-right)) 0 max(22px, var(--safe-left)); }
+    nav::-webkit-scrollbar, .type-pool::-webkit-scrollbar, .color-pool::-webkit-scrollbar, .preset-list::-webkit-scrollbar, .packet-cards::-webkit-scrollbar { display: none; }
     .tab { border: 0; border-bottom: 3px solid transparent; background: transparent; padding: 10px 14px 9px; color: var(--muted); white-space: nowrap; }
     .tab[aria-selected="true"] { border-color: var(--red); color: var(--ink); font-weight: 700; }
-    main { max-width: 1600px; margin: auto; padding: 22px; }
+    main { max-width: 1600px; margin: auto; padding: 22px max(22px, var(--safe-right)) max(22px, var(--safe-bottom)) max(22px, var(--safe-left)); }
     section[hidden] { display: none; }
     h2 { font-size: 17px; margin: 0 0 6px; letter-spacing: 0; }
     h3 { font-size: 14px; margin: 0; letter-spacing: 0; }
@@ -63,18 +70,18 @@
     .bar { width: 120px; height: 8px; background: #30353a; overflow: hidden; }
     .bar > i { display: block; height: 100%; background: var(--green); }
     .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; align-items: center; }
-    .color-pool { height: 38px; display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--panel); padding: 0 7px; margin: 0; border-radius: 6px; }
+    .color-pool { height: 38px; max-width: 100%; display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--panel); padding: 0 7px; margin: 0; border-radius: 6px; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; contain: inline-size; }
     .color-pool legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .color-pool label { display: inline-grid; place-items: center; cursor: pointer; }
-    .color-pool input { position: absolute; opacity: 0; pointer-events: none; }
+    .color-pool label { position: relative; display: inline-grid; place-items: center; cursor: pointer; }
+    .color-pool input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
     .color-pool input:checked + .pip { outline: 3px solid var(--ink); outline-offset: 1px; }
     .color-pool input:focus-visible + .pip { box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--blue); }
     .color-clear { height: 26px; border: 0; border-left: 1px solid var(--line); background: transparent; padding: 0 3px 0 8px; color: var(--muted); font-size: 11px; font-weight: 700; }
     .color-clear:hover { color: var(--ink); }
-    .type-pool { min-height: 38px; max-width: 100%; display: inline-flex; align-items: center; gap: 3px; border: 1px solid var(--line); background: var(--panel); padding: 3px; margin: 0; border-radius: 6px; overflow-x: auto; }
+    .type-pool { min-height: 38px; max-width: 100%; display: inline-flex; align-items: center; gap: 3px; border: 1px solid var(--line); background: var(--panel); padding: 3px; margin: 0; border-radius: 6px; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; contain: inline-size; }
     .type-pool legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .type-pool label { flex: 0 0 auto; cursor: pointer; }
-    .type-pool input { position: absolute; opacity: 0; pointer-events: none; }
+    .type-pool label { position: relative; flex: 0 0 auto; cursor: pointer; }
+    .type-pool input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
     .type-pool label span { min-height: 28px; display: inline-flex; align-items: center; padding: 0 8px; border: 1px solid transparent; border-radius: 3px; color: var(--muted); font-size: 11px; font-weight: 700; }
     .type-pool input:checked + span { border-color: var(--blue); background: #20333b; color: var(--ink); }
     .type-pool input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 1px; }
@@ -85,7 +92,7 @@
     .mode-control input { position: absolute; opacity: 0; pointer-events: none; }
     .mode-control span { height: 100%; display: inline-flex; align-items: center; padding: 0 9px; color: var(--muted); font-size: 11px; font-weight: 700; }
     .mode-control input:checked + span { background: #20333b; color: var(--ink); }
-    input, select { height: 38px; border: 1px solid var(--line); background: var(--panel); padding: 0 10px; border-radius: 6px; color: var(--ink); }
+    input:not([type="checkbox"]):not([type="radio"]), select { height: 38px; border: 1px solid var(--line); background: var(--panel); padding: 0 10px; border-radius: 6px; color: var(--ink); }
     input[type="search"] { min-width: 280px; flex: 1; }
     input[type="number"] { width: 86px; }
     .command { min-height: 38px; border: 1px solid var(--line); background: var(--raised); color: var(--ink); padding: 7px 12px; border-radius: 6px; font-weight: 700; }
@@ -135,7 +142,7 @@
     .mini-card span { display: block; font-size: 9px; text-align: center; margin-top: 2px; }
     .empty { color: var(--muted); padding: 24px 0; }
     .all-card-row { cursor: pointer; }
-    .canvas-wrap { border: 1px solid var(--line); background: #16191c; overflow: hidden; }
+    .canvas-wrap { border: 1px solid var(--line); background: #16191c; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; contain: inline-size; }
     #synergy-canvas { width: 100%; height: 620px; display: block; }
     .candidate-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px 9px; }
     .candidate { margin: 0; min-width: 0; }
@@ -179,7 +186,12 @@
     code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .92em; }
     @media (max-width: 980px) {
       .header-actions .metrics { display: none; }
-      .top, nav, main { padding-left: 12px; padding-right: 12px; }
+      .top, nav, main { padding-left: max(12px, var(--safe-left)); padding-right: max(12px, var(--safe-right)); }
+      .top { gap: 8px; align-items: flex-start; }
+      .top > div:first-child { min-width: 0; overflow: hidden; padding-top: 3px; }
+      h1 { overflow: hidden; font-size: 18px; text-overflow: ellipsis; white-space: nowrap; }
+      .header-actions { flex: 0 0 auto; }
+      main { padding-top: 18px; padding-bottom: max(20px, var(--safe-bottom)); }
       .browser-layout, .grid-2 { grid-template-columns: 1fr; }
       .overview-head { align-items: stretch; flex-direction: column; }
       .freshness { text-align: left; }
@@ -188,7 +200,27 @@
       .detail { position: static; border-left: 0; border-top: 1px solid var(--line); padding: 15px 0 0; max-width: 360px; max-height: none; }
       .card-gallery { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
       .packet { grid-template-columns: 1fr; }
+      .role-head { align-items: stretch; flex-direction: column; }
+      .result-count { width: 100%; margin-left: 0; }
+      .color-pool, .type-pool { width: 100%; min-width: 0; }
+      input[type="search"], input[type="text"] { min-width: min(100%, 280px); }
+      #synergy-canvas { width: max(100%, 720px); height: 520px; }
       th, td { padding: 8px; }
+    }
+    @media (max-width: 980px), (pointer: coarse) {
+      button, select, input:not([type="checkbox"]):not([type="radio"]), .check-control { min-height: 44px; }
+      input:not([type="checkbox"]):not([type="radio"]), select { height: 44px; font-size: 16px; }
+      .tab { min-height: 44px; padding-top: 10px; padding-bottom: 9px; }
+      .command { min-height: 44px; }
+      .color-pool { height: 44px; padding-top: 0; padding-bottom: 0; }
+      .color-pool label { flex: 0 0 44px; min-width: 44px; min-height: 44px; }
+      .color-clear { flex: 0 0 44px; min-width: 44px; min-height: 44px; }
+      .type-pool { min-height: 44px; }
+      .type-pool label, .type-pool label span { min-width: 44px; }
+      .type-pool label span, .type-clear { min-height: 44px; }
+      .mode-control, .mode-control label { height: 44px; min-height: 44px; }
+      .all-card-row { min-height: 44px; }
+      tr.all-card-row td { padding-top: 15px; padding-bottom: 15px; }
     }
     @media (prefers-reduced-motion: no-preference) {
       section:not([hidden]) { animation: reveal 170ms ease-out; }
@@ -202,7 +234,7 @@
   <header>
     <div class="top">
       <div>
-        <h1>✨ Winning in Style ✨</h1>
+        <h1 title="✨ Winning in Style ✨">✨ Winning in Style ✨</h1>
         <div class="subtitle">Analyzed snapshot v550 | 2026-08-25 19:27</div>
       </div>
       <div class="header-actions">
@@ -574,16 +606,21 @@
       discover: [['discover','Scryfall Discovery'],['tags','Scryfall Tag Census']],
     };
     let activeGroup='overview';
+    const initializedViews=new Set(['overview']);
+    const viewInitializers={};
     const activateView = (group, sectionId = null) => {
       activeGroup=group;
       const views=viewGroups[group];
       const selected=views.some(([id])=>id===sectionId)?sectionId:views[0][0];
-      document.querySelectorAll('.tab').forEach(x=>{const active=x.dataset.group===group;x.setAttribute('aria-selected',String(active));x.tabIndex=active?0:-1;});
+      let activeTab=null;
+      document.querySelectorAll('.tab').forEach(x=>{const active=x.dataset.group===group;x.setAttribute('aria-selected',String(active));x.tabIndex=active?0:-1;if(active)activeTab=x;});
       document.querySelectorAll('main > section').forEach(x=>{x.hidden=x.id!==selected;x.setAttribute('role','tabpanel');});
       const selector=q('#subview-select'),wrap=q('#subview-wrap');
       selector.innerHTML=views.map(([id,label])=>'<option value="'+e(id)+'"'+(id===selected?' selected':'')+'>'+e(label)+'</option>').join('');
       wrap.hidden=views.length<2;
+      if(!initializedViews.has(selected)&&viewInitializers[selected]){viewInitializers[selected]();initializedViews.add(selected);}
       if(selected==='map')requestAnimationFrame(drawSynergyMap);
+      activeTab?.scrollIntoView({block:'nearest',inline:'center',behavior:'auto'});
       window.scrollTo({top:0,behavior:'auto'});
     };
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>activateView(btn.dataset.group,btn.dataset.tab)));
@@ -641,7 +678,7 @@
     q('#theme-type-mode').querySelectorAll('input').forEach(input=>input.addEventListener('change',renderThemes));
     bindColorPool('#theme-colors',renderThemes);
     bindTypePool('#theme-types',renderThemes);
-    renderThemes();
+    viewInitializers.themes=renderThemes;
 
     const averageOf=(cards,getter)=>cards.length?cards.reduce((sum,card)=>sum+getter(card),0)/cards.length:null;
     const themeEvidence = theme => {
@@ -756,7 +793,7 @@
       q('#cut-count').textContent=cards.length+' cards';
       bindCardButtons(q('#cut-gallery'),'#cut-detail');
     };
-    ['#cut-view','#cut-sort'].forEach(sel=>q(sel).addEventListener('change',renderCuts));bindColorPool('#cut-colors',renderCuts);renderCuts();
+    ['#cut-view','#cut-sort'].forEach(sel=>q(sel).addEventListener('change',renderCuts));bindColorPool('#cut-colors',renderCuts);viewInitializers.cuts=renderCuts;
 
     const reviewThemes=[...new Set(DATA.diagnostics.rejectedNominations.map(x=>x.theme))].sort();
     q('#review-theme').innerHTML=reviewThemes.map(name=>'<option>'+e(name)+'</option>').join('');
@@ -767,9 +804,8 @@
       q('#review-list').innerHTML=items.map(item=>'<button class="all-card-row" data-card-id="'+e(item.id)+'"><strong>'+e(item.name)+'</strong><br><small>Scryfall suggested: '+e(item.tags.join(', '))+'</small></button>').join('')||'<p class="empty">No rejected nominations for this theme.</p>';
       bindCardButtons(q('#review-list'),'#review-detail');
     };
-    q('#review-theme').addEventListener('change',renderReview);renderReview();
-    q('#ambiguous-power').innerHTML=DATA.diagnostics.ambiguousPowerIds.map(id=>byId.get(id)).filter(Boolean).map(cardTile).join('');
-    bindCardButtons(q('#ambiguous-power'),'#review-detail');
+    q('#review-theme').addEventListener('change',renderReview);
+    viewInitializers.review=()=>{renderReview();q('#ambiguous-power').innerHTML=DATA.diagnostics.ambiguousPowerIds.map(id=>byId.get(id)).filter(Boolean).map(cardTile).join('');bindCardButtons(q('#ambiguous-power'),'#review-detail');};
 
     const roleGallery = (title, ids) => {
       const cards=ids.map(id=>byId.get(id)).filter(Boolean);return '<div class="role-section"><div class="role-head"><h3>'+e(title)+'</h3><span>'+cards.length+' cards</span></div>'+(cards.length?'<div class="card-gallery">'+sortCards(cards,'quality').map(cardTile).join('')+'</div>':'<p class="empty">No cards in this role.</p>')+'</div>';
@@ -782,16 +818,16 @@
       if(mode==='enchantress'){const x=DATA.diagnostics.gwEnchantress;groups=[['True GW Enchantress draw engines',x.drawEngines],['All GW explicit Enchantress hard payoffs',x.payoffs],['GW enchantments',x.enablers],['GW tutor and recursion glue',x.glue]];stats=[['Enchantments',x.enablers.length],['Hard payoffs',x.payoffs.length],['Draw engines',x.drawEngines.length],['Glue',x.glue.length]];}
       q('#focus-stats').innerHTML=stats.map(([label,value])=>'<div class="stat"><strong>'+value+'</strong><span>'+e(label)+'</span></div>').join('');q('#focus-content').innerHTML=groups.map(([title,ids])=>roleGallery(title,ids)).join('');q('#focus-count').textContent=groups.reduce((sum,g)=>sum+g[1].length,0)+' role assignments';bindCardButtons(q('#focus-content'),'#focus-detail');
     };
-    q('#focus-select').addEventListener('change',renderFocus);renderFocus();
+    q('#focus-select').addEventListener('change',renderFocus);viewInitializers.focus=renderFocus;
 
     const bridgeCards=mainboard.filter(card=>!card.type.includes('Basic Land')).map(card=>({card,count:card.strictThemeCount})).filter(x=>x.count>=2).sort((a,b)=>b.count-a.count||b.card.quality.score-a.card.quality.score).slice(0,80);
-    q('#bridge-gallery').innerHTML=bridgeCards.map(x=>cardTile(x.card)).join('');bindCardButtons(q('#bridge-gallery'),'#map-detail');
+    viewInitializers.map=()=>{q('#bridge-gallery').innerHTML=bridgeCards.map(x=>cardTile(x.card)).join('');bindCardButtons(q('#bridge-gallery'),'#map-detail');};
     const drawSynergyMap = () => {
-      const canvas=q('#synergy-canvas'),ratio=window.devicePixelRatio||1,width=Math.max(720,canvas.clientWidth),height=620;canvas.width=width*ratio;canvas.height=height*ratio;const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.clearRect(0,0,width,height);const themes=DATA.themes,n=themes.length,cx=width/2,cy=height/2,r=Math.min(width*.38,height*.37);const nodes=themes.map((theme,i)=>({theme,x:cx+Math.cos(-Math.PI/2+i*2*Math.PI/n)*r,y:cy+Math.sin(-Math.PI/2+i*2*Math.PI/n)*r}));const byNameNode=new Map(nodes.map(node=>[node.theme.name,node]));
+      const canvas=q('#synergy-canvas'),ratio=window.devicePixelRatio||1,width=Math.max(320,canvas.clientWidth),height=Math.max(320,canvas.clientHeight);canvas.width=width*ratio;canvas.height=height*ratio;const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.clearRect(0,0,width,height);const themes=DATA.themes,n=themes.length,cx=width/2,cy=height/2,r=Math.min(width*.38,height*.37);const nodes=themes.map((theme,i)=>({theme,x:cx+Math.cos(-Math.PI/2+i*2*Math.PI/n)*r,y:cy+Math.sin(-Math.PI/2+i*2*Math.PI/n)*r}));const byNameNode=new Map(nodes.map(node=>[node.theme.name,node]));
       DATA.overlaps.slice(0,60).forEach(edge=>{const a=byNameNode.get(edge.a),b=byNameNode.get(edge.b);if(!a||!b)return;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba(98,182,217,'+Math.min(.68,.08+edge.percent/160)+')';ctx.lineWidth=Math.max(1,edge.shared/45);ctx.stroke();});
-      nodes.forEach(node=>{const radius=13+node.theme.score/10;ctx.beginPath();ctx.arc(node.x,node.y,radius,0,Math.PI*2);ctx.fillStyle=node.theme.score>=80?'#3d9367':node.theme.score>=50?'#337d9e':'#a77727';ctx.fill();ctx.strokeStyle='#e8ecef';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#f3f2ed';ctx.font='600 11px system-ui';ctx.textAlign='center';ctx.fillText(node.theme.name.length>24?node.theme.name.slice(0,22)+'...':node.theme.name,node.x,node.y+radius+14);});
+      nodes.forEach(node=>{const radius=13+node.theme.score/10;ctx.beginPath();ctx.arc(node.x,node.y,radius,0,Math.PI*2);ctx.fillStyle=node.theme.score>=80?'#3d9367':node.theme.score>=50?'#337d9e':'#a77727';ctx.fill();ctx.strokeStyle='#e8ecef';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#f3f2ed';ctx.font='600 11px system-ui';ctx.textAlign='center';ctx.fillText(node.theme.name.length>24?node.theme.name.slice(0,22)+'...':node.theme.name,node.x,node.y+radius+14);});const wrap=canvas.parentElement;if(window.innerWidth<=980&&wrap.scrollWidth>wrap.clientWidth&&wrap.scrollLeft===0)wrap.scrollLeft=(wrap.scrollWidth-wrap.clientWidth)/2;
     };
-    window.addEventListener('resize',drawSynergyMap);drawSynergyMap();
+    window.addEventListener('resize',drawSynergyMap);
 
     const logChoose = (n,k) => { if(k<0||k>n)return -Infinity; const s=Math.min(k,n-k); let r=0; for(let i=1;i<=s;i++)r+=Math.log(n-s+i)-Math.log(i); return r; };
     const probabilityNone = (n,k,d) => k<=0 ? 1 : d>n-k ? 0 : Math.exp(logChoose(n-k,d)-logChoose(n,d));
@@ -809,7 +845,7 @@
       q('#packet-players').value=players; q('#packet-size').value=size;
       q('#packet-body').innerHTML=DATA.themes.map(a=>{const m=dynamicVisibility(a,players,size);return '<tr><td><strong>'+e(a.name)+'</strong></td><td class="status '+statusClass(m.signal)+'">'+e(m.signal)+'</td><td class="num">'+m.table.ee+'</td><td class="num">'+m.table.ep+'</td><td class="num">'+m.packet.e+'%</td><td class="num">'+m.packet.p+'%</td><td class="num">'+m.packet.both+'%</td><td class="num">'+m.coherent+' / '+players+'</td><td class="num">'+m.table.both+'%</td></tr>';}).join('');
     };
-    q('#recalculate-packets').addEventListener('click',renderPacketMath); renderPacketMath();
+    q('#recalculate-packets').addEventListener('click',renderPacketMath);
     const dealPackets = () => {
       const players=Math.max(2,Math.min(16,Number(q('#packet-players').value)||8)),size=Math.max(1,Math.min(45,Number(q('#packet-size').value)||15));
       const archetype=DATA.themes.find(a=>a.id===q('#deal-archetype').value)||DATA.themes[0];
@@ -820,7 +856,7 @@
         return '<div class="packet"><div class="packet-summary"><strong>Packet '+(i+1)+'</strong>'+ec+' enablers | '+pc+' hard payoffs | '+gc+' soft synergy</div><div class="packet-cards">'+(mini||'<span class="empty">No support cards in this packet.</span>')+'</div></div>';}).join('');
       q('#deal-summary').textContent=totalE+' enablers, '+totalP+' hard payoffs, '+coherent+' coherent packets';
     };
-    q('#deal-button').addEventListener('click',dealPackets); q('#deal-archetype').addEventListener('change',dealPackets); dealPackets();
+    q('#deal-button').addEventListener('click',dealPackets);q('#deal-archetype').addEventListener('change',dealPackets);viewInitializers.packets=()=>{renderPacketMath();dealPackets();};
 
     let qualityLimit=160;
     const filteredQualityCards = () => {
@@ -830,7 +866,7 @@
     const renderQuality = (reset=true) => {
       if(reset)qualityLimit=160;const cards=filteredQualityCards(),shown=cards.slice(0,qualityLimit);q('#quality-gallery').innerHTML=shown.map(cardTile).join('')||'<p class="empty">No cards match these filters.</p>';q('#quality-count').textContent='Showing '+shown.length+' of '+cards.length;q('#quality-more').hidden=shown.length>=cards.length;bindCardButtons(q('#quality-gallery'),'#quality-detail');
     };
-    ['#quality-tier','#quality-speed','#quality-color','#quality-sort'].forEach(sel=>q(sel).addEventListener('change',()=>renderQuality(true)));q('#quality-search').addEventListener('input',debounce(()=>renderQuality(true)));q('#quality-more').addEventListener('click',()=>{qualityLimit+=160;renderQuality(false);});renderQuality(true);
+    ['#quality-tier','#quality-speed','#quality-color','#quality-sort'].forEach(sel=>q(sel).addEventListener('change',()=>renderQuality(true)));q('#quality-search').addEventListener('input',debounce(()=>renderQuality(true)));q('#quality-more').addEventListener('click',()=>{qualityLimit+=160;renderQuality(false);});viewInitializers.quality=()=>renderQuality(true);
 
     const cutSet=new Set(DATA.seventeenLands.cutCandidateIds);
     const renderSeventeen = () => {
@@ -839,11 +875,10 @@
       cards.sort((a,b)=>sort==='pick'?(a.seventeenLands.avgPick??99)-(b.seventeenLands.avgPick??99):sort==='iih'?(b.seventeenLands.improvementInHand??-99)-(a.seventeenLands.improvementInHand??-99):(view==='cuts'||view==='bottom'?a.seventeenLands.score-b.seventeenLands.score:b.seventeenLands.score-a.seventeenLands.score));
       q('#lands-gallery').innerHTML=cards.map(cardTile).join('')||'<p class="empty">No cards match this view.</p>';q('#lands-count').textContent=cards.length+' cards';bindCardButtons(q('#lands-gallery'),'#lands-detail');
     };
-    ['#lands-view','#lands-sort'].forEach(sel=>q(sel).addEventListener('change',renderSeventeen));q('#lands-search').addEventListener('input',debounce(renderSeventeen));renderSeventeen();
-    q('#signpost-body').innerHTML=DATA.seventeenLands.signposts.map(item=>{const chance=n=>item.tableChanceByCopies.find(x=>x.copies===n)?.chance??0;return '<tr><td><strong>'+e(item.name)+'</strong><br><small>'+e(item.note)+'</small></td><td class="num">'+item.currentCopies+'</td><td class="num">'+item.currentTableChance+'%</td><td class="num">'+chance(2)+'%</td><td class="num">'+chance(3)+'%</td><td class="num">'+chance(6)+'%</td><td>'+(item.rating?'score '+item.rating.score+' ('+e(item.rating.grade)+'), avg pick '+item.rating.avgPick:'No Powered Cube match')+'</td></tr>';}).join('');
+    ['#lands-view','#lands-sort'].forEach(sel=>q(sel).addEventListener('change',renderSeventeen));q('#lands-search').addEventListener('input',debounce(renderSeventeen));
     const externalCandidate=(card)=>'<figure class="candidate"><a href="'+e(card.scryfallUri)+'" target="_blank" rel="noreferrer"><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"></a><figcaption><strong>'+e(card.name)+'</strong><small>'+e(card.type)+' | MV '+card.manaValue+(card.seventeenLands?' | 17Lands '+card.seventeenLands.score+' '+e(card.seventeenLands.grade):' | no Powered Cube data')+'</small></figcaption></figure>';
-    renderGuild();
-    q('#candidate-groups').innerHTML=DATA.research.groups.map(group=>'<div class="role-section"><div class="role-head"><h3>'+e(group.label)+'</h3><span>Absent from current cube</span></div><div class="candidate-gallery">'+group.candidates.map(externalCandidate).join('')+'</div></div>').join('');
+    viewInitializers.guilds=renderGuild;
+    viewInitializers.seventeen=()=>{renderSeventeen();q('#signpost-body').innerHTML=DATA.seventeenLands.signposts.map(item=>{const chance=n=>item.tableChanceByCopies.find(x=>x.copies===n)?.chance??0;return '<tr><td><strong>'+e(item.name)+'</strong><br><small>'+e(item.note)+'</small></td><td class="num">'+item.currentCopies+'</td><td class="num">'+item.currentTableChance+'%</td><td class="num">'+chance(2)+'%</td><td class="num">'+chance(3)+'%</td><td class="num">'+chance(6)+'%</td><td>'+(item.rating?'score '+item.rating.score+' ('+e(item.rating.grade)+'), avg pick '+item.rating.avgPick:'No Powered Cube match')+'</td></tr>';}).join('');q('#candidate-groups').innerHTML=DATA.research.groups.map(group=>'<div class="role-section"><div class="role-head"><h3>'+e(group.label)+'</h3><span>Absent from current cube</span></div><div class="candidate-gallery">'+group.candidates.map(externalCandidate).join('')+'</div></div>').join('');};
 
     const cubeByOracle=new Map(DATA.cards.filter(card=>card.oracleId).map(card=>[card.oracleId,card]));
     const cubeByName=new Map(DATA.cards.map(card=>[card.name.toLowerCase(),card]));
@@ -926,14 +961,14 @@
       q('#type-count').textContent='Showing '+shown.length+' of '+cards.length;
       bindCardButtons(q('#type-gallery'),'#type-detail');
     };
-    ['#type-select','#type-function'].forEach(sel=>q(sel).addEventListener('change',renderTypes));bindColorPool('#type-colors',renderTypes);renderTypes();
+    ['#type-select','#type-function'].forEach(sel=>q(sel).addEventListener('change',renderTypes));bindColorPool('#type-colors',renderTypes);viewInitializers.types=renderTypes;
 
     const renderAllCards = () => {
       const term=q('#card-search').value.trim().toLowerCase(),board=q('#card-board').value,color=q('#card-color').value,type=q('#card-type').value,fn=q('#card-function').value;const cards=DATA.cards.filter(c=>(board==='all'||c.board===board)&&cardColorsMatch(c,color)&&cardMatchesType(c,type)&&cardMatchesFunction(c,fn)&&(!term||c.search.includes(term)));const shown=cards.slice(0,350);q('#all-card-count').textContent='Showing '+shown.length+' of '+cards.length;
       q('#card-body').innerHTML=shown.map(c=>'<tr class="all-card-row" data-card-id="'+e(c.id)+'"><td><strong>'+e(c.name)+'</strong><br><small>'+e(c.type)+'</small></td><td>'+pips(c.colors)+'</td><td class="num">'+c.cmc+'</td><td>'+chips(c.functionRoles.map(role=>role.label))+'</td><td class="status '+statusClass(c.quality.standaloneTier)+'">'+e(c.quality.standaloneTier)+' '+c.quality.score+'</td><td class="num">'+e(c.quality.advantageLabel)+'</td><td>'+chips(c.archetypeRoles.map(r=>r.archetype+' - '+roleLabel(r.role)))+'</td><td>'+chips(c.proposedTags)+'</td></tr>').join('');bindCardButtons(q('#card-body'),'#card-detail');
     };
-    ['#card-board','#card-color','#card-type','#card-function'].forEach(sel=>q(sel).addEventListener('change',renderAllCards));q('#card-search').addEventListener('input',debounce(renderAllCards));renderAllCards();
-    const renderTagTables=()=>{const term=q('#tag-search').value.trim().toLowerCase();const render=(rows,target)=>{q(target).innerHTML=rows.filter(x=>!term||x.tag.includes(term)).slice(0,500).map(x=>'<tr><td><code>'+e(x.tag)+'</code></td><td class="num">'+x.count+'</td></tr>').join('');};render(DATA.oracleTagFrequency,'#oracle-tag-body');render(DATA.artTagFrequency,'#art-tag-body');};q('#tag-search').addEventListener('input',debounce(renderTagTables));renderTagTables();
+    ['#card-board','#card-color','#card-type','#card-function'].forEach(sel=>q(sel).addEventListener('change',renderAllCards));q('#card-search').addEventListener('input',debounce(renderAllCards));viewInitializers.cards=renderAllCards;
+    const renderTagTables=()=>{const term=q('#tag-search').value.trim().toLowerCase();const render=(rows,target)=>{q(target).innerHTML=rows.filter(x=>!term||x.tag.includes(term)).slice(0,500).map(x=>'<tr><td><code>'+e(x.tag)+'</code></td><td class="num">'+x.count+'</td></tr>').join('');};render(DATA.oracleTagFrequency,'#oracle-tag-body');render(DATA.artTagFrequency,'#art-tag-body');};q('#tag-search').addEventListener('input',debounce(renderTagTables));viewInitializers.tags=renderTagTables;
   </script>
 </body>
 </html>
