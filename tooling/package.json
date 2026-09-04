@@ -1,0 +1,33 @@
+{
+  "name": "winning-in-style-cube-health",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-first Cube Cobra and Scryfall synergy audit for Winning in Style.",
+  "scripts": {
+    "analyze": "node src/analyze.mjs && node src/build-dashboard.mjs",
+    "analyze:17lands": "node src/analyze-17lands.mjs",
+    "research:scryfall": "node src/fetch-research.mjs",
+    "adjacency:build": "node src/build-cubecobra-adjacency.mjs",
+    "adjacency:refresh": "node src/build-cubecobra-adjacency.mjs --fetch",
+    "refresh": "node src/analyze.mjs --fetch && node src/build-dashboard.mjs",
+    "build:dashboard": "node src/build-dashboard.mjs",
+    "tags:dry-run": "node src/sync-tags.mjs",
+    "tags:apply": "node src/sync-tags.mjs --apply",
+    "cuts:dry-run": "node src/remove-cards.mjs",
+    "cuts:apply": "node src/remove-cards.mjs --apply",
+    "verify": "node src/verify.mjs",
+    "verify:visual": "node src/visual-check.mjs",
+    "verify:deploy": "node src/build-dashboard.mjs --check"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "csv-parse": "^6.1.0",
+    "stream-json": "^1.9.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

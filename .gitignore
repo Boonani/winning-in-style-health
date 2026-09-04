@@ -1,0 +1,11 @@
+tooling/node_modules/
+tooling/outputs/
+tooling/backups/
+tooling/deploy-site/
+tooling/dashboard.html
+tooling/data/cubecobra-ml/cache/
+**/.env
+**/.env.*
+**/*credentials*
+**/*auth-state*
+**/storage-state*.json

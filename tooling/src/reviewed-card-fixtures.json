@@ -1,0 +1,2225 @@
+{
+  "source": "https://cubecobra.com/cube/api/cubeJSON/style",
+  "sourceVersion": 555,
+  "capturedAt": "2026-09-04T20:35:32.446Z",
+  "cards": [
+    {
+      "index": 388,
+      "cardID": "9c769202-178c-442a-a9e2-aa08b5ae5c9a",
+      "details": {
+        "color_identity": [
+          "W"
+        ],
+        "name": "Agent Bishop, Man in Black",
+        "full_name": "Agent Bishop, Man in Black [tmt-2]",
+        "produced_mana": [],
+        "oracle_text": "At the beginning of combat on your turn, put a +1/+1 counter on each of up to two target creatures.",
+        "scryfall_id": "9c769202-178c-442a-a9e2-aa08b5ae5c9a",
+        "oracle_id": "f33217cc-175f-45e8-bc69-801f41cb4495",
+        "cmc": 3,
+        "type": "Legendary Creature — Human Soldier",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "misnomer",
+          "card-names",
+          "triggered-ability",
+          "repeatable-crime",
+          "support",
+          "gives-pp-counters",
+          "repeatable-pp-counters",
+          "multiple-targets",
+          "alliteration"
+        ],
+        "power": "1",
+        "toughness": "2"
+      }
+    },
+    {
+      "index": 857,
+      "cardID": "8bff0aa6-16d9-4c83-b598-ef00a3b33d2c",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Bilbo, Luckwearer",
+        "full_name": "Bilbo, Luckwearer [hob-32]",
+        "produced_mana": [],
+        "oracle_text": "Bilbo can't be blocked.\nWhenever Bilbo deals combat damage to a player, draw a card, then discard a card.\nExchange control of two target nonland permanents that share a card type. (Then exile this card. You may cast the creature later from exile.)",
+        "scryfall_id": "8bff0aa6-16d9-4c83-b598-ef00a3b33d2c",
+        "oracle_id": "a73d9109-36e0-40ea-ab06-5c5f7eb4ac54",
+        "cmc": 2,
+        "type": "Legendary Creature — Halfling Rogue",
+        "layout": "adventure",
+        "keywords": [],
+        "oracle_tags": [
+          "theft-nonland",
+          "theft",
+          "control-changing-effects",
+          "castable-from-exile",
+          "unexile",
+          "castable-from-nonhand",
+          "more-expensive-than-mv",
+          "triggered-ability",
+          "saboteur",
+          "exile-self",
+          "multiple-targets",
+          "repeatable-loot",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "loot",
+          "discard-outlet",
+          "blue-effect",
+          "untracked-indefinite-effect",
+          "indefinite-effect",
+          "unblockable",
+          "evasion",
+          "exchange-control"
+        ],
+        "power": "1",
+        "toughness": "1"
+      }
+    },
+    {
+      "index": 322,
+      "cardID": "e273f4e6-4691-4cb3-89e2-9b1ab45a2bc0",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Lockjaw, Slobbering Teleporter",
+        "full_name": "Lockjaw, Slobbering Teleporter [msc-36]",
+        "produced_mana": [],
+        "oracle_text": "Vigilance\nAt the beginning of combat on your turn, if you've cast a noncreature spell this turn, put a +1/+1 counter on Lockjaw. When you do, Lockjaw and up to one other target creature you control can't be blocked this turn.",
+        "scryfall_id": "e273f4e6-4691-4cb3-89e2-9b1ab45a2bc0",
+        "oracle_id": "5efce07e-24c4-4520-a46f-9954b67c4e6e",
+        "cmc": 2,
+        "type": "Legendary Creature — Inhuman Dog Hero",
+        "layout": "normal",
+        "keywords": [
+          "Vigilance"
+        ],
+        "oracle_tags": [
+          "reflexive-trigger",
+          "triggered-ability",
+          "unique-type-line",
+          "intervening-if-clause",
+          "synergy-noncreature",
+          "repeatable-pp-counters",
+          "gives-unblockable",
+          "gives-evasion",
+          "gains-pp-counters",
+          "unblockable",
+          "evasion"
+        ],
+        "power": "1",
+        "toughness": "1"
+      }
+    },
+    {
+      "index": 655,
+      "cardID": "4ecbca71-9a1d-44c5-b709-d6f565941d5e",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Skycoach Conductor",
+        "full_name": "Skycoach Conductor [sos-67]",
+        "produced_mana": [],
+        "oracle_text": "Flash\nFlying, vigilance\nThis creature enters prepared. (While it's prepared, you may cast a copy of its spell. Doing so unprepares it.)\nExile target non-Pilot creature you control, then return that card to the battlefield under its owner's control.",
+        "scryfall_id": "4ecbca71-9a1d-44c5-b709-d6f565941d5e",
+        "oracle_id": "788d3cfa-7706-4728-9c48-cf7bc963d002",
+        "cmc": 3,
+        "type": "Creature — Bird Pilot",
+        "layout": "prepare",
+        "keywords": [
+          "Flying",
+          "Vigilance",
+          "Prepared",
+          "Flash"
+        ],
+        "oracle_tags": [
+          "unique-type-line",
+          "typal-non-pilot",
+          "typal-creature",
+          "typal",
+          "protects-creature",
+          "protection",
+          "flicker-creature",
+          "flicker",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "evasion",
+          "unique-type-exclusion"
+        ],
+        "power": "2",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 790,
+      "cardID": "75961d36-acf6-425f-9698-0bf52af74f31",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Emeritus of Ideation",
+        "full_name": "Emeritus of Ideation [sos-45]",
+        "produced_mana": [],
+        "oracle_text": "Flying, ward {2}\nThis creature enters prepared.\nWhenever this creature attacks, you may exile eight cards from your graveyard. If you do, this creature becomes prepared.\nTarget player draws three cards.",
+        "scryfall_id": "75961d36-acf6-425f-9698-0bf52af74f31",
+        "oracle_id": "24a29be4-5bc2-469b-b2ce-2fb305c3facb",
+        "cmc": 5,
+        "type": "Creature — Human Wizard",
+        "layout": "prepare",
+        "keywords": [
+          "Flying",
+          "Prepared",
+          "Ward"
+        ],
+        "oracle_tags": [
+          "draw-engine",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "single-target-instant-sorcery",
+          "cycle-sos-emeritus",
+          "cycle",
+          "burst-draw",
+          "graveyard-fuel",
+          "repeatable-pure-draw",
+          "pure-draw",
+          "repeatable-crime",
+          "ward",
+          "hate-target",
+          "hate",
+          "triggered-ability",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "evasion",
+          "rhystic",
+          "tax",
+          "attacking-matters-self",
+          "attack-trigger",
+          "force-draw"
+        ],
+        "power": "5",
+        "toughness": "5"
+      }
+    },
+    {
+      "index": 303,
+      "cardID": "d72aa8fc-6808-4865-879e-417a300c40de",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Monstrosity of the Lake",
+        "full_name": "Monstrosity of the Lake [ltc-22]",
+        "produced_mana": [],
+        "oracle_text": "When Monstrosity of the Lake enters, you may pay {5}. If you do, tap all creatures your opponents control, then put a stun counter on each of those creatures. (If a permanent with a stun counter would become untapped, remove one from it instead.)\nIslandcycling {2} ({2}, Discard this card: Search your library for an Island card, reveal it, put it into your hand, then shuffle.)",
+        "scryfall_id": "d72aa8fc-6808-4865-879e-417a300c40de",
+        "oracle_id": "c5f52c7f-5dba-4d4c-8acc-068732964031",
+        "cmc": 5,
+        "type": "Legendary Creature — Kraken",
+        "layout": "normal",
+        "keywords": [
+          "Islandcycling",
+          "Landcycling",
+          "Typecycling",
+          "Cycling"
+        ],
+        "oracle_tags": [
+          "cheaper-than-mv",
+          "triggered-ability",
+          "tapper-creature",
+          "tapper",
+          "pseudo-fog",
+          "tutor-land-island",
+          "tutor-land",
+          "tutor",
+          "tutor-to-hand",
+          "tutor-to",
+          "freeze-creature",
+          "freeze",
+          "virtual-vanilla",
+          "flavors-of-vanilla",
+          "activate-from-hand",
+          "activated-ability"
+        ],
+        "power": "4",
+        "toughness": "6"
+      }
+    },
+    {
+      "index": 286,
+      "cardID": "1b03fa4e-b3a1-4c23-8341-e9ce89aa872f",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Professor Hulk",
+        "full_name": "Professor Hulk [msc-37]",
+        "produced_mana": [],
+        "oracle_text": "Trample\nWhenever Professor Hulk deals combat damage to a player, draw that many cards.",
+        "scryfall_id": "1b03fa4e-b3a1-4c23-8341-e9ce89aa872f",
+        "oracle_id": "b8a627a1-d6d7-45d1-aeea-ff7b834cbb29",
+        "cmc": 6,
+        "type": "Legendary Creature — Gamma Scientist Hero",
+        "layout": "normal",
+        "keywords": [
+          "Trample"
+        ],
+        "oracle_tags": [
+          "draw-engine",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "burst-draw",
+          "triggered-ability",
+          "repeatable-pure-draw",
+          "pure-draw",
+          "curiosity",
+          "curiosity-like",
+          "saboteur",
+          "drawlink",
+          "scales-with-damage-dealt"
+        ],
+        "power": "6",
+        "toughness": "6"
+      }
+    },
+    {
+      "index": 395,
+      "cardID": "db82c2fd-5418-41d6-8712-e33a2ae200fe",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Command the Chaff",
+        "full_name": "Command the Chaff [cmb1-18]",
+        "produced_mana": [],
+        "oracle_text": "Look at target opponent's sideboard. You may cast a card from that sideboard without paying its mana cost.\nExile Command the Chaff.",
+        "scryfall_id": "db82c2fd-5418-41d6-8712-e33a2ae200fe",
+        "oracle_id": "c1b8145a-7c54-49fb-b1be-9c745a581e56",
+        "cmc": 6,
+        "type": "Instant",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "sideboard-matters",
+          "single-target-instant-sorcery",
+          "free-cast-another",
+          "cost-ignorer",
+          "cast-on-resolution",
+          "potentially-black-border",
+          "gives-castable-from-nonhand",
+          "alliteration",
+          "card-names",
+          "exile-on-resolution",
+          "exile-self",
+          "theft-cast",
+          "theft",
+          "control-changing-effects",
+          "wish"
+        ]
+      }
+    },
+    {
+      "index": 631,
+      "cardID": "4b851c17-55ed-4671-b471-dc7b34944432",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Show and Tell",
+        "full_name": "Show and Tell [usg-96]",
+        "produced_mana": [],
+        "oracle_text": "Each player may put an artifact, creature, enchantment, or land card from their hand onto the battlefield.",
+        "scryfall_id": "4b851c17-55ed-4671-b471-dc7b34944432",
+        "oracle_id": "b83a3ba0-249e-4c39-bbf0-cb005413f7d2",
+        "cmc": 3,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "sneak-land",
+          "sneak",
+          "cost-ignorer",
+          "extra-land",
+          "ramp",
+          "synergy-artifact",
+          "land-ramp",
+          "sneak-enchantment",
+          "sneak-creature",
+          "show-and-tell",
+          "symmetrical",
+          "sneak-artifact",
+          "school-name",
+          "card-names",
+          "synergy-enchantment"
+        ]
+      }
+    },
+    {
+      "index": 270,
+      "cardID": "ee3bc0e6-5e47-4a04-af15-faea70f3983a",
+      "details": {
+        "color_identity": [
+          "U"
+        ],
+        "name": "Aminatou's Augury",
+        "full_name": "Aminatou's Augury [c18-6]",
+        "produced_mana": [],
+        "oracle_text": "Exile the top eight cards of your library. You may put a land card from among them onto the battlefield. Until end of turn, for each nonland card type, you may cast a spell of that type from among the exiled cards without paying its mana cost.",
+        "scryfall_id": "ee3bc0e6-5e47-4a04-af15-faea70f3983a",
+        "oracle_id": "c9160997-0305-47f5-9a2f-77588d167da0",
+        "cmc": 8,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "free-cast-another",
+          "cost-ignorer",
+          "impulsive-draw",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "card-advantage",
+          "red-effect",
+          "land-ramp",
+          "ramp",
+          "alliteration",
+          "card-names",
+          "namesake-spell",
+          "cycle-c18-signature-spell",
+          "cycle",
+          "card-types-matter"
+        ]
+      }
+    },
+    {
+      "index": 750,
+      "cardID": "d7efb10f-c760-431c-8ac6-904965d850dc",
+      "details": {
+        "color_identity": [
+          "B"
+        ],
+        "name": "Guildsworn Prowler",
+        "full_name": "Guildsworn Prowler [clb-130]",
+        "produced_mana": [],
+        "oracle_text": "Deathtouch\nWhen this creature dies, if it wasn't blocking, draw a card.",
+        "scryfall_id": "d7efb10f-c760-431c-8ac6-904965d850dc",
+        "oracle_id": "72e2aa4f-b4b4-42ab-adc0-d0ac09cd5f92",
+        "cmc": 2,
+        "type": "Creature — Tiefling Rogue Assassin",
+        "layout": "normal",
+        "keywords": [
+          "Deathtouch"
+        ],
+        "oracle_tags": [
+          "unique-type-line",
+          "pure-draw",
+          "draw",
+          "card-advantage",
+          "death-trigger-self",
+          "death-trigger",
+          "triggered-ability",
+          "intervening-if-clause"
+        ],
+        "power": "2",
+        "toughness": "1"
+      }
+    },
+    {
+      "index": 104,
+      "cardID": "ae1ef31c-8ca5-444c-8f39-e1d1827318f5",
+      "details": {
+        "color_identity": [
+          "B"
+        ],
+        "name": "Reanimate",
+        "full_name": "Reanimate [tmp-151]",
+        "produced_mana": [],
+        "oracle_text": "Put target creature card from a graveyard onto the battlefield under your control. You lose life equal to that card's mana value.",
+        "scryfall_id": "ae1ef31c-8ca5-444c-8f39-e1d1827318f5",
+        "oracle_id": "a044474a-cd72-4e9d-bd8d-a08f2de9cdc0",
+        "cmc": 1,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "single-target-instant-sorcery",
+          "single-english-word-name",
+          "card-names",
+          "scales-with-mana-value",
+          "mana-value-matters",
+          "reanimate-creature",
+          "recursion-creature",
+          "recursion",
+          "reanimate",
+          "reanimate-from-any",
+          "reanimate-from-opponent",
+          "theft",
+          "control-changing-effects",
+          "life-payment"
+        ]
+      }
+    },
+    {
+      "index": 795,
+      "cardID": "6d3e3c3a-d351-4d91-8884-312d4b6f540d",
+      "details": {
+        "color_identity": [
+          "B"
+        ],
+        "name": "Yawgmoth's Will",
+        "full_name": "Yawgmoth's Will [usg-171]",
+        "produced_mana": [],
+        "oracle_text": "Until end of turn, you may play lands and cast spells from your graveyard.\nIf a card would be put into your graveyard from anywhere this turn, exile that card instead.",
+        "scryfall_id": "6d3e3c3a-d351-4d91-8884-312d4b6f540d",
+        "oracle_id": "322f0459-f394-44f0-977b-55fd0cbe0712",
+        "cmc": 3,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "gives-castable-from-graveyard",
+          "recursion",
+          "gives-castable-from-nonhand",
+          "reanimate-permanent",
+          "recursion-permanent",
+          "reanimate",
+          "namesake-spell",
+          "card-names",
+          "reanimate-cast"
+        ]
+      }
+    },
+    {
+      "index": 133,
+      "cardID": "d357d997-9d4e-4ade-81f2-37629853f13a",
+      "details": {
+        "color_identity": [
+          "B"
+        ],
+        "name": "Arcane Omens",
+        "full_name": "Arcane Omens [sos-73]",
+        "produced_mana": [],
+        "oracle_text": "Converge — Target player discards X cards, where X is the number of colors of mana spent to cast this spell.",
+        "scryfall_id": "d357d997-9d4e-4ade-81f2-37629853f13a",
+        "oracle_id": "863cbd12-da20-456e-8698-06fba4d9bd5c",
+        "cmc": 5,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [
+          "Converge"
+        ],
+        "oracle_tags": [
+          "converge",
+          "color-spent-matters",
+          "mana-spent-matters",
+          "single-target-instant-sorcery",
+          "discard-with-set-s-mechanic",
+          "hand-disruption",
+          "staple-with-set-s-mechanic",
+          "discard",
+          "black-effect"
+        ]
+      }
+    },
+    {
+      "index": 176,
+      "cardID": "daf51a76-7a57-4462-ae18-a19e817e49e5",
+      "details": {
+        "color_identity": [
+          "B"
+        ],
+        "name": "Breach the Multiverse",
+        "full_name": "Breach the Multiverse [mom-94]",
+        "produced_mana": [],
+        "oracle_text": "Each player mills ten cards. For each player, choose a creature or planeswalker card in that player's graveyard. Put those cards onto the battlefield under your control. Then each creature you control becomes a Phyrexian in addition to its other types.",
+        "scryfall_id": "daf51a76-7a57-4462-ae18-a19e817e49e5",
+        "oracle_id": "ebbd5b9c-07ff-4b42-81c2-ba09539f3a42",
+        "cmc": 7,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [
+          "Mill"
+        ],
+        "oracle_tags": [
+          "universal-type-change",
+          "type-change",
+          "per-player",
+          "multiplayer",
+          "reanimate-creature",
+          "recursion-creature",
+          "recursion",
+          "reanimate",
+          "reanimate-from-any",
+          "reanimate-from-opponent",
+          "theft",
+          "control-changing-effects",
+          "reanimate-planeswalker",
+          "recursion-planeswalker",
+          "cost-ignorer",
+          "untracked-indefinite-effect",
+          "indefinite-effect",
+          "mill-each",
+          "mill-opponent",
+          "mill",
+          "mill-self"
+        ]
+      }
+    },
+    {
+      "index": 202,
+      "cardID": "a0d0a9fa-75c9-4492-accd-bc9f79407453",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Dismissive Pyromancer",
+        "full_name": "Dismissive Pyromancer [m19-136]",
+        "produced_mana": [],
+        "oracle_text": "{R}, {T}, Discard a card: Draw a card.\n{2}{R}, {T}, Sacrifice this creature: It deals 4 damage to target creature.",
+        "scryfall_id": "a0d0a9fa-75c9-4492-accd-bc9f79407453",
+        "oracle_id": "f040310d-d6ac-4d77-9f76-ca325eddf306",
+        "cmc": 2,
+        "type": "Creature — Human Wizard",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "burn-creature",
+          "removal-creature",
+          "removal",
+          "removal-burn",
+          "burn",
+          "bombard-self",
+          "sacrifice-self",
+          "repeatable-rummage",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "rummage",
+          "discard-outlet",
+          "red-effect",
+          "martyr",
+          "activated-ability",
+          "spot-removal"
+        ],
+        "power": "2",
+        "toughness": "2"
+      }
+    },
+    {
+      "index": 231,
+      "cardID": "3ba971e7-0b7a-4750-896f-7cf063e66b2a",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Blazing Firesinger",
+        "full_name": "Blazing Firesinger [sos-109]",
+        "produced_mana": [
+          "R"
+        ],
+        "oracle_text": "This creature enters prepared. (While it's prepared, you may cast a copy of its spell. Doing so unprepares it.)\nAdd {R}{R}{R}{R}{R}.",
+        "scryfall_id": "3ba971e7-0b7a-4750-896f-7cf063e66b2a",
+        "oracle_id": "1bf505a7-292e-4642-83b6-8ff41ebe5d51",
+        "cmc": 3,
+        "type": "Creature — Dwarf Bard",
+        "layout": "prepare",
+        "keywords": [
+          "Prepared"
+        ],
+        "oracle_tags": [
+          "adds-multiple-mana",
+          "refund",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "ritual",
+          "ramp"
+        ],
+        "power": "2",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 195,
+      "cardID": "5c7c23a6-53ff-4588-838c-7936cb9eb86b",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Star Athlete",
+        "full_name": "Star Athlete [dsc-29]",
+        "produced_mana": [],
+        "oracle_text": "Menace\nWhenever this creature attacks, choose up to one target nonland permanent. Its controller may sacrifice it. If they don't, this creature deals 5 damage to that player.\nBlitz {3}{R} (If you cast this spell for its blitz cost, it gains haste and \"When this creature dies, draw a card.\" Sacrifice it at the beginning of the next end step.)",
+        "scryfall_id": "5c7c23a6-53ff-4588-838c-7936cb9eb86b",
+        "oracle_id": "fb03befb-b4e4-4ae9-908d-a16d5b03b054",
+        "cmc": 3,
+        "type": "Creature — Human Warrior",
+        "layout": "normal",
+        "keywords": [
+          "Blitz",
+          "Menace"
+        ],
+        "oracle_tags": [
+          "burn-player",
+          "burn",
+          "more-expensive-than-mv",
+          "fun-ruling",
+          "repeatable-crime",
+          "delayed-trigger",
+          "triggered-ability",
+          "removal-nonland",
+          "removal-vehicle",
+          "removal",
+          "removal-spacecraft",
+          "removal-aura",
+          "removal-equipment",
+          "removal-battle",
+          "removal-planeswalker",
+          "removal-creature",
+          "removal-enchantment",
+          "removal-artifact",
+          "punisher",
+          "dilemma",
+          "gains-haste",
+          "evasion",
+          "spot-removal",
+          "repeatable-removal",
+          "removal-sacrifice",
+          "attacking-matters-self",
+          "attack-trigger"
+        ],
+        "power": "3",
+        "toughness": "2"
+      }
+    },
+    {
+      "index": 742,
+      "cardID": "8bc5a0ac-5979-43ce-8a65-98c5f09f4aa6",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Tokka & Rahzar, Unsupervised",
+        "full_name": "Tokka & Rahzar, Unsupervised [tmc-28]",
+        "produced_mana": [],
+        "oracle_text": "First strike\nWhenever another nontoken creature you control leaves the battlefield, put a +1/+1 counter on Tokka & Rahzar and create a Treasure token. This ability triggers only once each turn.",
+        "scryfall_id": "8bc5a0ac-5979-43ce-8a65-98c5f09f4aa6",
+        "oracle_id": "8d857d79-bdb2-4ca3-abd6-7db8f6b3bcfa",
+        "cmc": 3,
+        "type": "Legendary Creature — Turtle Wolf Mutant",
+        "layout": "normal",
+        "keywords": [
+          "First strike",
+          "Treasure"
+        ],
+        "oracle_tags": [
+          "ramp",
+          "repeatable-treasures",
+          "repeatable-artifact-tokens",
+          "repeatable-token-generator",
+          "repeatable-noncreature-tokens",
+          "leaves-battlefield-trigger",
+          "triggered-ability",
+          "repeatable-pp-counters",
+          "gains-pp-counters",
+          "multi-character-card"
+        ],
+        "power": "3",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 204,
+      "cardID": "fddd2e68-8e1e-4162-a2c7-49da2c86d471",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Abomination, World Ravager",
+        "full_name": "Abomination, World Ravager [msc-47]",
+        "produced_mana": [],
+        "oracle_text": "Menace, trample\nMayhem {4}{R} (You may cast this card from your graveyard for {4}{R} if you discarded it this turn. Timing rules still apply.)",
+        "scryfall_id": "fddd2e68-8e1e-4162-a2c7-49da2c86d471",
+        "oracle_id": "e0b12c48-7234-40b5-a84c-6901d2b4e5b0",
+        "cmc": 8,
+        "type": "Legendary Creature — Gamma Berserker Villain",
+        "layout": "normal",
+        "keywords": [
+          "Mayhem",
+          "Trample",
+          "Menace"
+        ],
+        "oracle_tags": [
+          "cheaper-than-mv",
+          "french-vanilla",
+          "flavors-of-vanilla",
+          "self-discard-matters",
+          "discard-matters",
+          "evasion",
+          "castable-from-graveyard",
+          "castable-from-nonhand"
+        ],
+        "power": "10",
+        "toughness": "10"
+      }
+    },
+    {
+      "index": 245,
+      "cardID": "5cafb84c-6e35-488c-a219-c6bbdb3ac565",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Trigger Happy",
+        "full_name": "Trigger Happy [unf-125]",
+        "produced_mana": [],
+        "oracle_text": "Choose a triggered ability of target permanent. It triggers. You control that ability.",
+        "scryfall_id": "5cafb84c-6e35-488c-a219-c6bbdb3ac565",
+        "oracle_id": "6190985c-7ec4-4313-8da5-5e46bfd7f3f7",
+        "cmc": 2,
+        "type": "Instant",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "single-target-instant-sorcery",
+          "copy-ability",
+          "copy",
+          "punny-name",
+          "card-names"
+        ]
+      }
+    },
+    {
+      "index": 201,
+      "cardID": "e0c7f566-5351-44e3-a346-b84b0eb10209",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Mjölnir, Hammer of Thor",
+        "full_name": "Mjölnir, Hammer of Thor [msh-146]",
+        "produced_mana": [],
+        "oracle_text": "When Mjölnir enters, it deals 4 damage to up to one target creature.\nDouble all damage equipped creature would deal.\nEquip worthy {1} (A creature is worthy if it's a legendary non-Villain that's red and/or white.)\n{2}{R}, Discard this card: It deals 2 damage to each creature.",
+        "scryfall_id": "e0c7f566-5351-44e3-a346-b84b0eb10209",
+        "oracle_id": "7f9a8845-d760-44a7-a4c9-8a20dba4e14a",
+        "cmc": 4,
+        "type": "Legendary Artifact — Equipment",
+        "layout": "normal",
+        "keywords": [
+          "Double"
+        ],
+        "oracle_tags": [
+          "burn-creature",
+          "removal-creature",
+          "removal",
+          "removal-burn",
+          "burn",
+          "damage-multiplier",
+          "synergy-legendary",
+          "sweeper",
+          "fun-ruling",
+          "triggered-ability",
+          "namesake-spell",
+          "card-names",
+          "synergy-red",
+          "synergy-white",
+          "spot-removal",
+          "typal-non-villain",
+          "typal-creature",
+          "typal",
+          "activate-from-hand",
+          "activated-ability",
+          "unique-cr-reference",
+          "symmetrical"
+        ]
+      }
+    },
+    {
+      "index": 224,
+      "cardID": "24c0d87b-0049-4beb-b9cb-6f813b7aa7dc",
+      "details": {
+        "color_identity": [
+          "R"
+        ],
+        "name": "Fable of the Mirror-Breaker",
+        "full_name": "Fable of the Mirror-Breaker [neo-141]",
+        "produced_mana": [],
+        "oracle_text": "(As this Saga enters and after your draw step, add a lore counter.)\nI — Create a 2/2 red Goblin Shaman creature token with \"Whenever this token attacks, create a Treasure token.\"\nII — You may discard up to two cards. If you do, draw that many cards.\nIII — Exile this Saga, then return it to the battlefield transformed under your control.\n{1}, {T}: Create a token that's a copy of another target nonlegendary creature you control, except it has haste. Sacrifice it at the beginning of the next end step.",
+        "scryfall_id": "24c0d87b-0049-4beb-b9cb-6f813b7aa7dc",
+        "oracle_id": "c0957e5e-c71b-439c-931c-9f55d2f76ace",
+        "cmc": 3,
+        "type": "Enchantment — Saga",
+        "layout": "transform",
+        "keywords": [
+          "Transform",
+          "Treasure"
+        ],
+        "oracle_tags": [
+          "unique-type-line",
+          "repeatable-treasures",
+          "repeatable-artifact-tokens",
+          "repeatable-token-generator",
+          "repeatable-noncreature-tokens",
+          "intervening-if-clause",
+          "triggered-ability",
+          "delayed-trigger",
+          "copy-creature",
+          "copy",
+          "pillage-effect",
+          "firebend-like",
+          "combat-ramp",
+          "ramp",
+          "attack-trigger",
+          "namesake-spell",
+          "card-names",
+          "activated-ability",
+          "temporary-token",
+          "exile-self-dfc-transform",
+          "exile-self",
+          "mana-dork",
+          "mana-producer",
+          "attacking-matters",
+          "rummage",
+          "draw",
+          "card-advantage",
+          "discard-outlet",
+          "red-effect",
+          "rhyming-name"
+        ],
+        "image_flip": "https://assets.cubecobra.com/cardimages/24c0d87b-0049-4beb-b9cb-6f813b7aa7dc/normal_back.webp"
+      }
+    },
+    {
+      "index": 664,
+      "cardID": "18477047-218d-4b2a-a086-37431b6a3025",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Michelangelo, Weirdness to 11",
+        "full_name": "Michelangelo, Weirdness to 11 [tmt-121]",
+        "produced_mana": [],
+        "oracle_text": "When Michelangelo enters, create a Mutagen token. (It's an artifact with \"{1}, {T}, Sacrifice this token: Put a +1/+1 counter on target creature. Activate only as a sorcery.\")\nIf one or more +1/+1 counters would be put on a creature you control, that many plus one +1/+1 counters are put on it instead.",
+        "scryfall_id": "18477047-218d-4b2a-a086-37431b6a3025",
+        "oracle_id": "170ab932-9d50-4ce7-9a42-08e1edce7e7c",
+        "cmc": 2,
+        "type": "Legendary Creature — Mutant Ninja Turtle",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "counter-increaser",
+          "triggered-ability",
+          "pp-counters-matter",
+          "counters-matter",
+          "cycle-tmt-michelangelo-vert",
+          "vertical-cycle",
+          "cycle",
+          "gives-pp-counters"
+        ],
+        "power": "1",
+        "toughness": "1"
+      }
+    },
+    {
+      "index": 621,
+      "cardID": "fb781323-2746-405d-a9b2-e778c037a6e9",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Tifa Lockhart",
+        "full_name": "Tifa Lockhart [fin-206]",
+        "produced_mana": [],
+        "oracle_text": "Trample\nLandfall — Whenever a land you control enters, double Tifa Lockhart's power until end of turn.",
+        "scryfall_id": "fb781323-2746-405d-a9b2-e778c037a6e9",
+        "oracle_id": "878df304-9d6d-4ce9-b65b-1439c251f3e0",
+        "cmc": 2,
+        "type": "Legendary Creature — Human Monk",
+        "layout": "normal",
+        "keywords": [
+          "Trample",
+          "Double",
+          "Landfall"
+        ],
+        "oracle_tags": [
+          "triggered-ability",
+          "exponential",
+          "power-doubler",
+          "scales-with-power",
+          "power-matters",
+          "landfall",
+          "thingfall",
+          "lands-matter",
+          "power-matters-self"
+        ],
+        "power": "1",
+        "toughness": "2"
+      }
+    },
+    {
+      "index": 965,
+      "cardID": "ac095763-6f4e-4d4e-9c99-414646368f8d",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Emeritus of Abundance",
+        "full_name": "Emeritus of Abundance [sos-145]",
+        "produced_mana": [],
+        "oracle_text": "Vigilance\nThis creature enters prepared.\nWhenever this creature attacks, if you control eight or more lands, this creature becomes prepared.\nReturn target card from your graveyard to your hand.",
+        "scryfall_id": "ac095763-6f4e-4d4e-9c99-414646368f8d",
+        "oracle_id": "e5152e8d-9f55-493d-a0fc-753cc72ee299",
+        "cmc": 3,
+        "type": "Creature — Elf Druid",
+        "layout": "prepare",
+        "keywords": [
+          "Vigilance",
+          "Prepared"
+        ],
+        "oracle_tags": [
+          "single-target-instant-sorcery",
+          "cycle-sos-emeritus",
+          "cycle",
+          "intervening-if-clause",
+          "triggered-ability",
+          "regrowth-any",
+          "recursion-any",
+          "recursion",
+          "regrowth",
+          "card-advantage",
+          "repeatable-card-advantage",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "land-count-matters",
+          "lands-matter",
+          "attacking-matters-self",
+          "attack-trigger"
+        ],
+        "power": "3",
+        "toughness": "4"
+      }
+    },
+    {
+      "index": 1002,
+      "cardID": "de124563-205c-4f40-8c13-4ae203599912",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Transdimensional Bovine",
+        "full_name": "Transdimensional Bovine [tmt-134]",
+        "produced_mana": [
+          "B",
+          "G",
+          "R",
+          "U",
+          "W"
+        ],
+        "oracle_text": "Flying\n{T}: Add two mana of any one color.",
+        "scryfall_id": "de124563-205c-4f40-8c13-4ae203599912",
+        "oracle_id": "eaa6b294-ac66-4fe2-b694-97b0a04f7be1",
+        "cmc": 3,
+        "type": "Creature — Ox Avatar",
+        "layout": "normal",
+        "keywords": [
+          "Flying"
+        ],
+        "oracle_tags": [
+          "unique-type-line",
+          "adds-multiple-mana",
+          "activated-ability",
+          "mana-dork",
+          "mana-producer",
+          "ramp",
+          "evasion"
+        ],
+        "power": "0",
+        "toughness": "4"
+      }
+    },
+    {
+      "index": 68,
+      "cardID": "d9482aab-6ddf-48e1-84fa-b13d5ff81e69",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Icetill Explorer",
+        "full_name": "Icetill Explorer [eoe-192]",
+        "produced_mana": [],
+        "oracle_text": "You may play an additional land on each of your turns.\nYou may play lands from your graveyard.\nLandfall — Whenever a land you control enters, mill a card.",
+        "scryfall_id": "d9482aab-6ddf-48e1-84fa-b13d5ff81e69",
+        "oracle_id": "109cdefd-e8cc-4ac7-b6ba-2cfdef8d780f",
+        "cmc": 4,
+        "type": "Creature — Insect Scout",
+        "layout": "normal",
+        "keywords": [
+          "Mill",
+          "Landfall"
+        ],
+        "oracle_tags": [
+          "triggered-ability",
+          "play-additional-land",
+          "extra-land",
+          "ramp",
+          "land-ramp",
+          "crucible-of-worlds",
+          "reanimate-land",
+          "recursion-land",
+          "recursion",
+          "reanimate",
+          "mill-self",
+          "mill",
+          "landfall",
+          "thingfall",
+          "lands-matter"
+        ],
+        "power": "2",
+        "toughness": "4"
+      }
+    },
+    {
+      "index": 998,
+      "cardID": "913977c2-73f9-466b-bd01-827c1736e070",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Aurora Awakener",
+        "full_name": "Aurora Awakener [ecl-165]",
+        "produced_mana": [],
+        "oracle_text": "Trample\nVivid — When this creature enters, reveal cards from the top of your library until you reveal X permanent cards, where X is the number of colors among permanents you control. Put any number of those permanent cards onto the battlefield, then put the rest of the revealed cards on the bottom of your library in a random order.",
+        "scryfall_id": "913977c2-73f9-466b-bd01-827c1736e070",
+        "oracle_id": "cf9d13e2-bdcc-4c66-95ad-654ef795dbd3",
+        "cmc": 7,
+        "type": "Creature — Giant Druid",
+        "layout": "normal",
+        "keywords": [
+          "Trample",
+          "Vivid"
+        ],
+        "oracle_tags": [
+          "vivid",
+          "synergy-color-each",
+          "triggered-ability",
+          "virtual-french-vanilla",
+          "flavors-of-vanilla",
+          "alliteration",
+          "card-names",
+          "genesis-effect",
+          "multi-land-ramp",
+          "land-ramp",
+          "ramp",
+          "consult-onto-battlefield",
+          "sneak-from-library",
+          "cost-ignorer",
+          "consult",
+          "card-advantage"
+        ],
+        "power": "7",
+        "toughness": "7"
+      }
+    },
+    {
+      "index": 774,
+      "cardID": "17fa0b62-d474-4dc7-9631-9d0a9d99e5e2",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Gift of the Viper",
+        "full_name": "Gift of the Viper [mh3-156]",
+        "produced_mana": [],
+        "oracle_text": "Put a +1/+1 counter, a reach counter, and a deathtouch counter on target creature. Untap it.",
+        "scryfall_id": "17fa0b62-d474-4dc7-9631-9d0a9d99e5e2",
+        "oracle_id": "7b1a59db-0ffc-490b-a881-c8192f3747db",
+        "cmc": 1,
+        "type": "Instant",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "gives-reach",
+          "reach-counter",
+          "keyword-counter",
+          "single-target-instant-sorcery",
+          "combat-trick",
+          "deathtouch-counter",
+          "untapper-creature",
+          "untapper",
+          "gives-pp-counters",
+          "gives-deathtouch"
+        ]
+      }
+    },
+    {
+      "index": 958,
+      "cardID": "6da747ef-4d8f-49a2-8682-52ab87e6ad6e",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Fight for the Throne",
+        "full_name": "Fight for the Throne [msc-65]",
+        "produced_mana": [],
+        "oracle_text": "Put a +1/+1 counter on target creature you control. Then it fights target creature an opponent controls. When the creature an opponent controls dies this turn, if you control your commander, you become the monarch.",
+        "scryfall_id": "6da747ef-4d8f-49a2-8682-52ab87e6ad6e",
+        "oracle_id": "53129de9-4809-4c8c-9d11-37369899e70a",
+        "cmc": 2,
+        "type": "Instant",
+        "layout": "normal",
+        "keywords": [
+          "Fight"
+        ],
+        "oracle_tags": [
+          "draw-engine",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "combat-trick",
+          "repeatable-pure-draw",
+          "pure-draw",
+          "intervening-if-clause",
+          "triggered-ability",
+          "delayed-trigger",
+          "death-trigger-opponent",
+          "death-trigger",
+          "multiple-targets",
+          "synergy-commander",
+          "gives-pp-counters",
+          "removal-fight",
+          "burn-creature",
+          "removal-creature",
+          "removal",
+          "removal-burn",
+          "burn",
+          "spot-removal"
+        ]
+      }
+    },
+    {
+      "index": 181,
+      "cardID": "7665948b-23d0-4b06-a32a-bfab8009b04f",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "It's Clobberin' Time!",
+        "full_name": "It's Clobberin' Time! [msc-66]",
+        "produced_mana": [],
+        "oracle_text": "Choose one —\n• Target creature you control deals damage equal to its power to target creature an opponent controls.\n• Destroy target artifact or enchantment.\nRebound",
+        "scryfall_id": "7665948b-23d0-4b06-a32a-bfab8009b04f",
+        "oracle_id": "4a75ef46-c5ae-4b1a-a681-d439b01f6731",
+        "cmc": 3,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [
+          "Rebound"
+        ],
+        "oracle_tags": [
+          "one-sided-fight",
+          "scales-with-power",
+          "power-matters",
+          "burn-creature",
+          "removal-creature",
+          "removal",
+          "removal-burn",
+          "burn",
+          "single-target-instant-sorcery",
+          "abrade",
+          "red-effect",
+          "removal-artifact",
+          "castable-from-exile",
+          "unexile",
+          "castable-from-nonhand",
+          "disenchant-naturalize",
+          "removal-enchantment",
+          "removal-destroy",
+          "cast-on-resolution",
+          "delayed-trigger",
+          "triggered-ability",
+          "modal",
+          "multi-removal",
+          "exile-self",
+          "multiple-targets",
+          "spot-removal"
+        ]
+      }
+    },
+    {
+      "index": 339,
+      "cardID": "0845f0b0-9413-4ddd-861d-9607636bebc6",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Natural Order",
+        "full_name": "Natural Order [vis-114]",
+        "produced_mana": [],
+        "oracle_text": "As an additional cost to cast this spell, sacrifice a green creature.\nSearch your library for a green creature card, put it onto the battlefield, then shuffle.",
+        "scryfall_id": "0845f0b0-9413-4ddd-861d-9607636bebc6",
+        "oracle_id": "8c1fe337-375a-4add-93b6-0ac39ed72b4f",
+        "cmc": 4,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "tutor-creature-green",
+          "tutor-creature",
+          "tutor",
+          "synergy-green",
+          "sacrifice-outlet-creature",
+          "sacrifice-outlet",
+          "cost-ignorer",
+          "tutor-to-battlefield",
+          "tutor-to"
+        ]
+      }
+    },
+    {
+      "index": 942,
+      "cardID": "b38b9bd6-1dd7-4bbc-8a82-ce391c1172e1",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Earth's Mightiest Heroes",
+        "full_name": "Earth's Mightiest Heroes [msh-165]",
+        "produced_mana": [],
+        "oracle_text": "Teamwork 5 (As an additional cost to cast this spell, you may tap any number of creatures you control with total power 5 or more.)\nReveal the top eight cards of your library. You may put a creature card from among them onto the battlefield. If this spell was cast using teamwork, put any number of creature cards from among them onto the battlefield instead. Put the rest into your graveyard.",
+        "scryfall_id": "b38b9bd6-1dd7-4bbc-8a82-ce391c1172e1",
+        "oracle_id": "2b87bcac-ec64-4012-9e75-f459d3640eb3",
+        "cmc": 6,
+        "type": "Sorcery",
+        "layout": "normal",
+        "keywords": [
+          "Teamwork"
+        ],
+        "oracle_tags": [
+          "impulse-creature",
+          "impulse",
+          "card-advantage",
+          "impulse-onto-battlefield",
+          "sneak-from-library",
+          "cost-ignorer",
+          "impulse-to-zone",
+          "naya-ferocious",
+          "power-matters",
+          "power-matters-individual",
+          "tap-fuel-power",
+          "tap-fuel-creature",
+          "tap-outlet",
+          "mulch",
+          "mill-self",
+          "mill",
+          "genesis-effect",
+          "self-replacement-effect"
+        ]
+      }
+    },
+    {
+      "index": 97,
+      "cardID": "d4398907-17d2-4fad-bfa9-56925fb75834",
+      "details": {
+        "color_identity": [
+          "G"
+        ],
+        "name": "Level Up",
+        "full_name": "Level Up [tmc-31]",
+        "produced_mana": [],
+        "oracle_text": "Enchant creature\nWhen this Aura enters, put a +1/+1 counter on enchanted creature.\nEnchanted creature has \"Whenever this creature attacks, double the number of +1/+1 counters on it. Then if it has power 10 or greater, draw a card.\"",
+        "scryfall_id": "d4398907-17d2-4fad-bfa9-56925fb75834",
+        "oracle_id": "88cd43ce-b168-45a4-8d29-6cac5ab42857",
+        "cmc": 2,
+        "type": "Enchantment — Aura",
+        "layout": "normal",
+        "keywords": [
+          "Enchant",
+          "Double"
+        ],
+        "oracle_tags": [
+          "draw-engine",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "counter-doubler",
+          "counter-increaser",
+          "repeatable-pure-draw",
+          "pure-draw",
+          "exponential",
+          "repeatable-pp-counters",
+          "game-name",
+          "card-names",
+          "power-matters-individual",
+          "power-matters",
+          "gives-pp-counters",
+          "attacking-matters",
+          "attack-trigger",
+          "triggered-ability"
+        ]
+      }
+    },
+    {
+      "index": 525,
+      "cardID": "5e2f9f4c-dbdd-4da6-b08f-1f4d3fcb1328",
+      "details": {
+        "color_identity": [],
+        "name": "H.E.R.B.I.E., Lovable Robot",
+        "full_name": "H.E.R.B.I.E., Lovable Robot [msc-106]",
+        "produced_mana": [
+          "B",
+          "C",
+          "G",
+          "R",
+          "U",
+          "W"
+        ],
+        "oracle_text": "Flying\nAt the beginning of combat on your turn, if you've cast a noncreature spell this turn, surveil 1.\n{T}: Add {C}.\n{1}, {T}: Add one mana of any color.",
+        "scryfall_id": "5e2f9f4c-dbdd-4da6-b08f-1f4d3fcb1328",
+        "oracle_id": "064a2f4a-ff3f-4622-8727-24b22965416d",
+        "cmc": 2,
+        "type": "Legendary Artifact Creature — Robot Scout",
+        "layout": "normal",
+        "keywords": [
+          "Flying",
+          "Surveil"
+        ],
+        "oracle_tags": [
+          "unique-type-line",
+          "mana-filter",
+          "intervening-if-clause",
+          "triggered-ability",
+          "synergy-noncreature",
+          "activated-ability",
+          "mana-dork",
+          "mana-producer",
+          "ramp",
+          "evasion",
+          "surveil",
+          "peek-library",
+          "peek",
+          "top-deck-manipulation",
+          "library-manipulation",
+          "mill-self",
+          "mill"
+        ],
+        "power": "1",
+        "toughness": "1"
+      }
+    },
+    {
+      "index": 1000,
+      "cardID": "4c398d11-a2fc-43e2-96e9-7f3383e1a43c",
+      "details": {
+        "color_identity": [],
+        "name": "Stridehangar Automaton",
+        "full_name": "Stridehangar Automaton [drc-19]",
+        "produced_mana": [],
+        "oracle_text": "Thopters you control get +1/+1.\nIf one or more artifact tokens would be created under your control, those tokens plus an additional 1/1 colorless Thopter artifact creature token with flying are created instead.",
+        "scryfall_id": "4c398d11-a2fc-43e2-96e9-7f3383e1a43c",
+        "oracle_id": "9070c98b-fd01-4eeb-a4ec-fc464946c7c0",
+        "cmc": 3,
+        "type": "Artifact Creature — Construct",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "anthem",
+          "toughness-boost-to-all",
+          "typal-thopter",
+          "typal-creature",
+          "typal",
+          "evasion",
+          "power-boost-to-all",
+          "token-increaser"
+        ],
+        "power": "1",
+        "toughness": "4"
+      }
+    },
+    {
+      "index": 379,
+      "cardID": "ee64d0dd-e3d8-4abc-b9d6-b19c505fbfa1",
+      "details": {
+        "color_identity": [],
+        "name": "Molecule Man",
+        "full_name": "Molecule Man [msc-9]",
+        "produced_mana": [],
+        "oracle_text": "Nonland cards in your hand have miracle {0}. (You may cast a card for its miracle cost when you draw it if it's the first card you drew this turn.)",
+        "scryfall_id": "ee64d0dd-e3d8-4abc-b9d6-b19c505fbfa1",
+        "oracle_id": "ba944437-0b55-47cb-92dc-2477ce6726c3",
+        "cmc": 6,
+        "type": "Legendary Creature — Human Villain",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "gives-miracle",
+          "cast-on-resolution",
+          "free-cast-another",
+          "cost-ignorer",
+          "alliteration",
+          "card-names"
+        ],
+        "power": "5",
+        "toughness": "5"
+      }
+    },
+    {
+      "index": 548,
+      "cardID": "7928bb14-7631-4830-a756-26d1ea832ba2",
+      "details": {
+        "color_identity": [],
+        "name": "Blightsteel Colossus",
+        "full_name": "Blightsteel Colossus [mbs-99]",
+        "produced_mana": [],
+        "oracle_text": "Trample, infect, indestructible\nIf Blightsteel Colossus would be put into a graveyard from anywhere, reveal Blightsteel Colossus and shuffle it into its owner's library instead.",
+        "scryfall_id": "7928bb14-7631-4830-a756-26d1ea832ba2",
+        "oracle_id": "e80772e2-8623-4094-81a2-70828b2b151c",
+        "cmc": 12,
+        "type": "Artifact Creature — Phyrexian Golem",
+        "layout": "normal",
+        "keywords": [
+          "Indestructible",
+          "Trample",
+          "Infect"
+        ],
+        "oracle_tags": [
+          "virtual-legendary",
+          "card-names",
+          "poisonous",
+          "poison-mechanics",
+          "type-addition-phyrexian",
+          "type-errata-addition",
+          "type-errata",
+          "gives-mm-counters",
+          "titan-immortality",
+          "restock-self",
+          "recursion-self",
+          "recursion",
+          "restock"
+        ],
+        "power": "11",
+        "toughness": "11"
+      }
+    },
+    {
+      "index": 751,
+      "cardID": "8bb7185d-fc07-4f2f-9762-aa7e7c287cba",
+      "details": {
+        "color_identity": [],
+        "name": "Panther Robot",
+        "full_name": "Panther Robot [msc-113]",
+        "produced_mana": [],
+        "oracle_text": "Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)\nReach, trample",
+        "scryfall_id": "8bb7185d-fc07-4f2f-9762-aa7e7c287cba",
+        "oracle_id": "89115ed5-95bf-4b81-b352-5481c3addbed",
+        "cmc": 10,
+        "type": "Artifact Creature — Cat Robot",
+        "layout": "normal",
+        "keywords": [
+          "Reach",
+          "Affinity",
+          "Trample"
+        ],
+        "oracle_tags": [
+          "affinity-for-artifacts",
+          "synergy-artifact",
+          "affinity",
+          "discount-self",
+          "cheaper-than-mv",
+          "french-vanilla",
+          "flavors-of-vanilla"
+        ],
+        "power": "8",
+        "toughness": "8"
+      }
+    },
+    {
+      "index": 422,
+      "cardID": "95318d85-4a08-47ac-a43d-ea83c0bea81c",
+      "details": {
+        "color_identity": [],
+        "name": "Summon: Bahamut",
+        "full_name": "Summon: Bahamut [fin-1]",
+        "produced_mana": [],
+        "oracle_text": "(As this Saga enters and after your draw step, add a lore counter. Sacrifice after IV.)\nI, II — Destroy up to one target nonland permanent.\nIII — Draw two cards.\nIV — Mega Flare — This creature deals damage equal to the total mana value of other permanents you control to each opponent.\nFlying",
+        "scryfall_id": "95318d85-4a08-47ac-a43d-ea83c0bea81c",
+        "oracle_id": "fe9f6825-597b-4d80-ab7c-f4ee4e824b6f",
+        "cmc": 9,
+        "type": "Enchantment Creature — Saga Dragon",
+        "layout": "saga",
+        "keywords": [
+          "Flying"
+        ],
+        "oracle_tags": [
+          "burn-player",
+          "burn",
+          "unique-type-line",
+          "pure-draw",
+          "draw",
+          "card-advantage",
+          "intervening-if-clause",
+          "triggered-ability",
+          "removal-destroy",
+          "removal",
+          "removal-nonland",
+          "removal-vehicle",
+          "removal-spacecraft",
+          "removal-aura",
+          "removal-equipment",
+          "removal-battle",
+          "removal-planeswalker",
+          "removal-creature",
+          "removal-enchantment",
+          "removal-artifact",
+          "scales-with-mana-value",
+          "mana-value-matters",
+          "group-slug",
+          "mixed-subtypes",
+          "evasion",
+          "spot-removal",
+          "repeatable-removal"
+        ],
+        "power": "9",
+        "toughness": "9"
+      }
+    },
+    {
+      "index": 541,
+      "cardID": "38bb3e3c-1a7d-4bc4-b69d-6a8e9f1b3fe7",
+      "details": {
+        "color_identity": [],
+        "name": "Cloak and Dagger",
+        "full_name": "Cloak and Dagger [mor-141]",
+        "produced_mana": [],
+        "oracle_text": "Equipped creature gets +2/+0 and has shroud. (It can't be the target of spells or abilities.)\nWhenever a Rogue creature enters, you may attach this Equipment to it.\nEquip {3}",
+        "scryfall_id": "38bb3e3c-1a7d-4bc4-b69d-6a8e9f1b3fe7",
+        "oracle_id": "73ca14bb-0586-4716-8d4c-738a93950ed5",
+        "cmc": 2,
+        "type": "Kindred Artifact — Rogue Equipment",
+        "layout": "normal",
+        "keywords": [
+          "Equip"
+        ],
+        "oracle_tags": [
+          "cycle-mor-typal-equipment",
+          "cycle",
+          "unique-type-line",
+          "gives-shroud",
+          "protection",
+          "creaturefall",
+          "thingfall",
+          "triggered-ability",
+          "protects-creature",
+          "typal-rogue",
+          "typal-creature",
+          "typal",
+          "quick-equip",
+          "quick-attach",
+          "mixed-subtypes",
+          "activated-ability",
+          "punny-name",
+          "card-names"
+        ]
+      }
+    },
+    {
+      "index": 794,
+      "cardID": "7378e998-0382-42fc-8606-c6e7fc04b6a4",
+      "details": {
+        "color_identity": [],
+        "name": "Conjurer's Closet",
+        "full_name": "Conjurer's Closet [avr-214]",
+        "produced_mana": [],
+        "oracle_text": "At the beginning of your end step, you may exile target creature you control, then return that card to the battlefield under your control.",
+        "scryfall_id": "7378e998-0382-42fc-8606-c6e7fc04b6a4",
+        "oracle_id": "cd1eda60-53e4-44d0-9b2c-7a57395e291f",
+        "cmc": 5,
+        "type": "Artifact",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "triggered-ability",
+          "flicker-creature",
+          "flicker",
+          "alliteration",
+          "card-names"
+        ]
+      }
+    },
+    {
+      "index": 393,
+      "cardID": "3ae767c5-fc28-4d9f-9e5a-ee28735f4054",
+      "details": {
+        "color_identity": [],
+        "name": "N'Yami-Class Mother Ship",
+        "full_name": "N'Yami-Class Mother Ship [msc-110]",
+        "produced_mana": [],
+        "oracle_text": "Flying, vigilance, haste\nWhenever this Vehicle deals combat damage to a player, look at the top card of your library. If it's a permanent card, you may put it onto the battlefield. If you don't put it onto the battlefield, put it into your hand.\nCrew 3",
+        "scryfall_id": "3ae767c5-fc28-4d9f-9e5a-ee28735f4054",
+        "oracle_id": "5dec1b09-4df0-4e9b-9dca-b80134be3343",
+        "cmc": 6,
+        "type": "Artifact — Vehicle",
+        "layout": "normal",
+        "keywords": [
+          "Flying",
+          "Vigilance",
+          "Haste",
+          "Crew"
+        ],
+        "oracle_tags": [
+          "repeatable-impulse",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "impulse",
+          "impulse-permanent",
+          "impulse-onto-battlefield",
+          "sneak-from-library",
+          "cost-ignorer",
+          "impulse-to-zone",
+          "triggered-ability",
+          "combat-ramp",
+          "ramp",
+          "sneak-permanent",
+          "sneak",
+          "curiosity-like",
+          "saboteur",
+          "crew",
+          "animate-self",
+          "animate",
+          "type-change",
+          "activated-ability",
+          "tap-fuel-power",
+          "tap-fuel-creature",
+          "tap-outlet",
+          "power-matters",
+          "land-or-hand",
+          "extra-land",
+          "evasion"
+        ],
+        "power": "5",
+        "toughness": "7"
+      }
+    },
+    {
+      "index": 999,
+      "cardID": "252e87b7-3998-4e88-802e-cf981ca114d9",
+      "details": {
+        "color_identity": [
+          "U",
+          "W"
+        ],
+        "name": "Mistmeadow Vanisher",
+        "full_name": "Mistmeadow Vanisher [moc-42]",
+        "produced_mana": [],
+        "oracle_text": "Whenever this creature becomes tapped, exile up to one target nonland, nontoken permanent. Return that card to the battlefield under its owner's control at the beginning of the next end step.",
+        "scryfall_id": "252e87b7-3998-4e88-802e-cf981ca114d9",
+        "oracle_id": "5d11ada1-6459-4a91-bd10-66673dc1ad3c",
+        "cmc": 3,
+        "type": "Creature — Kithkin Wizard",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "uninspired",
+          "homeward-effect",
+          "hate-theft",
+          "hate",
+          "flicker-slow",
+          "flicker",
+          "repeatable-crime",
+          "delayed-trigger",
+          "triggered-ability",
+          "flicker-nonland",
+          "flicker-planeswalker",
+          "flicker-enchantment",
+          "flicker-artifact",
+          "flicker-creature"
+        ],
+        "power": "3",
+        "toughness": "2"
+      }
+    },
+    {
+      "index": 376,
+      "cardID": "ea23111b-ccc1-4d5c-a9d2-9db14c728820",
+      "details": {
+        "color_identity": [
+          "U",
+          "W"
+        ],
+        "name": "Soulherder",
+        "full_name": "Soulherder [mh1-214]",
+        "produced_mana": [],
+        "oracle_text": "Whenever a creature is exiled from the battlefield, put a +1/+1 counter on this creature.\nAt the beginning of your end step, you may exile another target creature you control, then return that card to the battlefield under its owner's control.",
+        "scryfall_id": "ea23111b-ccc1-4d5c-a9d2-9db14c728820",
+        "oracle_id": "92019547-f6db-4ea6-8356-d0a90ace5662",
+        "cmc": 3,
+        "type": "Creature — Spirit",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "triggered-ability",
+          "cycle-mh1-draft-signpost",
+          "draft-signpost",
+          "cycle",
+          "flicker-creature",
+          "flicker",
+          "repeatable-pp-counters",
+          "synergy-exiling",
+          "gains-pp-counters"
+        ],
+        "power": "1",
+        "toughness": "1"
+      }
+    },
+    {
+      "index": 1001,
+      "cardID": "0d484566-6816-4535-a754-dbda8073ae73",
+      "details": {
+        "color_identity": [
+          "U",
+          "W"
+        ],
+        "name": "Black Bolt, Inhuman King",
+        "full_name": "Black Bolt, Inhuman King [msc-76]",
+        "produced_mana": [],
+        "oracle_text": "Flying\nWhenever you cast a noncreature spell, Black Bolt gets +2/+2 until end of turn.\nLethal Voice — Whenever Black Bolt becomes the target of a spell or ability an opponent controls, destroy target nonland permanent that player controls.",
+        "scryfall_id": "0d484566-6816-4535-a754-dbda8073ae73",
+        "oracle_id": "a30f30e3-dbbf-4cb2-b3d0-76f57dffb2dd",
+        "cmc": 4,
+        "type": "Legendary Creature — Inhuman Noble Hero",
+        "layout": "normal",
+        "keywords": [
+          "Flying",
+          "Lethal Voice"
+        ],
+        "oracle_tags": [
+          "misnomer",
+          "card-names",
+          "hate-target",
+          "hate",
+          "removal-destroy",
+          "removal",
+          "removal-nonland",
+          "removal-vehicle",
+          "removal-spacecraft",
+          "removal-aura",
+          "removal-equipment",
+          "removal-battle",
+          "removal-planeswalker",
+          "removal-creature",
+          "removal-enchantment",
+          "removal-artifact",
+          "cast-trigger-you",
+          "cast-trigger",
+          "triggered-ability",
+          "synergy-noncreature",
+          "alliteration",
+          "evasion",
+          "spot-removal"
+        ],
+        "power": "3",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 660,
+      "cardID": "00f40514-d37d-423f-aa0c-1875300f43a8",
+      "details": {
+        "color_identity": [
+          "B",
+          "U"
+        ],
+        "name": "Gríma, Saruman's Footman",
+        "full_name": "Gríma, Saruman's Footman [ltc-57]",
+        "produced_mana": [],
+        "oracle_text": "Gríma can't be blocked.\nWhenever Gríma deals combat damage to a player, that player exiles cards from the top of their library until they exile an instant or sorcery card. You may cast that card without paying its mana cost. Then that player puts the exiled cards that weren't cast this way on the bottom of their library in a random order.",
+        "scryfall_id": "00f40514-d37d-423f-aa0c-1875300f43a8",
+        "oracle_id": "9df60bb7-2dd4-4d22-b814-f52145356424",
+        "cmc": 4,
+        "type": "Legendary Creature — Human Advisor",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "nightveil-theft",
+          "free-cast-another",
+          "cost-ignorer",
+          "triggered-ability",
+          "cast-on-resolution",
+          "consult-cast",
+          "consult",
+          "card-advantage",
+          "repeatable-card-advantage",
+          "curiosity-like",
+          "saboteur",
+          "hate-sorcery",
+          "hate",
+          "namesake-spell",
+          "card-names",
+          "theft-cast",
+          "theft",
+          "control-changing-effects",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "hate-instant",
+          "unblockable",
+          "evasion"
+        ],
+        "power": "1",
+        "toughness": "4"
+      }
+    },
+    {
+      "index": 872,
+      "cardID": "421376e4-a4ad-427c-bc9c-d315308dcf68",
+      "details": {
+        "color_identity": [
+          "B",
+          "U"
+        ],
+        "name": "Narfi, Betrayer King",
+        "full_name": "Narfi, Betrayer King [khm-224]",
+        "produced_mana": [],
+        "oracle_text": "Other snow and Zombie creatures you control get +1/+1.\n{S}{S}{S}: Return this card from your graveyard to the battlefield tapped. ({S} can be paid with one mana from a snow source.)",
+        "scryfall_id": "421376e4-a4ad-427c-bc9c-d315308dcf68",
+        "oracle_id": "18beb8eb-6f67-482f-9a7d-282f1e7ecbc1",
+        "cmc": 5,
+        "type": "Legendary Snow Creature — Zombie Wizard",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "anthem",
+          "unique-type-line",
+          "toughness-boost-to-all",
+          "cycle-khm-legendary-signpost",
+          "cycle-khm-draft-signpost",
+          "draft-signpost",
+          "cycle",
+          "reanimate-self",
+          "recursion-self",
+          "recursion",
+          "reanimate",
+          "synergy-snow",
+          "activate-from-graveyard",
+          "activated-ability",
+          "typal-zombie",
+          "typal-creature",
+          "typal",
+          "power-boost-to-all"
+        ],
+        "power": "4",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 772,
+      "cardID": "3e121d65-d341-40b9-bebc-1e7d1b83905c",
+      "details": {
+        "color_identity": [
+          "B",
+          "R"
+        ],
+        "name": "Ares, God of War",
+        "full_name": "Ares, God of War [msh-202]",
+        "produced_mana": [],
+        "oracle_text": "Ares attacks each combat if able.\nWhenever an attacking creature you control dies, return that card to its owner's hand.",
+        "scryfall_id": "3e121d65-d341-40b9-bebc-1e7d1b83905c",
+        "oracle_id": "8a09d4a2-4796-4a15-ab75-a3a0b717f62d",
+        "cmc": 3,
+        "type": "Legendary Creature — God Warrior Villain",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "sneaky-self-trigger",
+          "unique-type-line",
+          "death-trigger",
+          "triggered-ability",
+          "forced-attacker",
+          "drawback",
+          "attacking-matters",
+          "cheat-death"
+        ],
+        "power": "4",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 382,
+      "cardID": "18ee486e-dc25-4de7-a71f-f11fdf100176",
+      "details": {
+        "color_identity": [
+          "G",
+          "W"
+        ],
+        "name": "Okoye, Mighty and Adored",
+        "full_name": "Okoye, Mighty and Adored [msc-89]",
+        "produced_mana": [],
+        "oracle_text": "When Okoye enters, you become the monarch.\nAt the beginning of combat on your turn, put a +1/+1 counter on target creature. Whenever that creature attacks the monarch this turn, it gains double strike and trample until end of turn.",
+        "scryfall_id": "18ee486e-dc25-4de7-a71f-f11fdf100176",
+        "oracle_id": "8fbfc5b1-2146-4d07-a5fe-5f025da31bd6",
+        "cmc": 4,
+        "type": "Legendary Creature — Human Warrior Hero",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "draw-engine",
+          "repeatable-draw",
+          "repeatable-card-advantage",
+          "card-advantage",
+          "draw",
+          "gives-trample",
+          "repeatable-pure-draw",
+          "pure-draw",
+          "repeatable-crime",
+          "delayed-trigger",
+          "triggered-ability",
+          "gives-double-strike",
+          "monarch-matters",
+          "repeatable-pp-counters",
+          "gives-pp-counters",
+          "attacking-matters",
+          "attack-trigger"
+        ],
+        "power": "3",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 849,
+      "cardID": "2308c274-40d8-490f-955e-67a57b89525a",
+      "details": {
+        "color_identity": [
+          "R",
+          "U"
+        ],
+        "name": "Scarlet Witch, Chaotic Avenger",
+        "full_name": "Scarlet Witch, Chaotic Avenger [msc-93]",
+        "produced_mana": [],
+        "oracle_text": "Flying\nWhenever Scarlet Witch deals combat damage to a player, look at the top two cards of your library, then exile them face down. Then you may cast a Hero or noncreature spell from among cards exiled with Scarlet Witch without paying its mana cost.",
+        "scryfall_id": "2308c274-40d8-490f-955e-67a57b89525a",
+        "oracle_id": "8c72d54e-97a6-408e-ae77-18d3c96b3bd8",
+        "cmc": 4,
+        "type": "Legendary Creature — Mutant Warlock Hero",
+        "layout": "normal",
+        "keywords": [
+          "Flying"
+        ],
+        "oracle_tags": [
+          "free-cast-another",
+          "cost-ignorer",
+          "triggered-ability",
+          "impulsive-curiosity",
+          "impulsive-draw",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "card-advantage",
+          "red-effect",
+          "curiosity-like",
+          "saboteur",
+          "cast-on-resolution",
+          "synergy-noncreature",
+          "evasion",
+          "typal-hero",
+          "typal-creature",
+          "typal",
+          "repeatable-impulsive-draw",
+          "repeatable-card-advantage"
+        ],
+        "power": "3",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 913,
+      "cardID": "04a38b92-619e-4fe8-b0cb-6fa31f0824ff",
+      "details": {
+        "color_identity": [
+          "B",
+          "G"
+        ],
+        "name": "The Coming of Galactus",
+        "full_name": "The Coming of Galactus [msh-212]",
+        "produced_mana": [],
+        "oracle_text": "(As this Saga enters and after your draw step, add a lore counter. Sacrifice after IV.)\nI — Destroy up to one target nonland permanent.\nII, III — Each opponent loses 2 life.\nIV — Create Galactus, a legendary 16/16 black Elder Alien creature token with flying, trample, and \"Whenever Galactus attacks, destroy target land.\"",
+        "scryfall_id": "04a38b92-619e-4fe8-b0cb-6fa31f0824ff",
+        "oracle_id": "e05f23ba-f2b2-4c40-83fa-8defce3cb978",
+        "cmc": 5,
+        "type": "Enchantment — Saga",
+        "layout": "saga",
+        "keywords": [
+          "Trample"
+        ],
+        "oracle_tags": [
+          "repeatable-crime",
+          "intervening-if-clause",
+          "triggered-ability",
+          "removal-destroy",
+          "removal",
+          "removal-nonland",
+          "removal-vehicle",
+          "removal-spacecraft",
+          "removal-aura",
+          "removal-equipment",
+          "removal-battle",
+          "removal-planeswalker",
+          "removal-creature",
+          "removal-enchantment",
+          "removal-artifact",
+          "group-slug",
+          "namesake-spell",
+          "card-names",
+          "opponent-loses-life",
+          "evasion",
+          "unique-mana-cost",
+          "spot-removal",
+          "repeatable-removal",
+          "removal-land",
+          "attack-trigger"
+        ]
+      }
+    },
+    {
+      "index": 669,
+      "cardID": "1624a5f4-f5bc-47c9-85de-c5520ee234ce",
+      "details": {
+        "color_identity": [
+          "G",
+          "R",
+          "W"
+        ],
+        "name": "Annie Joins Up",
+        "full_name": "Annie Joins Up [otj-191]",
+        "produced_mana": [],
+        "oracle_text": "When Annie Joins Up enters, it deals 5 damage to target creature or planeswalker an opponent controls.\nIf a triggered ability of a legendary creature you control triggers, that ability triggers an additional time.",
+        "scryfall_id": "1624a5f4-f5bc-47c9-85de-c5520ee234ce",
+        "oracle_id": "4c3ad545-b375-44a7-a24e-58baacc4e4b6",
+        "cmc": 4,
+        "type": "Legendary Enchantment",
+        "layout": "normal",
+        "keywords": [],
+        "oracle_tags": [
+          "burn-creature",
+          "removal-creature",
+          "removal",
+          "removal-burn",
+          "burn",
+          "cycle-otj-join-up",
+          "cycle",
+          "synergy-legendary",
+          "triggered-ability",
+          "burn-planeswalker",
+          "removal-planeswalker",
+          "namesake-spell",
+          "card-names",
+          "spot-removal",
+          "trigger-doubler"
+        ]
+      }
+    },
+    {
+      "index": 383,
+      "cardID": "35d03f86-5219-4456-8136-802699ff26d3",
+      "details": {
+        "color_identity": [
+          "B",
+          "R",
+          "W"
+        ],
+        "name": "Negan, the Cold-Blooded",
+        "full_name": "Negan, the Cold-Blooded [sld-147]",
+        "produced_mana": [],
+        "oracle_text": "When Malik, Grim Manipulator enters, you and target opponent each secretly choose a creature that player controls. Then those choices are revealed, and that player sacrifices those creatures.\nWhenever an opponent sacrifices a creature, you create a Treasure token.",
+        "scryfall_id": "35d03f86-5219-4456-8136-802699ff26d3",
+        "oracle_id": "416608a1-89a4-44ce-8fd0-fab6b023d3d4",
+        "cmc": 5,
+        "type": "Legendary Creature — Human Rogue",
+        "layout": "normal",
+        "keywords": [
+          "Treasure"
+        ],
+        "oracle_tags": [
+          "opponent-sacrifice-matters",
+          "sacrifice-matters",
+          "secretly-choose",
+          "ramp",
+          "repeatable-treasures",
+          "repeatable-artifact-tokens",
+          "repeatable-token-generator",
+          "repeatable-noncreature-tokens",
+          "triggered-ability",
+          "refund",
+          "multi-removal",
+          "removal",
+          "alliteration",
+          "card-names",
+          "minigame",
+          "spot-removal",
+          "removal-sacrifice",
+          "removal-creature",
+          "faux-targeting"
+        ],
+        "power": "4",
+        "toughness": "3"
+      }
+    },
+    {
+      "index": 1003,
+      "cardID": "04f8aa71-f27b-48b3-9146-b9e785555428",
+      "details": {
+        "color_identity": [
+          "G",
+          "R",
+          "U",
+          "W"
+        ],
+        "name": "Power Pack",
+        "full_name": "Power Pack [msc-90]",
+        "produced_mana": [],
+        "oracle_text": "Flying, vigilance, trample, haste\nWhenever Power Pack deals combat damage to a player, exile target instant or sorcery card from your graveyard chosen at random. At the beginning of your next upkeep, you may cast that card without paying its mana cost. If that spell would be put into your graveyard, exile it instead.",
+        "scryfall_id": "04f8aa71-f27b-48b3-9146-b9e785555428",
+        "oracle_id": "3d5c98ff-fcf1-42bd-9533-2648791a4f45",
+        "cmc": 5,
+        "type": "Legendary Creature — Human Hero",
+        "layout": "normal",
+        "keywords": [
+          "Flying",
+          "Vigilance",
+          "Haste",
+          "Trample"
+        ],
+        "oracle_tags": [
+          "graveyard-fuel-instant",
+          "graveyard-fuel",
+          "free-cast-another",
+          "cost-ignorer",
+          "synergy-instant",
+          "cast-on-resolution",
+          "delayed-trigger",
+          "triggered-ability",
+          "saboteur",
+          "synergy-sorcery",
+          "alliteration",
+          "card-names",
+          "graveyard-fuel-sorcery",
+          "gives-castable-from-exile",
+          "gives-castable-from-nonhand",
+          "evasion",
+          "unique-mana-cost",
+          "multi-character-card"
+        ],
+        "power": "4",
+        "toughness": "4"
+      }
+    }
+  ]
+}
