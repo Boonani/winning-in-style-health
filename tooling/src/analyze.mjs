@@ -315,8 +315,8 @@ function reportMarkdown(data) {
   const rows = (items, columns) => items.map((item) => `| ${columns.map(([key, render]) => render ? render(item[key], item) : item[key]).join(' | ')} |`).join('\n');
   return `# ${data.cube.name} - Cube Health Report
 
-Generated: ${data.generatedAt}  
-Cube Cobra version: ${data.cube.version}  
+Generated: ${data.generatedAt}
+Cube Cobra version: ${data.cube.version}
 Mainboard: ${data.cube.mainboardCount} cards; maybeboard: ${data.cube.maybeboardCount}; recorded decks: ${data.cube.numDecks}
 
 ## Verdict
@@ -437,8 +437,8 @@ function strictReportMarkdown(data) {
   const rows = (items, render) => items.map((item) => `| ${render(item).join(' | ')} |`).join('\n');
   return `# ${data.cube.name} - Strict Cube Health Report
 
-Generated: ${data.generatedAt}  
-Cube Cobra version: ${data.cube.version}  
+Generated: ${data.generatedAt}
+Cube Cobra version: ${data.cube.version}
 Mainboard: ${data.cube.mainboardCount} cards; maybeboard: ${data.cube.maybeboardCount}; recorded decks: ${data.cube.numDecks}
 
 ## Verdict
