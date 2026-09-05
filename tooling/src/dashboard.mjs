@@ -803,7 +803,6 @@ ${designShell.trim()}
       if(selected==='map')requestAnimationFrame(drawSynergyMap);
       activeTab?.scrollIntoView({block:'nearest',inline:'center',behavior:'auto'});
       window.scrollTo({top:0,behavior:'auto'});
-      if(group==='health'&&selected==='overview')requestAnimationFrame(()=>q('#design-health').scrollIntoView({block:'center'}));
     };
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>activateView(btn.dataset.group,btn.dataset.tab)));
     document.querySelector('nav[role="tablist"]').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const tabs=[...document.querySelectorAll('.tab')],current=tabs.indexOf(document.activeElement);let next=event.key==='Home'?0:event.key==='End'?tabs.length-1:event.key==='ArrowRight'?(current+1)%tabs.length:(current-1+tabs.length)%tabs.length;tabs[next].focus();tabs[next].click();});
