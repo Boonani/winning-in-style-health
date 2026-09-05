@@ -3,11 +3,14 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderDashboard } from './dashboard.mjs';
+import { renderDraftPrimer, renderCubeCobraPrimer } from './draft-primer.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const deployRoot = path.resolve(root, process.env.DASHBOARD_DEPLOY_DIR ?? 'deploy-site');
 const analysis = JSON.parse(await fs.readFile(path.join(root, 'outputs', 'analysis.json'), 'utf8'));
 const expectedHtml = renderDashboard(analysis);
+const expectedPrimer = renderDraftPrimer(analysis);
+const expectedAbout = renderCubeCobraPrimer(analysis);
 const adjacencySource = path.join(root, 'data', 'cubecobra-ml', 'cubecobra-adjacency.json');
 const adjacencyDeploy = path.join(deployRoot, 'data', 'cubecobra-adjacency.json');
 const manaSymbols = ['W', 'U', 'B', 'R', 'G', 'C'];
@@ -26,6 +29,8 @@ if (checkOnly) {
   assert.equal(standalone, expectedHtml, 'dashboard.html does not match src/dashboard.mjs and outputs/analysis.json');
   assert.equal(deployed, expectedHtml, 'deploy-site/index.html does not match the verified standalone dashboard');
   assert.deepEqual(deployedAdjacency, sourceAdjacency, 'Deployed CubeCobra adjacency matrix is stale');
+  assert.equal(await fs.readFile(path.join(deployRoot, 'draft-primer.html'), 'utf8'), expectedPrimer, 'Draft primer is stale');
+  assert.equal(await fs.readFile(path.join(root, 'reports', 'CUBE_COBRA_PRIMER.md'), 'utf8'), expectedAbout, 'Cube Cobra primer is stale');
   for (const symbol of manaSymbols) {
     const [source, deployedAsset] = await Promise.all([
       fs.readFile(path.join(root, 'assets', 'mana', `${symbol}.svg`)),
@@ -39,6 +44,8 @@ if (checkOnly) {
   await Promise.all([
     fs.writeFile(path.join(root, 'dashboard.html'), expectedHtml),
     fs.writeFile(path.join(deployRoot, 'index.html'), expectedHtml),
+    fs.writeFile(path.join(deployRoot, 'draft-primer.html'), expectedPrimer),
+    fs.writeFile(path.join(root, 'reports', 'CUBE_COBRA_PRIMER.md'), expectedAbout),
     fs.copyFile(adjacencySource, adjacencyDeploy),
     ...manaSymbols.map((symbol) => fs.copyFile(
       path.join(root, 'assets', 'mana', `${symbol}.svg`),

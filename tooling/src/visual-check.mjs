@@ -37,6 +37,7 @@ async function inspectSemantics(browser) {
   assert.equal(await page.locator('.metric').first().locator('strong').innerText(), '1004');
   assert.equal(await page.locator('nav .tab').count(), 6);
   assert.equal(await page.locator('#overview-stats .overview-stat').count(), 7);
+  await page.locator('.legacy-overview > summary').click();
   const themeCount = await page.evaluate(() => DATA.themes.length);
   assert.equal(await page.locator('#overview-themes .theme-viz-card').count(), themeCount);
   assert.match(await page.locator('#overview-scale-note').innerText(), /largest circle = \d+ cards/i);

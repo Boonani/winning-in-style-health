@@ -1,4 +1,6 @@
 import { buildThemeSupportModel, groupUpdateEvents } from './dashboard-ui.mjs';
+import { buildDesignedModel, fitsPair, laneRoles, summarizeLane } from './designed-archetypes.mjs';
+import { designCSS, designShell, mountDesignWorkspace } from './designed-ui.mjs';
 
 const esc = (value) =>
   String(value ?? '')
@@ -11,6 +13,7 @@ export function renderDashboard(data) {
   const payloadData = structuredClone(data);
   for (const card of payloadData.cards) delete card.search;
   payloadData.themeSupportVisual = buildThemeSupportModel(payloadData);
+  payloadData.designed = buildDesignedModel(payloadData);
   const payload = JSON.stringify(payloadData).replaceAll('</script', '<\\/script');
   const colorPicker = (id) => `<fieldset class="color-pool" id="${id}"><legend>Color pool</legend>${[
     ['W', 'White'], ['U', 'Blue'], ['B', 'Black'], ['R', 'Red'], ['G', 'Green'], ['C', 'Colorless'],
@@ -331,6 +334,7 @@ export function renderDashboard(data) {
       .theme-viz-card:hover { transform: translateY(-1px); }
       @keyframes reveal { from { opacity: .72; transform: translateY(3px); } to { opacity: 1; transform: none; } }
     }
+${designCSS.trim()}
   </style>
 </head>
 <body>
@@ -352,7 +356,7 @@ export function renderDashboard(data) {
       <button class="tab" data-group="overview" data-tab="overview" role="tab" aria-controls="overview" aria-selected="true" tabindex="0">Overview</button>
       <button class="tab" data-group="browse" data-tab="themes" role="tab" aria-controls="themes" aria-selected="false" tabindex="-1">Browse</button>
       <button class="tab" data-group="updates" data-tab="updates" role="tab" aria-controls="updates" aria-selected="false" tabindex="-1">Updates</button>
-      <button class="tab" data-group="health" data-tab="health" role="tab" aria-controls="health" aria-selected="false" tabindex="-1">Health</button>
+      <button class="tab" data-group="health" data-tab="overview" role="tab" aria-controls="overview" aria-selected="false" tabindex="-1">Health</button>
       <button class="tab" data-group="review" data-tab="cuts" role="tab" aria-controls="cuts" aria-selected="false" tabindex="-1">Review</button>
       <button class="tab" data-group="discover" data-tab="adjacency" role="tab" aria-controls="adjacency" aria-selected="false" tabindex="-1">Discover</button>
     </nav>
@@ -361,6 +365,8 @@ export function renderDashboard(data) {
     <div class="subview" id="subview-wrap" hidden><label for="subview-select">View</label><select id="subview-select" aria-label="View within this workspace"></select></div>
 
     <section id="overview">
+${designShell.trim()}
+      <details class="legacy-overview"><summary>All detected themes and cube diagnostics</summary>
       <div class="overview-head">
         <div><h2>Cube structure at a glance</h2><p class="lede">See the cards, colors, roles, and actual support behind every theme in the current snapshot.</p></div>
         <div class="freshness"><button class="command primary" id="overview-refetch" type="button">Refetch Cube Cobra</button><p id="freshness-status">Published analysis matches snapshot v${esc(data.cube.version)}. Refetch is read-only.</p><div id="freshness-diff" class="diff-list"></div></div>
@@ -377,6 +383,7 @@ export function renderDashboard(data) {
         <div id="overview-themes" class="theme-summary-grid"></div>
       </div>
       <div class="attention-grid band"><div><h2>Smallest support pools</h2><div id="overview-weak"></div></div><div><h2>Cards flagged for review</h2><div id="overview-attention"></div></div></div>
+      </details>
     </section>
 
     <section id="themes" hidden>
@@ -775,7 +782,7 @@ export function renderDashboard(data) {
       overview: [['overview','Overview']],
       browse: [['themes','Theme Cards and All'],['types','Type Census'],['cards','Data Explorer']],
       updates: [['updates','Updates']],
-      health: [['health','Theme Health'],['guilds','Guild Experiments'],['overlap','Card Overlap'],['focus','Existing Lanes'],['map','Synergy Map'],['packets','Draft Packets'],['blink','Blink by Color'],['hidden','Weak Themes'],['tribes','Creature Types']],
+      health: [['overview','Designed Pair Health'],['health','Detected Theme Health'],['guilds','Guild Experiments'],['overlap','Card Overlap'],['focus','Existing Lanes'],['map','Synergy Map'],['packets','Draft Packets'],['blink','Blink by Color'],['hidden','Weak Themes'],['tribes','Creature Types']],
       review: [['cuts','Cut Review'],['review','Tag Review Queue'],['seventeen','17Lands'],['quality','Card Quality']],
       discover: [['adjacency','Card Adjacency'],['discover','Scryfall Discovery'],['tags','Scryfall Tag Census']],
     };
@@ -796,6 +803,7 @@ export function renderDashboard(data) {
       if(selected==='map')requestAnimationFrame(drawSynergyMap);
       activeTab?.scrollIntoView({block:'nearest',inline:'center',behavior:'auto'});
       window.scrollTo({top:0,behavior:'auto'});
+      if(group==='health'&&selected==='overview')requestAnimationFrame(()=>q('#design-health').scrollIntoView({block:'center'}));
     };
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>activateView(btn.dataset.group,btn.dataset.tab)));
     document.querySelector('nav[role="tablist"]').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const tabs=[...document.querySelectorAll('.tab')],current=tabs.indexOf(document.activeElement);let next=event.key==='Home'?0:event.key==='End'?tabs.length-1:event.key==='ArrowRight'?(current+1)%tabs.length:(current-1+tabs.length)%tabs.length;tabs[next].focus();tabs[next].click();});
@@ -873,12 +881,12 @@ export function renderDashboard(data) {
       const rated=performanceCards.filter(card=>card.seventeenLands?.score!=null);
       const average=(cards,getter,digits=1)=>cards.length?(cards.reduce((sum,card)=>sum+getter(card),0)/cards.length).toFixed(digits):'n/a';
       q('#theme-stats').innerHTML = '<div class="stat"><strong>'+filteredRoleCards.enablers.length+'</strong><span>Enablers shown</span></div><div class="stat"><strong>'+filteredRoleCards.payoffs.length+'</strong><span>Payoffs shown</span></div><div class="stat"><strong>'+filteredRoleCards.glue.length+'</strong><span>Glue / soft synergy shown</span></div><div class="stat"><strong>'+e(ratio)+'</strong><span>Filtered enabler : payoff</span></div><div class="stat"><strong>'+rated.length+'</strong><span>17Lands rated</span></div><div class="stat"><strong>'+average(rated,card=>card.seventeenLands.score)+'</strong><span>Average 17Lands score</span></div><div class="stat"><strong>'+average(rated,card=>card.seventeenLands.avgPick)+'</strong><span>Average 17Lands pick</span></div><div class="stat"><strong>'+Math.round(Number(average(performanceCards,card=>card.pickCount,0))||0).toLocaleString()+'</strong><span>Average community picks</span></div><div class="stat"><strong>'+pack.packet.bothChance+'%</strong><span>Global pack sees both</span></div><div class="stat"><strong>'+pack.table.bothChance+'%</strong><span>Global 8-pack table sees both</span></div>';
-      const roles = selectedRole === 'all' ? ['enablers','payoffs','glue'] : [selectedRole];
+      const roles = selectedRole === 'all' ? ['payoffs','glue','enablers'] : [selectedRole];
       let shown = 0;
       q('#theme-groups').innerHTML = roles.map(role => {
         const cards = sortCards(filteredRoleCards[role], sorting, sortDirection);
         shown += cards.length;
-        return '<div class="role-section"><div class="role-head"><h3>'+roleLabel(role)+'</h3><span>'+cards.length+' cards</span></div>'+(cards.length ? '<div class="card-gallery">'+cards.map(cardTile).join('')+'</div>' : '<p class="empty">No cards match the selected color, type, and performance filters.</p>')+'</div>';
+        return '<details class="role-section" '+(role==='payoffs'||selectedRole!=='all'?'open':'')+'><summary>'+roleLabel(role)+' / '+cards.length+' cards</summary>'+(cards.length ? '<div class="card-gallery">'+cards.map(cardTile).join('')+'</div>' : '<p class="empty">No cards match the selected color, type, and performance filters.</p>')+'</details>';
       }).join('');
       q('#theme-count').textContent = shown+' role assignments shown';
       bindCardButtons(q('#theme-groups'),'#theme-detail');
@@ -913,7 +921,7 @@ export function renderDashboard(data) {
       q('#overview-themes').querySelectorAll('.support-node').forEach(button=>button.addEventListener('click',()=>openThemeSupport(button.dataset.themeId,button.dataset.role)));
     };
     const renderOverview=()=>{
-      const nonlands=mainboard.filter(card=>!card.isLand);
+      const nonlands=mainboard.filter(card=>!cardHasType(card,'Land'));
       const curve=[['0-1',nonlands.filter(card=>card.cmc<=1).length],['2',nonlands.filter(card=>card.cmc===2).length],['3',nonlands.filter(card=>card.cmc===3).length],['4',nonlands.filter(card=>card.cmc===4).length],['5',nonlands.filter(card=>card.cmc===5).length],['6',nonlands.filter(card=>card.cmc===6).length],['7+',nonlands.filter(card=>card.cmc>=7).length]];
       const colors=['W','U','B','R','G','C'].map(color=>[color,mainboard.filter(card=>color==='C'?card.colors.length===0:card.colors.includes(color)).length]);
       const types=['Creature','Instant','Sorcery','Artifact','Enchantment','Planeswalker','Land'].map(type=>[e(type),DATA.typeCounts[type]||0]);
@@ -1008,7 +1016,7 @@ export function renderDashboard(data) {
       const visibility=experiment.visibility;
       q('#guild-verdict').innerHTML='<strong>'+e(experiment.name)+':</strong> '+e(experiment.verdict)+' <strong>Balance goal:</strong> '+(experiment.balanceGoalMet?'met':'not met')+'.';
       q('#guild-stats').innerHTML='<div class="stat"><strong>'+experiment.roleCardIds.enablers.length+'</strong><span>Enablers</span></div><div class="stat"><strong>'+experiment.roleCardIds.payoffs.length+'</strong><span>Payoffs</span></div><div class="stat"><strong>'+experiment.colors[0]+': '+experiment.roleColorContributions.payoffs[experiment.colors[0]]+'</strong><span>Payoffs using first color</span></div><div class="stat"><strong>'+experiment.colors[1]+': '+experiment.roleColorContributions.payoffs[experiment.colors[1]]+'</strong><span>Payoffs using second color</span></div><div class="stat"><strong>'+visibility.packet.bothChance+'%</strong><span>One pack sees both</span></div><div class="stat"><strong>'+visibility.table.bothChance+'%</strong><span>Eight packs see both</span></div><div class="stat"><strong>'+experiment.flexibleCards.length+'</strong><span>Support multiple themes</span></div>';
-      q('#guild-content').innerHTML=['enablers','payoffs','glue'].map(role=>roleGallery(roleLabel(role),experiment.roleCardIds[role])).join('')+'<div class="role-section"><div class="role-head"><h3>Flexible support</h3><span>'+experiment.flexibleCards.length+' cards</span></div><div class="card-gallery">'+experiment.flexibleCards.slice(0,80).map(item=>cardTile(byId.get(item.id))).join('')+'</div></div>';
+      q('#guild-content').innerHTML=['payoffs','glue','enablers'].map(role=>roleGallery(roleLabel(role),experiment.roleCardIds[role])).join('')+'<div class="role-section"><div class="role-head"><h3>Flexible support</h3><span>'+experiment.flexibleCards.length+' cards</span></div><div class="card-gallery">'+experiment.flexibleCards.slice(0,80).map(item=>cardTile(byId.get(item.id))).join('')+'</div></div>';
       q('#guild-count').textContent=experiment.supportIds.length+' distinct support cards';
       bindCardButtons(q('#guild-content'),'#guild-detail');
       const research=DATA.research.groups.find(group=>group.id===experimentResearch[experiment.id]);
@@ -1054,7 +1062,7 @@ export function renderDashboard(data) {
     viewInitializers.review=()=>{renderReview();q('#ambiguous-power').innerHTML=DATA.diagnostics.ambiguousPowerIds.map(id=>byId.get(id)).filter(Boolean).map(cardTile).join('');bindCardButtons(q('#ambiguous-power'),'#review-detail');};
 
     const roleGallery = (title, ids) => {
-      const cards=ids.map(id=>byId.get(id)).filter(Boolean);return '<div class="role-section"><div class="role-head"><h3>'+e(title)+'</h3><span>'+cards.length+' cards</span></div>'+(cards.length?'<div class="card-gallery">'+sortCards(cards,'quality').map(cardTile).join('')+'</div>':'<p class="empty">No cards in this role.</p>')+'</div>';
+      const cards=ids.map(id=>byId.get(id)).filter(Boolean);return '<details class="role-section" '+(/enabler|glue/i.test(title)?'':'open')+'><summary>'+e(title)+' / '+cards.length+' cards</summary>'+(cards.length?'<div class="card-gallery">'+sortCards(cards,'quality').map(cardTile).join('')+'</div>':'<p class="empty">No cards in this role.</p>')+'</details>';
     };
     const renderFocus = () => {
       const mode=q('#focus-select').value;let groups=[],stats=[];
@@ -1340,6 +1348,10 @@ export function renderDashboard(data) {
     };
     ['#card-board','#card-color','#card-type','#card-function'].forEach(sel=>q(sel).addEventListener('change',renderAllCards));q('#card-search').addEventListener('input',debounce(renderAllCards));viewInitializers.cards=renderAllCards;
     const renderTagTables=()=>{const term=q('#tag-search').value.trim().toLowerCase();const render=(rows,target)=>{q(target).innerHTML=rows.filter(x=>!term||x.tag.includes(term)).slice(0,500).map(x=>'<tr><td><code>'+e(x.tag)+'</code></td><td class="num">'+x.count+'</td></tr>').join('');};render(DATA.oracleTagFrequency,'#oracle-tag-body');render(DATA.artTagFrequency,'#art-tag-body');};q('#tag-search').addEventListener('input',debounce(renderTagTables));viewInitializers.tags=renderTagTables;
+    const fitsPair = ${fitsPair.toString()};
+    const laneRoles = ${laneRoles.toString()};
+    const summarizeLane = ${summarizeLane.toString()};
+    (${mountDesignWorkspace.toString()})({DATA,byId,pips,showCard,summarizeLane});
   </script>
 </body>
 </html>`;
