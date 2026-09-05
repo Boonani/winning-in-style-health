@@ -469,7 +469,7 @@ async function inspectMobile(browser, engine, profile) {
   await blueLabel.scrollIntoViewIfNeeded();
   await blueLabel.click();
   assert.ok(await page.locator('#theme-colors input[value="U"]').isChecked(), `${engine}/${profile.name} touch filter did not toggle`);
-  assert.equal(visited.length, 21, `${engine}/${profile.name} did not inspect every subview`);
+  assert.equal(visited.length, 22, `${engine}/${profile.name} did not inspect every subview, including Designed Pair Health`);
   assert.deepEqual(errors, [], `${engine}/${profile.name} emitted browser errors`);
   await page.close();
   return { engine, profile: profile.name, viewport: profile.viewport, safe: profile.safe, views: visited.length, mapPixels, errors };
