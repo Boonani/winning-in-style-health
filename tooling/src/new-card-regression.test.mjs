@@ -21,7 +21,7 @@ const cases = [
   ['Command the Chaff', 'opponent-cards', 'enablers', true],
   ['Show and Tell', 'blink', 'enablers', false],
   ["Aminatou's Augury", 'landfall', 'enablers', true],
-  ['Guildsworn Prowler', 'dies', 'payoffs', true],
+  ['Guildsworn Prowler', 'dies', 'enablers', true],
   ['Arcane Omens', 'five-color-domain', 'payoffs', true],
   ['Breach the Multiverse', 'reanimator', 'payoffs', true],
   ['Breach the Multiverse', 'blink', 'enablers', false],

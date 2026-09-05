@@ -1,6 +1,7 @@
 tooling/node_modules/
 tooling/outputs/
 tooling/backups/
+tooling/data/raw/about.html
 tooling/deploy-site/
 tooling/dashboard.html
 tooling/data/cubecobra-ml/cache/

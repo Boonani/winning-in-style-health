@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 import {
   STRICT_THEMES,
@@ -547,7 +548,10 @@ ${rows(data.weakCards.filter((item) => item.weakness.reviewTier === 'Likely cut'
 }
 
 async function main() {
-  if (process.argv.includes('--fetch')) await refreshRawData();
+  if (process.argv.includes('--fetch')) {
+    await refreshRawData();
+    execFileSync(process.execPath, [path.join(root, 'src/fetch-history.mjs')], { cwd: root, stdio: 'inherit' });
+  }
   const raw = JSON.parse(await fs.readFile(path.join(rawDir, 'cube.json'), 'utf8'));
   const seventeenLandsRaw = await readJsonIfExists(seventeenLandsPath, { source: null, ratings: [] });
   const researchRaw = await readJsonIfExists(researchPath, { source: null, searches: [] });
@@ -815,7 +819,9 @@ async function main() {
       name,
       themeId,
       colors,
-      verdict,
+      verdict: ['power-four', 'power-matters'].includes(themeId)
+        ? `${roleCardIds.enablers.length} early inputs and ${roleCardIds.payoffs.length} rewards in these colors. ${roleCardIds.enablers.length > roleCardIds.payoffs.length ? 'Input count exceeds payoff count.' : 'Early inputs are scarce relative to rewards.'} Expensive finishers are not counted as early support.`
+        : verdict,
       balanceGoalMet: roleCardIds.enablers.length > roleCardIds.payoffs.length,
       roleCardIds,
       roleColorContributions,
@@ -1008,6 +1014,7 @@ async function main() {
     research: { source: researchRaw.source, precedents: researchRaw.precedents ?? [], groups: researchGroups },
     cubeAdjacency,
     changes,
+    updateHistory: await readJsonIfExists(path.join(root, 'data/history/cube-history.json'), { available: false, coverage: { note: 'Change history has not been fetched.' }, events: [] }),
     newCardFindings,
     oracleTagFrequency,
     artTagFrequency,

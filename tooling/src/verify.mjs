@@ -15,7 +15,7 @@ const analysisPath = path.join(root, 'outputs', 'analysis.json');
 const dashboardPath = path.join(root, 'dashboard.html');
 const adjacencyPath = path.join(root, 'data', 'cubecobra-ml', 'cubecobra-adjacency.json');
 const [analysisStat, dashboardStat, adjacencyStat] = await Promise.all([fs.stat(analysisPath), fs.stat(dashboardPath), fs.stat(adjacencyPath)]);
-for (const source of ['src/taxonomy.mjs', 'src/taxonomy-v555-changes.mjs', 'src/analyze.mjs', 'src/card-quality.mjs', 'src/pack-math.mjs']) {
+for (const source of ['src/taxonomy.mjs', 'src/strategic-support.mjs', 'src/update-history.mjs', 'data/history/cube-history.json', 'src/taxonomy-v555-changes.mjs', 'src/analyze.mjs', 'src/card-quality.mjs', 'src/pack-math.mjs']) {
   const sourceStat = await fs.stat(path.join(root, source));
   assert.ok(analysisStat.mtimeMs >= sourceStat.mtimeMs, `outputs/analysis.json is older than ${source}; run npm run analyze first`);
 }
@@ -307,10 +307,10 @@ const semanticExpectations = [
   ['Stridehangar Automaton', 'artifacts', 'payoffs', true],
   ['Negan, the Cold-Blooded', 'blink', 'payoffs', true],
   ['Dismissive Pyromancer', 'discard', 'enablers', true],
-  ['Guildsworn Prowler', 'dies', 'payoffs', true],
+  ['Guildsworn Prowler', 'dies', 'enablers', true],
   ['Fight for the Throne', 'dies', 'payoffs', false],
   ['Massacre Wurm', 'dies', 'payoffs', false],
-  ['Natural Order', 'dies', 'enablers', true],
+  ['Natural Order', 'dies', 'payoffs', true],
   ['Natural Order', 'sacrifice', 'enablers', true],
   ['Mjölnir, Hammer of Thor', 'noncombat-damage', 'enablers', true],
   ['Mjölnir, Hammer of Thor', 'noncombat-damage', 'payoffs', false],
@@ -419,13 +419,21 @@ for (const name of ['Only Reanimate', 'Only Copy', 'Only Bounce']) assert.equal(
 assert.equal(boundaryRole('Own Entry', 'payoffs'), true, 'Own-side reusable entry trigger is missing from Blink payoffs');
 for (const name of ['Opponent Entry', 'Land Entry', 'Cast Entry']) assert.equal(boundaryRole(name, 'payoffs'), false, `${name} leaked into Blink payoffs`);
 
+const history = analysis.updateHistory;
+assert.equal(history.available, true, 'Published dashboard requires dated change history');
+assert.equal(history.coverage.complete, true, 'History must not silently truncate pagination');
+assert.equal(new Set(history.events.map(event => event.id)).size, history.events.length, 'Duplicate update records');
+assert.ok(history.events.every(event => Number.isFinite(Date.parse(event.date))), 'Updates must carry real dates');
+assert.equal(history.events.reduce((n,event)=>n+event.added.length-event.removed.length,0), analysis.cube.mainboardCount, 'Complete changelog net additions must reconcile with the mainboard');
+
 const experiments = new Map(analysis.guildExperiments.map((item) => [item.id, item]));
 for (const id of ['rg-power-four', 'rg-power-matters', 'ug-counters', 'ug-landfall', 'gw-counters']) assert.ok(experiments.has(id), `Missing experiment ${id}`);
 for (const experiment of experiments.values()) {
   assert.ok(experiment.visibility.packet.bothChance >= 0 && experiment.visibility.packet.bothChance <= 100);
   assert.ok(experiment.visibility.table.bothChance >= 0 && experiment.visibility.table.bothChance <= 100);
 }
-for (const id of ['rg-power-four', 'rg-power-matters', 'ug-counters', 'gw-counters']) assert.equal(experiments.get(id).balanceGoalMet, true, `${id} should have more enablers than payoffs`);
+for (const experiment of experiments.values()) assert.equal(experiment.balanceGoalMet, experiment.roleCardIds.enablers.length > experiment.roleCardIds.payoffs.length, `${experiment.id} balance must reflect actual support, not a desired result`);
+for (const id of ['rg-power-four', 'rg-power-matters']) assert.match(experiments.get(id).verdict, /early inputs|early support/i);
 assert.equal(experiments.get('ug-landfall').balanceGoalMet, true, 'UG Landfall no longer has more enablers than payoffs');
 assert.equal(experiments.get('ug-landfall').roleColorContributions.payoffs.U, 0, 'UG Landfall is no longer payoff-light in blue; update its verdict');
 assert.match(experiments.get('ug-landfall').verdict, /green-heavy/i, 'UG Landfall no longer explains its missing blue payoff support');

@@ -12,6 +12,8 @@
     "adjacency:refresh": "node src/build-cubecobra-adjacency.mjs --fetch",
     "refresh": "node src/analyze.mjs --fetch && node src/build-dashboard.mjs",
     "build:dashboard": "node src/build-dashboard.mjs",
+    "history:refresh": "node src/fetch-history.mjs",
+    "test": "node --test src/*.test.mjs",
     "tags:dry-run": "node src/sync-tags.mjs",
     "tags:apply": "node src/sync-tags.mjs --apply",
     "cuts:dry-run": "node src/remove-cards.mjs",

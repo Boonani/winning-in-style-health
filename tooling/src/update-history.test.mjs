@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { buildUpdateHistory } from './update-history.mjs';
+const details = { a: {name:'A',oracle_id:'a'}, b:{name:'B',oracle_id:'b'}, a2:{name:'A',oracle_id:'a'} };
+const post = (changelog, extra={}) => ({id:'event',cubeId:'cube',date:1788555056453,changelog:{mainboard:changelog},...extra});
+test('recorded swaps retain pair identity, date and source',()=>{const h=buildUpdateHistory([post({swaps:[{oldCard:{cardID:'a'},card:{cardID:'b'}}]})],details,{});assert.equal(h.events[0].date,'2026-09-04T20:50:56.453Z');assert.equal(h.events[0].replacements[0].from.name,'A');assert.equal(h.events[0].replacements[0].to.name,'B');assert.equal(h.events[0].sourceUrl,'https://cubecobra.com/cube/changelog/cube/event');});
+test('unpaired additions and removals never become invented replacements',()=>{const h=buildUpdateHistory([post({adds:[{cardID:'b'},{cardID:'b'}],removes:[{oldCard:{cardID:'a'}}]})],details,{});assert.equal(h.events[0].replacements.length,0);assert.equal(h.events[0].added.length,2);assert.equal(h.events[0].removed.length,1);});
+test('tag edits and printing swaps are not new cards',()=>{assert.equal(buildUpdateHistory([post({edits:[{oldCard:{cardID:'a'},newCard:{cardID:'a'}}],swaps:[{oldCard:{cardID:'a'},card:{cardID:'a2'}}]})],details,{}).events.length,0);});
+test('mainboard scope and deduplication',()=>{const p=post({adds:[{cardID:'a'}]});assert.equal(buildUpdateHistory([p,p,post({}, {id:'side',changelog:{maybeboard:{adds:[{cardID:'a'}]}}})],details,{}).events.length,1);});
+test('unknown identity and date fail explicitly',()=>{assert.throws(()=>buildUpdateHistory([post({adds:[{cardID:'missing'}]})],details,{}),/Unresolved/);assert.throws(()=>buildUpdateHistory([post({}, {date:'invalid'})],details,{}),/Invalid/);});

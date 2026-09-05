@@ -1,3 +1,5 @@
+import { buildThemeSupportModel, groupUpdateEvents } from './dashboard-ui.mjs';
+
 const esc = (value) =>
   String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -8,6 +10,7 @@ const esc = (value) =>
 export function renderDashboard(data) {
   const payloadData = structuredClone(data);
   for (const card of payloadData.cards) delete card.search;
+  payloadData.themeSupportVisual = buildThemeSupportModel(payloadData);
   const payload = JSON.stringify(payloadData).replaceAll('</script', '<\\/script');
   const colorPicker = (id) => `<fieldset class="color-pool" id="${id}"><legend>Color pool</legend>${[
     ['W', 'White'], ['U', 'Blue'], ['B', 'Black'], ['R', 'Red'], ['G', 'Green'], ['C', 'Colorless'],
@@ -38,6 +41,12 @@ export function renderDashboard(data) {
       --good: #68c392;
       --warn: #e0ad4f;
       --bad: #ef7668;
+      --mana-w: #f4e6b5;
+      --mana-u: #58a9df;
+      --mana-b: #827489;
+      --mana-r: #db624c;
+      --mana-g: #5eaa72;
+      --mana-c: #a8afb4;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-right: env(safe-area-inset-right, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -58,8 +67,8 @@ export function renderDashboard(data) {
     .metric { min-width: 72px; }
     .metric strong { display: block; font-size: 19px; }
     .metric span { color: var(--muted); font-size: 11px; }
-    nav { max-width: 1600px; margin: auto; display: flex; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; padding: 0 max(22px, var(--safe-right)) 0 max(22px, var(--safe-left)); }
-    nav::-webkit-scrollbar, .type-pool::-webkit-scrollbar, .color-pool::-webkit-scrollbar, .preset-list::-webkit-scrollbar, .packet-cards::-webkit-scrollbar { display: none; }
+    nav { width: 100%; max-width: 1600px; margin: auto; display: flex; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; contain: inline-size; padding: 0 max(22px, var(--safe-right)) 0 max(22px, var(--safe-left)); }
+    nav::-webkit-scrollbar, .type-pool::-webkit-scrollbar, .color-pool::-webkit-scrollbar, .preset-list::-webkit-scrollbar, .packet-cards::-webkit-scrollbar, .updates-periods::-webkit-scrollbar { display: none; }
     .tab { border: 0; border-bottom: 3px solid transparent; background: transparent; padding: 10px 14px 9px; color: var(--muted); white-space: nowrap; }
     .tab[aria-selected="true"] { border-color: var(--red); color: var(--ink); font-weight: 700; }
     main { max-width: 1600px; margin: auto; padding: 22px max(22px, var(--safe-right)) max(22px, var(--safe-bottom)) max(22px, var(--safe-left)); }
@@ -183,20 +192,71 @@ export function renderDashboard(data) {
     .freshness { min-width: min(100%, 360px); text-align: right; }
     .freshness p { color: var(--muted); margin: 6px 0 0; font-size: 12px; }
     .overview-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .overview-stat { padding: 16px; border-right: 1px solid var(--line); min-width: 0; }
+    .overview-stat { padding: 16px; border: 0; border-right: 1px solid var(--line); min-width: 0; background: transparent; color: var(--ink); text-align: left; }
     .overview-stat:last-child { border-right: 0; }
+    .overview-stat:hover, .overview-stat:focus-visible { background: var(--raised); outline: 2px solid var(--accent); outline-offset: -2px; }
     .overview-stat strong { display: block; font-size: 24px; font-variant-numeric: tabular-nums; }
     .overview-stat span { display: block; color: var(--muted); font-size: 11px; margin-top: 3px; }
     .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
     .compact-list { display: grid; gap: 8px; }
     .compact-row { display: grid; grid-template-columns: minmax(80px, 1fr) 3fr auto; align-items: center; gap: 9px; font-size: 12px; }
     .compact-row > .compact-bar { display: block; height: 7px; background: var(--accent); border-radius: 4px; }
-    .theme-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(235px, 1fr)); gap: 8px; }
-    .theme-summary { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 12px; color: var(--ink); text-align: left; min-height: 112px; }
-    .theme-summary:hover, .theme-summary:focus-visible { border-color: var(--accent); outline: none; background: var(--raised); }
-    .theme-summary header { position: static; display: flex; justify-content: space-between; gap: 8px; background: transparent; border: 0; backdrop-filter: none; }
-    .theme-summary small { color: var(--muted); display: block; margin-top: 8px; line-height: 1.4; }
-    .theme-summary .bar { width: 100%; margin-top: 10px; }
+    .theme-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+    .theme-viz-card { min-width: 0; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 12px; }
+    .theme-viz-title { width: 100%; min-height: 38px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); padding: 0 0 9px; text-align: left; font-weight: 750; }
+    .theme-viz-title:hover, .theme-viz-title:focus-visible { color: var(--accent); outline: none; }
+    .role-circles { min-height: 105px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; padding-top: 10px; }
+    .support-node { position: relative; min-width: 0; min-height: 88px; border: 0; border-radius: 6px; background: transparent; color: var(--ink); display: grid; grid-template-rows: 76px auto; place-items: center; padding: 0; }
+    .support-node:hover, .support-node:focus-visible, .support-node[aria-pressed="true"] { background: var(--raised); outline: 2px solid var(--accent); outline-offset: 1px; }
+    .support-node::after { content: none; position: absolute; z-index: 8; left: 50%; bottom: calc(100% + 6px); width: max-content; max-width: 240px; transform: translateX(-50%); padding: 6px 8px; border: 1px solid #596168; border-radius: 5px; background: #080a0c; color: var(--ink); font-size: 10px; line-height: 1.35; text-align: left; box-shadow: 0 4px 16px rgba(0,0,0,.45); opacity: 0; pointer-events: none; }
+    .role-circles .support-node:nth-child(odd)::after { left: 0; transform: none; }
+    .role-circles .support-node:nth-child(even)::after { left: auto; right: 0; transform: none; }
+    .support-node:hover::after, .support-node:focus-visible::after, .support-node[aria-pressed="true"]::after { opacity: 1; }
+    .support-circle { align-self: center; width: var(--diameter); height: var(--diameter); min-width: var(--diameter); border-radius: 50%; display: grid; place-items: center; color: #fff; border: 1px solid rgba(255,255,255,.58); box-shadow: inset 0 0 0 1px rgba(0,0,0,.35), 0 2px 7px rgba(0,0,0,.34); background: var(--support-fill, var(--mana-c)); font-size: 12px; font-weight: 850; font-variant-numeric: tabular-nums; text-shadow: 0 1px 2px #000, 0 0 3px #000; overflow: hidden; }
+    .support-circle.zero { width: 9px; height: 9px; min-width: 9px; background: transparent; border: 1px solid #626970; box-shadow: none; color: transparent; }
+    .support-node.payoffs .support-circle { background-image: repeating-linear-gradient(135deg, rgba(8,10,12,.65) 0 1px, transparent 1px 7px), repeating-linear-gradient(45deg, rgba(8,10,12,.65) 0 1px, transparent 1px 7px), var(--support-fill, linear-gradient(var(--mana-c),var(--mana-c))); }
+    .support-label { color: var(--muted); font-size: 10px; line-height: 1.25; text-align: center; }
+    .support-label strong { color: var(--ink); font-size: 12px; }
+    .theme-viz-foot { margin-top: 7px; color: var(--muted); font-size: 10px; line-height: 1.35; }
+    .viz-legend { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; color: var(--muted); font-size: 11px; }
+    .legend-mark { width: 16px; height: 16px; display: inline-block; border-radius: 50%; vertical-align: -4px; margin-right: 4px; background: var(--mana-u); border: 1px solid rgba(255,255,255,.55); }
+    .legend-mark.hatched { background-image: repeating-linear-gradient(135deg, rgba(8,10,12,.7) 0 1px, transparent 1px 5px), repeating-linear-gradient(45deg, rgba(8,10,12,.7) 0 1px, transparent 1px 5px), linear-gradient(var(--mana-u),var(--mana-u)); }
+    .theme-color-panel { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+    .theme-color-head { display: flex; justify-content: space-between; align-items: start; gap: 14px; margin-bottom: 10px; }
+    .theme-color-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 7px; padding: 2px; }
+    .theme-color-column { min-width: 0; border-left: 1px solid var(--line); padding-left: 7px; text-align: center; }
+    .theme-color-column:first-child { border-left: 0; }
+    .theme-color-name { display: inline-flex; gap: 5px; align-items: center; font-weight: 750; }
+    .theme-color-column .role-circles { min-height: 100px; gap: 2px; }
+    .theme-color-column .support-node { min-height: 86px; }
+    @media (max-width: 1050px) { .theme-color-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { .theme-color-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 16px; } .theme-color-column:nth-child(odd) { border-left: 0; } .support-label { font-size: 11px; } }
+    .update-period-heading { margin: 24px 0 0; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    .visual-filter-state { min-height: 28px; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+    .visual-filter-state[hidden] { display: none; }
+    .visual-filter-state .command { min-height: 28px; padding: 3px 8px; font-size: 11px; }
+    .advanced { border: 1px solid var(--line); border-radius: 6px; background: #111417; margin-bottom: 14px; }
+    .advanced > summary { min-height: 42px; display: flex; align-items: center; padding: 8px 11px; cursor: pointer; color: var(--muted); font-weight: 700; }
+    .advanced[open] > summary { border-bottom: 1px solid var(--line); color: var(--ink); }
+    .advanced-content { padding: 10px; }
+    .advanced .stats { margin-bottom: 0; }
+    .updates-periods { display: flex; gap: 5px; overflow-x: auto; margin: 12px 0 18px; }
+    .period-button { flex: 0 0 auto; min-height: 38px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--muted); padding: 7px 14px; }
+    .period-button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #09131d; font-weight: 800; }
+    .updates-coverage { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+    .update-list { display: grid; gap: 16px; }
+    .update-event { border: 0; border-bottom: 1px solid var(--line); background: transparent; border-radius: 0; overflow: hidden; }
+    .update-event-head { padding: 14px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; justify-content: space-between; align-items: baseline; }
+    .update-event-head time, .update-event-head .undated { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .update-event-body { padding: 14px; display: grid; gap: 16px; }
+    .change-group h3 { margin-bottom: 9px; }
+    .change-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(102px, 1fr)); gap: 9px; }
+    .change-card { min-width: 0; margin: 0; }
+    .change-card img, .change-card-placeholder { width: 100%; aspect-ratio: 488 / 680; object-fit: contain; display: block; border-radius: 6px; background: #23272b; }
+    .change-card figcaption { padding-top: 5px; font-size: 11px; line-height: 1.25; }
+    .replacement-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 520px)); gap: 10px; justify-content: start; }
+    .replacement { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); gap: 7px; align-items: center; border: 1px solid var(--line); padding: 8px; border-radius: 7px; }
+    .replacement-arrow { color: var(--accent); font-size: 20px; text-align: center; }
     .attention-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .diff-list { color: var(--muted); font-size: 12px; margin-top: 8px; }
     .discover-form { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
@@ -232,6 +292,7 @@ export function renderDashboard(data) {
       .overview-head { align-items: stretch; flex-direction: column; }
       .freshness { text-align: left; }
       .overview-grid, .attention-grid { grid-template-columns: 1fr; }
+      .theme-color-head { flex-direction: column; }
       .adjacency-builder { grid-template-columns: 1fr; }
       .overview-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .detail { position: static; border-left: 0; border-top: 1px solid var(--line); padding: 15px 0 0; max-width: 360px; max-height: none; }
@@ -259,12 +320,15 @@ export function renderDashboard(data) {
       .type-pool label span, .type-clear { min-height: 44px; }
       .mode-control, .mode-control label { height: 44px; min-height: 44px; }
       .all-card-row { min-height: 44px; }
+      .support-node { min-height: 88px; }
+      .theme-viz-title { min-height: 44px; }
+      .period-button { min-height: 44px; }
       tr.all-card-row td { padding-top: 15px; padding-bottom: 15px; }
     }
     @media (prefers-reduced-motion: no-preference) {
       section:not([hidden]) { animation: reveal 170ms ease-out; }
-      .theme-summary, .command, .card-tile img { transition: background-color 160ms ease, border-color 160ms ease, outline-color 160ms ease, transform 160ms ease; }
-      .theme-summary:hover { transform: translateY(-1px); }
+      .theme-viz-card, .command, .card-tile img, .support-node, .support-circle { transition: background-color 160ms ease, border-color 160ms ease, outline-color 160ms ease, transform 160ms ease; }
+      .theme-viz-card:hover { transform: translateY(-1px); }
       @keyframes reveal { from { opacity: .72; transform: translateY(3px); } to { opacity: 1; transform: none; } }
     }
   </style>
@@ -287,6 +351,7 @@ export function renderDashboard(data) {
     <nav aria-label="Primary views" role="tablist">
       <button class="tab" data-group="overview" data-tab="overview" role="tab" aria-controls="overview" aria-selected="true" tabindex="0">Overview</button>
       <button class="tab" data-group="browse" data-tab="themes" role="tab" aria-controls="themes" aria-selected="false" tabindex="-1">Browse</button>
+      <button class="tab" data-group="updates" data-tab="updates" role="tab" aria-controls="updates" aria-selected="false" tabindex="-1">Updates</button>
       <button class="tab" data-group="health" data-tab="health" role="tab" aria-controls="health" aria-selected="false" tabindex="-1">Health</button>
       <button class="tab" data-group="review" data-tab="cuts" role="tab" aria-controls="cuts" aria-selected="false" tabindex="-1">Review</button>
       <button class="tab" data-group="discover" data-tab="adjacency" role="tab" aria-controls="adjacency" aria-selected="false" tabindex="-1">Discover</button>
@@ -297,7 +362,7 @@ export function renderDashboard(data) {
 
     <section id="overview">
       <div class="overview-head">
-        <div><h2>Cube health at a glance</h2><p class="lede">The complete current snapshot: structure, overlap, performance evidence, and the themes that need attention.</p></div>
+        <div><h2>Cube structure at a glance</h2><p class="lede">See the cards, colors, roles, and actual support behind every theme in the current snapshot.</p></div>
         <div class="freshness"><button class="command primary" id="overview-refetch" type="button">Refetch Cube Cobra</button><p id="freshness-status">Published analysis matches snapshot v${esc(data.cube.version)}. Refetch is read-only.</p><div id="freshness-diff" class="diff-list"></div></div>
       </div>
       <div id="overview-stats" class="overview-stats"></div>
@@ -308,41 +373,56 @@ export function renderDashboard(data) {
         <div><h2>Card functions</h2><div id="overview-functions" class="compact-list"></div></div>
       </div>
       <div class="band">
-        <div class="role-head"><div><h2>Strict theme health</h2><p class="lede">Open any theme directly in Browse. Performance sorts use only cards with matching evidence.</p></div><select id="overview-theme-sort" aria-label="Sort archetypes"><option value="health">Health score</option><option value="pick">17Lands earliest average pick</option><option value="score">17Lands game-in-hand score</option><option value="community">Cube Cobra pick volume</option></select></div>
+        <div class="role-head"><div><h2>Theme support</h2><p class="lede">Circle area is proportional to the number of role assignments on one shared scale. Color slices show actual W/U/B/R/G/colorless support; multicolor cards contribute to each of their colors.</p><div class="viz-legend"><span><i class="legend-mark"></i>Enablers</span><span><i class="legend-mark hatched"></i>Payoffs</span><span id="overview-scale-note"></span></div></div><select id="overview-theme-sort" aria-label="Sort themes"><option value="support">Most total support</option><option value="enablers">Most enablers</option><option value="payoffs">Most payoffs</option><option value="name">Theme name</option></select></div>
         <div id="overview-themes" class="theme-summary-grid"></div>
       </div>
-      <div class="attention-grid band"><div><h2>Weakest supported lanes</h2><div id="overview-weak"></div></div><div><h2>Review attention</h2><div id="overview-attention"></div></div></div>
+      <div class="attention-grid band"><div><h2>Smallest support pools</h2><div id="overview-weak"></div></div><div><h2>Cards flagged for review</h2><div id="overview-attention"></div></div></div>
     </section>
 
     <section id="themes" hidden>
-      <h2>Cards by strict theme and role</h2>
-      <p class="lede">An enabler contains or produces the theme's input. A hard payoff needs a separate enabler to function. Glue works alone but becomes better with the theme. Every assignment is proven by type, a number, or rules text; Scryfall can nominate but cannot decide.</p>
-      <div class="note" id="change-note"></div>
-      <div class="band"><div class="role-head"><h3>Newly added cards</h3><span id="change-count"></span></div><div id="change-gallery" class="card-gallery"></div></div>
+      <h2>Browse themes and cards</h2>
+      <p class="lede">Choose a theme, then use its color-and-role map to open the exact support cards. Enablers supply the input; payoffs reward it; glue remains available in the card gallery.</p>
       <div class="browse-toolbar">
         <div class="filter-row filter-row-primary">
           <select id="theme-select" aria-label="Theme"></select>
-          <select id="theme-role" aria-label="Role"><option value="all">All roles</option><option value="enablers">Enablers</option><option value="payoffs">Hard Payoffs</option><option value="glue">Glue / Soft Synergy</option></select>
+          <select id="theme-role" aria-label="Role"><option value="all">All roles</option><option value="enablers">Enablers</option><option value="payoffs">Payoffs</option><option value="glue">Glue / Soft Synergy</option></select>
           <input id="theme-search" type="search" placeholder="Search card, text, tag, or role" aria-label="Search cards">
-          <select id="theme-function" aria-label="Function"><option value="all">All functions</option><option value="interaction">Interaction</option><option value="value">Value</option></select>
-        </div>
-        <div class="filter-row filter-row-types">
-          ${colorPicker('theme-colors')}
-          ${typePicker('theme-types')}
-          <div class="mode-control" id="theme-type-mode" role="radiogroup" aria-label="Multiple type matching"><label title="Match at least one selected type"><input type="radio" name="theme-type-mode" value="any" checked><span>Any type</span></label><label title="Require every selected type"><input type="radio" name="theme-type-mode" value="all"><span>All types</span></label></div>
-        </div>
-        <div class="filter-row filter-row-sort">
-          <select id="theme-performance" aria-label="Performance filter"><option value="all">All performance data</option><option value="seventeen-rated">17Lands rated only</option><option value="seventeen-top">17Lands top quartile</option><option value="seventeen-early">17Lands avg pick 5 or earlier</option><option value="community-top">Community-pick top quartile</option></select>
-          <select id="theme-sort" aria-label="Sort"><option value="quality">Local quality</option><option value="seventeen-score">17Lands score</option><option value="seventeen-pick">17Lands pick priority</option><option value="community-picks">Cube Cobra community picks</option><option value="elo">Cube Cobra ELO</option><option value="mv">Mana value</option><option value="name">Name</option></select>
-          <div class="mode-control" id="theme-sort-direction" role="radiogroup" aria-label="Sort direction"><label title="Show highest values or Z first"><input type="radio" name="theme-sort-direction" value="desc" checked><span>Descending</span></label><label title="Show lowest values or A first"><input type="radio" name="theme-sort-direction" value="asc"><span>Ascending</span></label></div>
-          <span class="result-count" id="theme-count"></span>
         </div>
       </div>
-      <div id="theme-stats" class="stats"></div>
+      <div id="theme-color-visual" class="theme-color-panel" hidden></div>
+      <div id="theme-visual-filter" class="visual-filter-state" hidden></div>
+      <details class="advanced" id="theme-advanced"><summary>Advanced filters, evidence, and sorting</summary><div class="advanced-content">
+          <div class="filter-row filter-row-primary"><select id="theme-function" aria-label="Function"><option value="all">All functions</option><option value="interaction">Interaction</option><option value="value">Value</option></select></div>
+          <div class="filter-row filter-row-types">
+            ${colorPicker('theme-colors')}
+            ${typePicker('theme-types')}
+            <div class="mode-control" id="theme-type-mode" role="radiogroup" aria-label="Multiple type matching"><label title="Match at least one selected type"><input type="radio" name="theme-type-mode" value="any" checked><span>Any type</span></label><label title="Require every selected type"><input type="radio" name="theme-type-mode" value="all"><span>All types</span></label></div>
+          </div>
+          <div class="filter-row filter-row-sort">
+            <select id="theme-performance" aria-label="Performance filter"><option value="all">All performance data</option><option value="seventeen-rated">17Lands rated only</option><option value="seventeen-top">17Lands top quartile</option><option value="seventeen-early">17Lands avg pick 5 or earlier</option><option value="community-top">Community-pick top quartile</option></select>
+            <select id="theme-sort" aria-label="Sort"><option value="quality">Local quality</option><option value="seventeen-score">17Lands score</option><option value="seventeen-pick">17Lands pick priority</option><option value="community-picks">Cube Cobra community picks</option><option value="elo">Cube Cobra ELO</option><option value="mv">Mana value</option><option value="name">Name</option></select>
+            <div class="mode-control" id="theme-sort-direction" role="radiogroup" aria-label="Sort direction"><label title="Show highest values or Z first"><input type="radio" name="theme-sort-direction" value="desc" checked><span>Descending</span></label><label title="Show lowest values or A first"><input type="radio" name="theme-sort-direction" value="asc"><span>Ascending</span></label></div>
+          </div>
+          <div id="theme-stats" class="stats"></div>
+      </div></details>
+      <div class="role-head"><span id="theme-count" class="result-count"></span></div>
       <div class="browser-layout">
         <div id="theme-groups"></div>
         <aside class="detail" id="theme-detail"><div class="note">Select a card to inspect every accepted role, its rule ID, and the exact reason it qualified.</div></aside>
       </div>
+    </section>
+
+    <section id="updates" hidden>
+      <h2>Cube updates</h2>
+      <p class="lede">Dated changes to the cube, shown with the real card art supplied by the update record. Replacement pairs appear only when they were explicitly recorded.</p>
+      <div class="updates-periods" role="group" aria-label="Update history period">
+        <button class="period-button" type="button" data-update-period="week" aria-pressed="true">Week</button>
+        <button class="period-button" type="button" data-update-period="month" aria-pressed="false">Month</button>
+        <button class="period-button" type="button" data-update-period="quarter" aria-pressed="false">3 months</button>
+        <button class="period-button" type="button" data-update-period="all" aria-pressed="false">All</button>
+      </div>
+      <div id="updates-coverage" class="updates-coverage"></div>
+      <div id="updates-list" class="update-list" aria-live="polite"></div>
     </section>
 
     <section id="guilds" hidden>
@@ -409,7 +489,7 @@ export function renderDashboard(data) {
         <label>Cards each <input id="packet-size" type="number" min="1" max="45" value="15"></label>
         <button class="command" id="recalculate-packets">Recalculate</button>
       </div>
-      <div class="note"><strong>Both</strong> means the sample contains at least one enabler and at least one hard payoff. Glue is displayed separately because soft synergy alone does not prove that the promised engine is present.</div>
+      <div class="note"><strong>Both</strong> means the sample contains at least one enabler and at least one payoff. Glue is displayed separately because soft synergy alone does not prove that the promised engine is present.</div>
       <div class="band table-wrap"><table><thead><tr><th>Theme</th><th>Signal</th><th>Expected E / table</th><th>Expected P / table</th><th>Pack sees E</th><th>Pack sees P</th><th>Pack sees both</th><th>Coherent packs</th><th>Table sees both</th></tr></thead><tbody id="packet-body"></tbody></table></div>
       <div class="band">
         <h2>Deal an actual randomized table</h2>
@@ -458,7 +538,7 @@ export function renderDashboard(data) {
     <section id="blink" hidden>
       <h2>Blink and adjacent ETB mechanics by color</h2>
       <p class="lede">Blink means intentional exile-and-return. Payoffs must benefit from actual flicker through a reusable own enter/leave effect, re-preparing, a useful Saga reset, or trigger amplification. Copy, graveyard return/casting, self-bounce, landfall, triggers caused only by opposing permanents entering, and cast triggers do not count as Blink. Adjacent mechanics remain visible in separate columns.</p>
-      <div class="band table-wrap"><table><thead><tr><th>Color</th><th>Blink enablers</th><th>Adjacent copy</th><th>Adjacent recursion</th><th>Adjacent self-bounce</th><th>ETB hard payoffs</th><th>E:P</th><th>Coverage</th><th>Blink examples</th><th>Adjacent examples</th></tr></thead><tbody id="blink-body"></tbody></table></div>
+      <div class="band table-wrap"><table><thead><tr><th>Color</th><th>Blink enablers</th><th>Adjacent copy</th><th>Adjacent recursion</th><th>Adjacent self-bounce</th><th>ETB payoffs</th><th>E:P</th><th>Coverage</th><th>Blink examples</th><th>Adjacent examples</th></tr></thead><tbody id="blink-body"></tbody></table></div>
     </section>
 
     <section id="hidden" hidden>
@@ -606,7 +686,9 @@ export function renderDashboard(data) {
     const pips = colors => '<span class="colors">' + (colors.length ? colors : ['C']).map(c => '<i class="pip '+c+'" title="'+e(c)+'"><span>'+e(c)+'</span><img src="assets/mana/'+e(c)+'.svg" alt=""></i>').join('') + '</span>';
     const chips = values => '<div class="tag-list">' + values.map(x => '<span class="chip">'+e(x)+'</span>').join('') + '</div>';
     const statusClass = value => String(value).toLowerCase().replaceAll(' ', '-');
-    const roleLabel = value => ({enablers:'Enablers',payoffs:'Hard Payoffs',glue:'Glue / Soft Synergy'}[value] || value);
+    const roleLabel = value => ({enablers:'Enablers',payoffs:'Payoffs',glue:'Glue / Soft Synergy'}[value] || value);
+    const COLOR_NAMES={W:'White',U:'Blue',B:'Black',R:'Red',G:'Green',C:'Colorless'};
+    const COLOR_HEX={W:'#f4e6b5',U:'#58a9df',B:'#827489',R:'#db624c',G:'#5eaa72',C:'#a8afb4'};
     const cardColorsMatch = (card, color) => color === 'all' || card.colorLabel === color || (color !== 'C' && card.colors.includes(color));
     const selectedColorPool = selector => new Set([...q(selector).querySelectorAll('input:checked')].map(input => input.value));
     const cardColorsMatchPool = (card, selected) => selected.size === 0 || (card.colors.length === 0 ? selected.has('C') : card.colors.every(color => selected.has(color)));
@@ -691,7 +773,8 @@ export function renderDashboard(data) {
 
     const viewGroups = {
       overview: [['overview','Overview']],
-      browse: [['themes','Strict Themes and All'],['types','Type Census'],['cards','Data Explorer']],
+      browse: [['themes','Theme Cards and All'],['types','Type Census'],['cards','Data Explorer']],
+      updates: [['updates','Updates']],
       health: [['health','Theme Health'],['guilds','Guild Experiments'],['overlap','Card Overlap'],['focus','Existing Lanes'],['map','Synergy Map'],['packets','Draft Packets'],['blink','Blink by Color'],['hidden','Weak Themes'],['tribes','Creature Types']],
       review: [['cuts','Cut Review'],['review','Tag Review Queue'],['seventeen','17Lands'],['quality','Card Quality']],
       discover: [['adjacency','Card Adjacency'],['discover','Scryfall Discovery'],['tags','Scryfall Tag Census']],
@@ -719,10 +802,36 @@ export function renderDashboard(data) {
     q('#subview-select').addEventListener('change',event=>activateView(activeGroup,event.target.value));
 
     const archetypeOptions = '<option value="all">All mainboard cards</option>'+DATA.themes.map(a => '<option value="'+e(a.id)+'">'+e(a.name)+'</option>').join('');
-    q('#change-note').innerHTML='Live list refreshed from version <strong>'+e(DATA.changes.fromVersion??'unknown')+'</strong> to <strong>'+e(DATA.changes.toVersion)+'</strong>. Added '+DATA.changes.added.map(x=>e(x.name)).join(', ')+'. Removed '+DATA.changes.removed.map(x=>e(x.name)).join(', ')+'.';
-    const changedCards=DATA.changes.added.map(change=>byId.get(change.cardId)).filter(Boolean);q('#change-gallery').innerHTML=changedCards.map(cardTile).join('');q('#change-count').textContent=changedCards.length+' current additions';bindCardButtons(q('#change-gallery'),'#theme-detail');
     q('#theme-select').innerHTML = archetypeOptions;
     q('#deal-archetype').innerHTML = DATA.themes.map(a => '<option value="'+e(a.id)+'">'+e(a.name)+'</option>').join('');
+    const visualThemeById=new Map(DATA.themeSupportVisual.themes.map(theme=>[theme.id,theme]));
+    let themeVisualColor=null;
+    const supportFill=colors=>{
+      const parts=Object.entries(colors).filter(([,count])=>count>0),total=parts.reduce((sum,[,count])=>sum+count,0);
+      if(!total)return 'linear-gradient(#30353a,#30353a)';
+      if(parts.length===1)return 'linear-gradient('+COLOR_HEX[parts[0][0]]+','+COLOR_HEX[parts[0][0]]+')';
+      let cursor=0;const stops=[];
+      parts.forEach(([color,count])=>{const start=cursor;cursor+=count/total*100;stops.push(COLOR_HEX[color]+' '+start.toFixed(2)+'% '+cursor.toFixed(2)+'%');});
+      return 'conic-gradient('+stops.join(',')+')';
+    };
+    const supportNode=(themeId,role,support,color=null)=>{
+      const count=color?support.colors[color]:support.count;
+      const diameter=color?support.colorDiameter[color]:support.diameter;
+      const roleName=roleLabel(role),scope=color?COLOR_NAMES[color]+' support':'all colors';
+      const colors=color?{[color]:count}:support.colors;
+      const breakdown=Object.entries(support.colors).filter(([,value])=>value).map(([key,value])=>key+' '+value).join(', ')||'no color support';
+      const tooltip=roleName+': '+count+' '+scope+(color?'':' · '+breakdown);
+      return '<button type="button" class="support-node '+role+'" data-theme-id="'+e(themeId)+'" data-role="'+role+'"'+(color?' data-color="'+color+'"':'')+' data-count="'+count+'" data-diameter="'+diameter+'" data-tooltip="'+e(tooltip)+'" title="'+e(tooltip)+'" aria-label="'+e('Show '+count+' '+scope+' '+roleName.toLowerCase()+' for '+(visualThemeById.get(themeId)?.name||themeId))+'" aria-pressed="'+String(Boolean(color&&themeVisualColor===color&&q('#theme-role').value===role))+'"><span class="support-circle'+(count?'':' zero')+'" style="--diameter:'+diameter+'px;--support-fill:'+supportFill(colors)+'"><span>'+(diameter>=28?count:'')+'</span></span><span class="support-label"><strong>'+count+'</strong> '+e(roleName)+'</span></button>';
+    };
+    const renderThemeColorVisual=archetype=>{
+      const panel=q('#theme-color-visual'),model=visualThemeById.get(archetype.id);
+      if(!model){panel.hidden=true;return;}
+      panel.hidden=false;
+      const enablerLeaders=model.roles.enablers.dominantColors.map(color=>COLOR_NAMES[color]).join(' / ')||'none';
+      const payoffLeaders=model.roles.payoffs.dominantColors.map(color=>COLOR_NAMES[color]).join(' / ')||'none';
+      panel.innerHTML='<div class="theme-color-head"><div><h3>'+e(archetype.name)+' by color and role</h3><p class="lede">Color identity, including multicolor cards.</p></div><div class="viz-legend"><span><i class="legend-mark"></i>Enablers</span><span><i class="legend-mark hatched"></i>Payoffs</span></div></div><div class="theme-color-grid">'+Object.keys(COLOR_NAMES).map(color=>'<div class="theme-color-column" data-theme-color="'+color+'"><div class="theme-color-name">'+pips(color==='C'?[]:[color])+' '+COLOR_NAMES[color]+'</div><div class="role-circles">'+supportNode(archetype.id,'enablers',model.roles.enablers,color)+supportNode(archetype.id,'payoffs',model.roles.payoffs,color)+'</div></div>').join('')+'</div><div class="theme-viz-foot">Most enablers: '+e(enablerLeaders)+' · Most payoffs: '+e(payoffLeaders)+'.</div>';
+      panel.querySelectorAll('.support-node').forEach(button=>button.addEventListener('click',()=>{resetThemeFilters();themeVisualColor=button.dataset.color;q('#theme-role').value=button.dataset.role;renderThemes();}));
+    };
     const renderThemes = () => {
       const themeValue=q('#theme-select').value;
       const allMode=themeValue==='all';
@@ -738,6 +847,9 @@ export function renderDashboard(data) {
       const term=q('#theme-search').value.trim().toLowerCase();
       q('#theme-role').disabled=allMode;
       if(allMode){
+        themeVisualColor=null;
+        q('#theme-color-visual').hidden=true;
+        q('#theme-visual-filter').hidden=true;
         q('#theme-role').value='all';
         const source=livePreviewMainboard||mainboard;
         const cards=sortCards(source.filter(card=>cardColorsMatchPool(card,colors)&&cardMatchesTypes(card,types,typeMode)&&cardMatchesPerformance(card,performance)&&cardMatchesFunction(card,fn)&&(!term||card.search.includes(term))),sorting,sortDirection);
@@ -748,13 +860,19 @@ export function renderDashboard(data) {
         bindCardButtons(q('#theme-groups'),'#theme-detail');
         return;
       }
+      renderThemeColorVisual(archetype);
+      const visualState=q('#theme-visual-filter');
+      visualState.hidden=!themeVisualColor;
+      visualState.innerHTML=themeVisualColor?'Showing '+e(COLOR_NAMES[themeVisualColor])+' support, including multicolor cards. <button type="button" class="command" id="clear-theme-visual">Clear color drilldown</button>':'';
+      q('#clear-theme-visual')?.addEventListener('click',()=>{themeVisualColor=null;renderThemes();});
       const pack = DATA.packModel.find(item => item.archetypeId === archetype.id);
-      const filteredRoleCards = Object.fromEntries(['enablers','payoffs','glue'].map(role => [role, archetype.roleCardIds[role].map(id=>byId.get(id)).filter(card=>card&&cardColorsMatchPool(card,colors)&&cardMatchesTypes(card,types,typeMode)&&cardMatchesPerformance(card,performance)&&cardMatchesFunction(card,fn)&&(!term||card.search.includes(term)))]));
+      const visualColorMatch=card=>!themeVisualColor||(themeVisualColor==='C'?card.colors.length===0:card.colors.includes(themeVisualColor));
+      const filteredRoleCards = Object.fromEntries(['enablers','payoffs','glue'].map(role => [role, archetype.roleCardIds[role].map(id=>byId.get(id)).filter(card=>card&&visualColorMatch(card)&&cardColorsMatchPool(card,colors)&&cardMatchesTypes(card,types,typeMode)&&cardMatchesPerformance(card,performance)&&cardMatchesFunction(card,fn)&&(!term||card.search.includes(term)))]));
       const ratio = filteredRoleCards.payoffs.length ? Math.round(filteredRoleCards.enablers.length/filteredRoleCards.payoffs.length*100)/100 : (filteredRoleCards.enablers.length ? 'Inf' : 0);
       const performanceCards=[...new Map(Object.values(filteredRoleCards).flat().map(card=>[card.id,card])).values()];
       const rated=performanceCards.filter(card=>card.seventeenLands?.score!=null);
       const average=(cards,getter,digits=1)=>cards.length?(cards.reduce((sum,card)=>sum+getter(card),0)/cards.length).toFixed(digits):'n/a';
-      q('#theme-stats').innerHTML = '<div class="stat"><strong>'+filteredRoleCards.enablers.length+'</strong><span>Enablers shown</span></div><div class="stat"><strong>'+filteredRoleCards.payoffs.length+'</strong><span>Hard payoffs shown</span></div><div class="stat"><strong>'+filteredRoleCards.glue.length+'</strong><span>Glue / soft synergy shown</span></div><div class="stat"><strong>'+e(ratio)+'</strong><span>Filtered enabler : payoff</span></div><div class="stat"><strong>'+rated.length+'</strong><span>17Lands rated</span></div><div class="stat"><strong>'+average(rated,card=>card.seventeenLands.score)+'</strong><span>Average 17Lands score</span></div><div class="stat"><strong>'+average(rated,card=>card.seventeenLands.avgPick)+'</strong><span>Average 17Lands pick</span></div><div class="stat"><strong>'+Math.round(Number(average(performanceCards,card=>card.pickCount,0))||0).toLocaleString()+'</strong><span>Average community picks</span></div><div class="stat"><strong>'+pack.packet.bothChance+'%</strong><span>Global pack sees both</span></div><div class="stat"><strong>'+pack.table.bothChance+'%</strong><span>Global 8-pack table sees both</span></div>';
+      q('#theme-stats').innerHTML = '<div class="stat"><strong>'+filteredRoleCards.enablers.length+'</strong><span>Enablers shown</span></div><div class="stat"><strong>'+filteredRoleCards.payoffs.length+'</strong><span>Payoffs shown</span></div><div class="stat"><strong>'+filteredRoleCards.glue.length+'</strong><span>Glue / soft synergy shown</span></div><div class="stat"><strong>'+e(ratio)+'</strong><span>Filtered enabler : payoff</span></div><div class="stat"><strong>'+rated.length+'</strong><span>17Lands rated</span></div><div class="stat"><strong>'+average(rated,card=>card.seventeenLands.score)+'</strong><span>Average 17Lands score</span></div><div class="stat"><strong>'+average(rated,card=>card.seventeenLands.avgPick)+'</strong><span>Average 17Lands pick</span></div><div class="stat"><strong>'+Math.round(Number(average(performanceCards,card=>card.pickCount,0))||0).toLocaleString()+'</strong><span>Average community picks</span></div><div class="stat"><strong>'+pack.packet.bothChance+'%</strong><span>Global pack sees both</span></div><div class="stat"><strong>'+pack.table.bothChance+'%</strong><span>Global 8-pack table sees both</span></div>';
       const roles = selectedRole === 'all' ? ['enablers','payoffs','glue'] : [selectedRole];
       let shown = 0;
       q('#theme-groups').innerHTML = roles.map(role => {
@@ -765,7 +883,9 @@ export function renderDashboard(data) {
       q('#theme-count').textContent = shown+' role assignments shown';
       bindCardButtons(q('#theme-groups'),'#theme-detail');
     };
-    ['#theme-select','#theme-role','#theme-function','#theme-performance','#theme-sort'].forEach(sel => q(sel).addEventListener('change',renderThemes));
+    q('#theme-select').addEventListener('change',()=>{themeVisualColor=null;renderThemes();});
+    q('#theme-role').addEventListener('change',()=>{themeVisualColor=null;renderThemes();});
+    ['#theme-function','#theme-performance','#theme-sort'].forEach(sel => q(sel).addEventListener('change',renderThemes));
     q('#theme-search').addEventListener('input',debounce(renderThemes));
     q('#theme-type-mode').querySelectorAll('input').forEach(input=>input.addEventListener('change',renderThemes));
     q('#theme-sort-direction').querySelectorAll('input').forEach(input=>input.addEventListener('change',renderThemes));
@@ -773,23 +893,24 @@ export function renderDashboard(data) {
     bindTypePool('#theme-types',renderThemes);
     viewInitializers.themes=renderThemes;
 
-    const averageOf=(cards,getter)=>cards.length?cards.reduce((sum,card)=>sum+getter(card),0)/cards.length:null;
-    const themeEvidence = theme => {
-      const cards=[...new Map(Object.values(theme.roleCardIds).flat().map(id=>[id,byId.get(id)])).values()].filter(Boolean);
-      const rated=cards.filter(card=>card.seventeenLands?.score!=null);
-      return {cards,rated,score:averageOf(rated,card=>card.seventeenLands.score),pick:averageOf(rated,card=>card.seventeenLands.avgPick),community:cards.reduce((sum,card)=>sum+card.pickCount,0)};
-    };
     const compactRows=(items)=>{const max=Math.max(1,...items.map(([,value])=>value));return items.map(([label,value,extra=''])=>'<div class="compact-row"><span>'+label+'</span><i class="compact-bar" style="width:'+Math.max(2,Math.round(value/max*100))+'%"></i><strong>'+value.toLocaleString()+e(extra)+'</strong></div>').join('');};
+    const resetThemeFilters=()=>{q('#theme-search').value='';q('#theme-function').value='all';q('#theme-performance').value='all';document.querySelectorAll('#theme-colors input,#theme-types input').forEach(input=>input.checked=false);};
+    const openThemeSupport=(themeId,role='all',color=null)=>{resetThemeFilters();q('#theme-select').value=themeId;q('#theme-role').value=role;themeVisualColor=color;renderThemes();activateView('browse','themes');};
     const renderOverviewThemes=()=>{
       const mode=q('#overview-theme-sort').value;
-      const items=DATA.themes.map(theme=>({theme,evidence:themeEvidence(theme)})).sort((a,b)=>{
-        if(mode==='pick')return (a.evidence.pick??99)-(b.evidence.pick??99)||b.theme.score-a.theme.score;
-        if(mode==='score')return (b.evidence.score??-1)-(a.evidence.score??-1)||b.theme.score-a.theme.score;
-        if(mode==='community')return b.evidence.community-a.evidence.community||b.theme.score-a.theme.score;
-        return b.theme.score-a.theme.score;
+      const items=DATA.themeSupportVisual.themes.slice().sort((a,b)=>{
+        if(mode==='enablers')return b.roles.enablers.count-a.roles.enablers.count||a.name.localeCompare(b.name);
+        if(mode==='payoffs')return b.roles.payoffs.count-a.roles.payoffs.count||a.name.localeCompare(b.name);
+        if(mode==='name')return a.name.localeCompare(b.name);
+        return (b.roles.enablers.count+b.roles.payoffs.count)-(a.roles.enablers.count+a.roles.payoffs.count)||a.name.localeCompare(b.name);
       });
-      q('#overview-themes').innerHTML=items.map(({theme,evidence})=>'<button class="theme-summary" data-theme-id="'+e(theme.id)+'"><header><strong>'+e(theme.name)+'</strong><span class="status '+statusClass(theme.status)+'">'+e(theme.status)+'</span></header><div class="bar"><i style="width:'+theme.score+'%"></i></div><small>'+theme.enablers+' E | '+theme.payoffs+' P | '+theme.glue+' glue | '+evidence.rated.length+' rated'+(evidence.pick!=null?' | avg pick '+evidence.pick.toFixed(1):'')+(evidence.score!=null?' | 17L '+evidence.score.toFixed(1):'')+'</small></button>').join('');
-      q('#overview-themes').querySelectorAll('[data-theme-id]').forEach(button=>button.addEventListener('click',()=>{q('#theme-select').value=button.dataset.themeId;renderThemes();activateView('browse','themes');}));
+      q('#overview-scale-note').textContent='Shared area scale: largest circle = '+DATA.themeSupportVisual.scaleMax+' cards.';
+      q('#overview-themes').innerHTML=items.map(theme=>{
+        const enablerLeaders=theme.roles.enablers.dominantColors.join('/')||'none',payoffLeaders=theme.roles.payoffs.dominantColors.join('/')||'none';
+        return '<article class="theme-viz-card" data-theme-card="'+e(theme.id)+'"><button type="button" class="theme-viz-title" data-open-theme="'+e(theme.id)+'">'+e(theme.name)+'</button><div class="role-circles">'+supportNode(theme.id,'enablers',theme.roles.enablers)+supportNode(theme.id,'payoffs',theme.roles.payoffs)+'</div><div class="theme-viz-foot">E color: '+enablerLeaders+' · P color: '+payoffLeaders+' · '+theme.glue+' glue</div></article>';
+      }).join('');
+      q('#overview-themes').querySelectorAll('[data-open-theme]').forEach(button=>button.addEventListener('click',()=>openThemeSupport(button.dataset.openTheme)));
+      q('#overview-themes').querySelectorAll('.support-node').forEach(button=>button.addEventListener('click',()=>openThemeSupport(button.dataset.themeId,button.dataset.role)));
     };
     const renderOverview=()=>{
       const nonlands=mainboard.filter(card=>!card.isLand);
@@ -797,13 +918,15 @@ export function renderDashboard(data) {
       const colors=['W','U','B','R','G','C'].map(color=>[color,mainboard.filter(card=>color==='C'?card.colors.length===0:card.colors.includes(color)).length]);
       const types=['Creature','Instant','Sorcery','Artifact','Enchantment','Planeswalker','Land'].map(type=>[e(type),DATA.typeCounts[type]||0]);
       const functions=[['Interaction',DATA.functionCounts.Interaction],['Value',DATA.functionCounts.Value]];
-      q('#overview-stats').innerHTML=[['Mainboard',DATA.cube.mainboardCount],['Strict themes',DATA.themes.length],['Themes / card',DATA.overlapDistribution.averageThemesPerCard],['Multi-theme',DATA.overlapDistribution.multiThemePercent+'%'],['17Lands coverage',DATA.summary.seventeenLandsCoverage],['Likely cuts',DATA.summary.likelyCutCount],['Oracle tags',DATA.summary.oracleTagCount],['Snapshot version','v'+DATA.cube.version]].map(([label,value])=>'<div class="overview-stat"><strong>'+e(value)+'</strong><span>'+e(label)+'</span></div>').join('');
+      const overviewStats=[['Mainboard',DATA.cube.mainboardCount,'browse','themes'],['Themes',DATA.themes.length,'browse','themes'],['Themes / card',DATA.overlapDistribution.averageThemesPerCard,'health','overlap'],['Multi-theme',DATA.overlapDistribution.multiThemePercent+'%','health','overlap'],['17Lands coverage',DATA.summary.seventeenLandsCoverage,'review','seventeen'],['Cards flagged',DATA.summary.likelyCutCount,'review','cuts'],['Oracle tags',DATA.summary.oracleTagCount,'discover','tags']];
+      q('#overview-stats').innerHTML=overviewStats.map(([label,value,group,view])=>'<button type="button" class="overview-stat" data-jump-group="'+group+'" data-jump-view="'+view+'" data-jump-label="'+e(label)+'" aria-label="Open '+e(label)+' details"><strong>'+e(value)+'</strong><span>'+e(label)+'</span></button>').join('');
+      q('#overview-stats').querySelectorAll('[data-jump-group]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.jumpLabel==='Mainboard'){openThemeSupport('all');return;}if(button.dataset.jumpLabel==='Themes'){q('#overview-themes').scrollIntoView({block:'start'});return;}activateView(button.dataset.jumpGroup,button.dataset.jumpView);}));
       q('#overview-curve').innerHTML=compactRows(curve);
       q('#overview-colors').innerHTML=compactRows(colors.map(([color,value])=>[pips(color==='C'?[]:[color]),value]));
       q('#overview-types').innerHTML=compactRows(types);
       q('#overview-functions').innerHTML=compactRows(functions);
-      q('#overview-weak').innerHTML='<div class="compact-list">'+DATA.themes.slice().sort((a,b)=>a.score-b.score).slice(0,7).map(theme=>'<button class="all-card-row" data-theme-id="'+e(theme.id)+'"><strong>'+e(theme.name)+'</strong><br><small>'+e(theme.status)+' | '+theme.enablers+' E | '+theme.payoffs+' P | score '+theme.score+'</small></button>').join('')+'</div>';
-      q('#overview-weak').querySelectorAll('[data-theme-id]').forEach(button=>button.addEventListener('click',()=>{q('#theme-select').value=button.dataset.themeId;renderThemes();activateView('browse','themes');}));
+      q('#overview-weak').innerHTML='<div class="compact-list">'+DATA.themeSupportVisual.themes.slice().sort((a,b)=>(a.roles.enablers.count+a.roles.payoffs.count)-(b.roles.enablers.count+b.roles.payoffs.count)).slice(0,7).map(theme=>'<button class="all-card-row" data-theme-id="'+e(theme.id)+'"><strong>'+e(theme.name)+'</strong><br><small>'+theme.roles.enablers.count+' enablers · '+theme.roles.payoffs.count+' payoffs · '+theme.glue+' glue</small></button>').join('')+'</div>';
+      q('#overview-weak').querySelectorAll('[data-theme-id]').forEach(button=>button.addEventListener('click',()=>openThemeSupport(button.dataset.themeId)));
       const attention=mainboard.filter(card=>card.weakness?.reviewTier==='Likely cut').sort((a,b)=>b.weakness.reviewScore-a.weakness.reviewScore);
       q('#overview-attention').innerHTML=attention.map(card=>'<button class="all-card-row" data-card-id="'+e(card.id)+'"><strong>'+e(card.name)+'</strong><br><small>'+card.weakness.negativeSignals+' independent signals | '+card.strictThemeCount+' strict themes</small></button>').join('')||'<p class="empty">No likely-cut cards in this snapshot.</p>';
       q('#overview-attention').querySelectorAll('[data-card-id]').forEach(button=>button.addEventListener('click',()=>{activateView('review','cuts');showCard(button.dataset.cardId,'#cut-detail');}));
@@ -811,6 +934,36 @@ export function renderDashboard(data) {
     };
     q('#overview-theme-sort').addEventListener('change',renderOverviewThemes);
     renderOverview();
+
+    const groupUpdateEvents = ${groupUpdateEvents.toString()};
+    let updatePeriod='week';
+    const updateCard=item=>'<figure class="change-card">'+(item.imageUrl?'<img src="'+e(item.imageUrl)+'" alt="'+e(item.name)+'" loading="lazy">':'<div class="change-card-placeholder" role="img" aria-label="Artwork unavailable for '+e(item.name)+'"></div>')+'<figcaption>'+e(item.name)+'</figcaption></figure>';
+    const updateGroup=(title,items)=>items?.length?'<div class="change-group"><h3>'+e(title)+' · '+items.length+'</h3><div class="change-cards">'+items.map(updateCard).join('')+'</div></div>':'';
+    const renderUpdates=()=>{
+      const history=DATA.updateHistory;
+      document.querySelectorAll('[data-update-period]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.updatePeriod===updatePeriod)));
+      if(!history?.available){
+        q('#updates-coverage').textContent=history?.coverage?.note||'Dated update history is not available for this snapshot.';
+        q('#updates-list').innerHTML='<div class="note"><strong>No dated history available.</strong> The dashboard will not infer dates or replacement pairs from a snapshot diff.</div>';
+        return;
+      }
+      const now=new Date(),days={week:7,month:30,quarter:90}[updatePeriod];
+      const events=(history.events||[]).filter(event=>{
+        if(event.date==null)return updatePeriod==='all';
+        const date=new Date(event.date);return !Number.isNaN(date.getTime())&&(updatePeriod==='all'||date>=new Date(now.getTime()-days*86400000))&&date<=now;
+      }).sort((a,b)=>a.date==null?1:b.date==null?-1:new Date(b.date)-new Date(a.date));
+      const coverage=history.coverage||{};
+      const dateLabel=value=>Number.isNaN(new Date(value).getTime())?value:new Intl.DateTimeFormat(undefined,{dateStyle:'medium'}).format(new Date(value));
+      q('#updates-coverage').textContent=[events.length+' updates',coverage.from&&coverage.to?'Recorded '+dateLabel(coverage.from)+' to '+dateLabel(coverage.to):'', 'Mainboard · Recorded swaps only'].filter(Boolean).join(' · ');
+      q('#updates-list').innerHTML=groupUpdateEvents(events,updatePeriod).map(group=>'<h3 class="update-period-heading">'+e(group.label)+' <small>'+group.events.reduce((n,event)=>n+event.added.length+event.replacements.length,0)+' in · '+group.events.reduce((n,event)=>n+event.removed.length+event.replacements.length,0)+' out</small></h3>'+group.events.map(event=>{
+        const date=event.date==null?'<span class="undated">Undated snapshot comparison</span>':'<time datetime="'+e(event.date)+'">'+e(new Intl.DateTimeFormat(undefined,{dateStyle:'long'}).format(new Date(event.date)))+'</time>';
+        const source=event.sourceUrl?'<a href="'+e(event.sourceUrl)+'" target="_blank" rel="noreferrer">Source</a>':'';
+        const replacements=event.replacements?.length?'<div class="change-group"><h3>Recorded replacements · '+event.replacements.length+'</h3><div class="replacement-list">'+event.replacements.map(pair=>'<div class="replacement">'+updateCard(pair.from)+'<span class="replacement-arrow" aria-hidden="true">→</span>'+updateCard(pair.to)+'</div>').join('')+'</div></div>':'';
+        return '<article class="update-event" data-update-id="'+e(event.id)+'"><div class="update-event-head"><div><h3>'+e(event.title)+'</h3>'+source+'</div>'+date+'</div><div class="update-event-body">'+updateGroup('Added',event.added)+updateGroup('Removed',event.removed)+replacements+'</div></article>';
+      }).join('')).join('')||'<p class="empty">No dated updates fall within this period.'+(updatePeriod==='all'?'':' Try a longer range.')+'</p>';
+    };
+    document.querySelectorAll('[data-update-period]').forEach(button=>button.addEventListener('click',()=>{updatePeriod=button.dataset.updatePeriod;renderUpdates();}));
+    viewInitializers.updates=renderUpdates;
 
     const countNames=cards=>{const counts=new Map();cards.forEach(card=>counts.set(card.name,(counts.get(card.name)||0)+1));return counts;};
     const nameDiff=(before,after)=>{const a=countNames(before),b=countNames(after),added=[],removed=[];for(const [name,count] of b){const delta=count-(a.get(name)||0);for(let i=0;i<delta;i++)added.push(name);}for(const [name,count] of a){const delta=count-(b.get(name)||0);for(let i=0;i<delta;i++)removed.push(name);}return {added,removed};};
@@ -854,7 +1007,7 @@ export function renderDashboard(data) {
       const experiment=DATA.guildExperiments.find(x=>x.id===q('#guild-select').value)||DATA.guildExperiments[0];
       const visibility=experiment.visibility;
       q('#guild-verdict').innerHTML='<strong>'+e(experiment.name)+':</strong> '+e(experiment.verdict)+' <strong>Balance goal:</strong> '+(experiment.balanceGoalMet?'met':'not met')+'.';
-      q('#guild-stats').innerHTML='<div class="stat"><strong>'+experiment.roleCardIds.enablers.length+'</strong><span>Enablers</span></div><div class="stat"><strong>'+experiment.roleCardIds.payoffs.length+'</strong><span>Hard payoffs</span></div><div class="stat"><strong>'+experiment.colors[0]+': '+experiment.roleColorContributions.payoffs[experiment.colors[0]]+'</strong><span>Hard payoffs using first color</span></div><div class="stat"><strong>'+experiment.colors[1]+': '+experiment.roleColorContributions.payoffs[experiment.colors[1]]+'</strong><span>Hard payoffs using second color</span></div><div class="stat"><strong>'+visibility.packet.bothChance+'%</strong><span>One pack sees both</span></div><div class="stat"><strong>'+visibility.table.bothChance+'%</strong><span>Eight packs see both</span></div><div class="stat"><strong>'+experiment.flexibleCards.length+'</strong><span>Support multiple themes</span></div>';
+      q('#guild-stats').innerHTML='<div class="stat"><strong>'+experiment.roleCardIds.enablers.length+'</strong><span>Enablers</span></div><div class="stat"><strong>'+experiment.roleCardIds.payoffs.length+'</strong><span>Payoffs</span></div><div class="stat"><strong>'+experiment.colors[0]+': '+experiment.roleColorContributions.payoffs[experiment.colors[0]]+'</strong><span>Payoffs using first color</span></div><div class="stat"><strong>'+experiment.colors[1]+': '+experiment.roleColorContributions.payoffs[experiment.colors[1]]+'</strong><span>Payoffs using second color</span></div><div class="stat"><strong>'+visibility.packet.bothChance+'%</strong><span>One pack sees both</span></div><div class="stat"><strong>'+visibility.table.bothChance+'%</strong><span>Eight packs see both</span></div><div class="stat"><strong>'+experiment.flexibleCards.length+'</strong><span>Support multiple themes</span></div>';
       q('#guild-content').innerHTML=['enablers','payoffs','glue'].map(role=>roleGallery(roleLabel(role),experiment.roleCardIds[role])).join('')+'<div class="role-section"><div class="role-head"><h3>Flexible support</h3><span>'+experiment.flexibleCards.length+' cards</span></div><div class="card-gallery">'+experiment.flexibleCards.slice(0,80).map(item=>cardTile(byId.get(item.id))).join('')+'</div></div>';
       q('#guild-count').textContent=experiment.supportIds.length+' distinct support cards';
       bindCardButtons(q('#guild-content'),'#guild-detail');
@@ -905,10 +1058,10 @@ export function renderDashboard(data) {
     };
     const renderFocus = () => {
       const mode=q('#focus-select').value;let groups=[],stats=[];
-      if(mode==='artifacts'){const x=DATA.diagnostics.urArtifact;groups=[['UR artifact enablers',x.enablers],['UR explicit artifact hard payoffs',x.payoffs],['UR artifact glue / soft synergy',x.glue]];stats=[['Enablers',x.enablers.length],['Hard payoffs',x.payoffs.length],['Glue / soft synergy',x.glue.length]];}
+      if(mode==='artifacts'){const x=DATA.diagnostics.urArtifact;groups=[['UR artifact enablers',x.enablers],['UR explicit artifact payoffs',x.payoffs],['UR artifact glue / soft synergy',x.glue]];stats=[['Enablers',x.enablers.length],['Payoffs',x.payoffs.length],['Glue / soft synergy',x.glue.length]];}
       if(mode==='noncreature'){const t=DATA.themes.find(x=>x.id==='noncreature-spells');groups=[['Broad noncreature-only rewards',DATA.diagnostics.broadNoncreatureOnlyIds],['All broad noncreature rewards',DATA.diagnostics.noncreaturePayoffIds]];stats=[['All inputs',t.enablers],['Broad payoffs',t.payoffs],['UR payoffs',t.focusRoleCounts.payoffs]];}
       if(mode==='spells'){groups=[['Specific cast rewards being considered for removal',DATA.diagnostics.specificCastRewardIds],['Every card that mentions instant and/or sorcery',DATA.diagnostics.instantSorcerySpecificIds]];stats=[['Specific mentions',DATA.diagnostics.instantSorcerySpecificIds.length],['Narrow cast rewards',DATA.diagnostics.specificCastRewardIds.length]];}
-      if(mode==='enchantress'){const x=DATA.diagnostics.gwEnchantress;groups=[['True GW Enchantress draw engines',x.drawEngines],['All GW explicit Enchantress hard payoffs',x.payoffs],['GW enchantments',x.enablers],['GW tutor and recursion glue',x.glue]];stats=[['Enchantments',x.enablers.length],['Hard payoffs',x.payoffs.length],['Draw engines',x.drawEngines.length],['Glue',x.glue.length]];}
+      if(mode==='enchantress'){const x=DATA.diagnostics.gwEnchantress;groups=[['True GW Enchantress draw engines',x.drawEngines],['All GW explicit Enchantress payoffs',x.payoffs],['GW enchantments',x.enablers],['GW tutor and recursion glue',x.glue]];stats=[['Enchantments',x.enablers.length],['Payoffs',x.payoffs.length],['Draw engines',x.drawEngines.length],['Glue',x.glue.length]];}
       q('#focus-stats').innerHTML=stats.map(([label,value])=>'<div class="stat"><strong>'+value+'</strong><span>'+e(label)+'</span></div>').join('');q('#focus-content').innerHTML=groups.map(([title,ids])=>roleGallery(title,ids)).join('');q('#focus-count').textContent=groups.reduce((sum,g)=>sum+g[1].length,0)+' role assignments';bindCardButtons(q('#focus-content'),'#focus-detail');
     };
     q('#focus-select').addEventListener('change',renderFocus);viewInitializers.focus=renderFocus;
@@ -946,8 +1099,8 @@ export function renderDashboard(data) {
       const es=new Set(archetype.roleCardIds.enablers),ps=new Set(archetype.roleCardIds.payoffs),gs=new Set(archetype.roleCardIds.glue); let totalE=0,totalP=0,coherent=0;
       q('#packet-deal').innerHTML=Array.from({length:players},(_,i)=>{const packet=deck.slice(i*size,(i+1)*size);const support=packet.filter(c=>es.has(c.id)||ps.has(c.id)||gs.has(c.id));const ec=packet.filter(c=>es.has(c.id)).length,pc=packet.filter(c=>ps.has(c.id)).length,gc=packet.filter(c=>gs.has(c.id)).length;totalE+=ec;totalP+=pc;if(ec&&pc)coherent++;
         const mini=support.map(c=>'<button class="mini-card" data-card-id="'+e(c.id)+'" title="'+e(c.name)+'"><img src="'+e(c.image)+'" alt="'+e(c.name)+'" loading="lazy"><span>'+(es.has(c.id)?'E':'')+(ps.has(c.id)?'P':'')+(gs.has(c.id)?'G':'')+'</span></button>').join('');
-        return '<div class="packet"><div class="packet-summary"><strong>Packet '+(i+1)+'</strong>'+ec+' enablers | '+pc+' hard payoffs | '+gc+' soft synergy</div><div class="packet-cards">'+(mini||'<span class="empty">No support cards in this packet.</span>')+'</div></div>';}).join('');
-      q('#deal-summary').textContent=totalE+' enablers, '+totalP+' hard payoffs, '+coherent+' coherent packets';
+        return '<div class="packet"><div class="packet-summary"><strong>Packet '+(i+1)+'</strong>'+ec+' enablers | '+pc+' payoffs | '+gc+' soft synergy</div><div class="packet-cards">'+(mini||'<span class="empty">No support cards in this packet.</span>')+'</div></div>';}).join('');
+      q('#deal-summary').textContent=totalE+' enablers, '+totalP+' payoffs, '+coherent+' coherent packets';
     };
     q('#deal-button').addEventListener('click',dealPackets);q('#deal-archetype').addEventListener('change',dealPackets);viewInitializers.packets=()=>{renderPacketMath();dealPackets();};
 

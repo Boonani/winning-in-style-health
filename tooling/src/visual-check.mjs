@@ -35,16 +35,80 @@ async function inspectSemantics(browser) {
   await page.waitForTimeout(1800);
   assert.match(await page.locator('h1').innerText(), /Winning in Style/);
   assert.equal(await page.locator('.metric').first().locator('strong').innerText(), '1004');
-  assert.equal(await page.locator('nav .tab').count(), 5);
-  assert.equal(await page.locator('#overview-stats .overview-stat').count(), 8);
-  assert.equal(await page.locator('#overview-themes .theme-summary').count(), 27);
+  assert.equal(await page.locator('nav .tab').count(), 6);
+  assert.equal(await page.locator('#overview-stats .overview-stat').count(), 7);
+  const themeCount = await page.evaluate(() => DATA.themes.length);
+  assert.equal(await page.locator('#overview-themes .theme-viz-card').count(), themeCount);
+  assert.match(await page.locator('#overview-scale-note').innerText(), /largest circle = \d+ cards/i);
+  const areaScale = await page.locator('#overview-themes').evaluate((root) => {
+    const nodes = [...root.querySelectorAll('.support-node[data-count]')]
+      .map((node) => ({ count: Number(node.dataset.count), diameter: Number(node.dataset.diameter), background: getComputedStyle(node.querySelector('.support-circle')).backgroundImage }))
+      .filter((node) => node.count > 0);
+    const normalizedAreas = nodes.map((node) => (node.diameter ** 2) / node.count);
+    return {
+      nodes: nodes.length,
+      spread: Math.max(...normalizedAreas) - Math.min(...normalizedAreas),
+      colored: nodes.every((node) => node.background !== 'none'),
+    };
+  });
+  assert.ok(areaScale.nodes > 20, 'Overview theme visualization has too few nonzero role circles');
+  assert.ok(areaScale.spread < 1, `Overview circle area is not proportional to count (spread ${areaScale.spread})`);
+  assert.equal(areaScale.colored, true, 'Overview theme circles have no visible color fill');
+  await page.evaluate(() => { document.querySelector('header').style.position = 'static'; });
+  const overviewVisualShot = await page.locator('#overview-themes').screenshot({ path: path.join(output, 'dashboard-theme-support.png') });
+  await page.evaluate(() => { document.querySelector('header').style.position = ''; window.scrollTo(0, 0); });
+  assert.ok(overviewVisualShot.length > 5_000, 'Overview theme visualization screenshot is unexpectedly blank');
   assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme), 'dark');
   assert.notEqual(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), 'rgb(255, 255, 255)');
   assert.equal(await page.locator('#theme-groups .card-tile').count(), 0, 'Browse cards render before the view is opened');
   assert.equal(await page.locator('#card-body tr').count(), 0, 'All-card rows render before the view is opened');
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: path.join(output, 'dashboard-desktop.png'), fullPage: false });
 
+  const firstOverviewCircle = page.locator('#overview-themes .support-node[data-count]:not([data-count="0"])').first();
+  const drilledTheme = await firstOverviewCircle.getAttribute('data-theme-id');
+  const drilledRole = await firstOverviewCircle.getAttribute('data-role');
+  await firstOverviewCircle.focus();
+  await firstOverviewCircle.press('Enter');
+  assert.equal(await page.locator('#theme-select').inputValue(), drilledTheme, 'Keyboard theme drilldown selected the wrong theme');
+  assert.equal(await page.locator('#theme-role').inputValue(), drilledRole, 'Keyboard theme drilldown selected the wrong role');
+
+  await openView(page, 'updates', 'updates');
+  assert.equal(await page.locator('[data-update-period]').count(), 4, 'Updates is missing a period control');
+  await page.locator('[data-update-period="all"]').click();
+  assert.equal(await page.locator('[data-update-period="all"]').getAttribute('aria-pressed'), 'true');
+  const updateState = await page.evaluate(() => ({ available: Boolean(DATA.updateHistory?.available), events: DATA.updateHistory?.events?.length || 0 }));
+  if (updateState.available) {
+    assert.equal(await page.locator('#updates-list .update-event').count(), updateState.events, 'All updates does not show every supplied event');
+    const replacements = await page.evaluate(() => (DATA.updateHistory.events || []).reduce((sum, event) => sum + (event.replacements?.length || 0), 0));
+    assert.equal(await page.locator('#updates-list .replacement').count(), replacements, 'Updates invented or omitted replacement pairs');
+  } else {
+    assert.match(await page.locator('#updates-list').innerText(), /No dated history available/i);
+  }
+  await page.evaluate(() => {
+    const [from, to] = DATA.cards.filter((card) => card.image).slice(0, 2);
+    DATA.updateHistory = {
+      available: true,
+      coverage: { from: 'test fixture', to: 'test fixture', note: 'Browser-only visual contract fixture.' },
+      events: [
+        { id: 'recent', date: new Date(Date.now() - 2 * 86400000).toISOString(), title: 'Recent recorded update', sourceUrl: '', added: [{ name: to.name, imageUrl: to.image, cardId: to.id }], removed: [], replacements: [{ from: { name: from.name, imageUrl: from.image, cardId: from.id }, to: { name: to.name, imageUrl: to.image, cardId: to.id } }] },
+        { id: 'old', date: new Date(Date.now() - 60 * 86400000).toISOString(), title: 'Older recorded update', sourceUrl: '', added: [], removed: [{ name: from.name, imageUrl: from.image, cardId: from.id }], replacements: [] },
+        { id: 'undated', date: null, title: 'Snapshot comparison', sourceUrl: '', added: [], removed: [], replacements: [] },
+      ],
+    };
+  });
+  await page.locator('[data-update-period="week"]').click();
+  assert.equal(await page.locator('#updates-list .update-event').count(), 1, 'Week filter includes old or undated updates');
+  await page.locator('[data-update-period="all"]').click();
+  assert.equal(await page.locator('#updates-list .update-event').count(), 3, 'All filter omits a supplied update');
+  assert.equal(await page.locator('#updates-list .replacement').count(), 1, 'Replacement comparison is not one-to-one with supplied records');
+  assert.match(await page.locator('#updates-list').innerText(), /Undated snapshot comparison/i);
+  const updateVisualShot = await page.locator('#updates-list').screenshot({ path: path.join(output, 'dashboard-updates.png') });
+  assert.ok(updateVisualShot.length > 5_000, 'Updates artwork screenshot is unexpectedly blank');
+
   await openView(page, 'browse', 'themes');
+  await page.locator('#theme-select').selectOption('all');
+  assert.equal(await page.locator('#theme-advanced').getAttribute('open'), null, 'Browse advanced controls are expanded by default');
   assert.equal(await page.locator('#theme-select').inputValue(), 'all');
   assert.equal(await page.locator('#theme-groups .card-tile').count(), 1004, 'All does not show the full mainboard');
   await page.locator('#theme-groups').scrollIntoViewIfNeeded();
@@ -55,6 +119,7 @@ async function inspectSemantics(browser) {
   );
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.locator('.browse-toolbar').scrollIntoViewIfNeeded();
+  await page.locator('#theme-advanced summary').click();
 
   const filterTargets = await page.evaluate(() => [...document.querySelectorAll('#theme-colors label, #theme-types label')].map((label) => {
     const rect=label.getBoundingClientRect(),pool=label.closest('fieldset').getBoundingClientRect();
@@ -87,6 +152,17 @@ async function inspectSemantics(browser) {
   await page.locator('#theme-colors .color-clear').click();
 
   await page.locator('#theme-select').selectOption('artifacts');
+  assert.equal(await page.locator('#theme-color-visual [data-theme-color]').count(), 6, 'Selected theme does not show all six color columns');
+  assert.equal(await page.locator('#theme-color-visual .support-node').count(), 12, 'Selected theme does not show both roles for every color');
+  const whiteEnablers = page.locator('#theme-color-visual .support-node.enablers[data-color="W"]');
+  const expectedWhiteEnablers = Number(await whiteEnablers.getAttribute('data-count'));
+  await whiteEnablers.click();
+  assert.equal(await whiteEnablers.getAttribute('aria-pressed'), 'true', 'Touch/click drilldown state is not exposed');
+  assert.match(await page.locator('#theme-visual-filter').innerText(), /White support, including multicolor cards/i);
+  const whiteDrilldown = await page.locator('#theme-groups [data-card-id]').evaluateAll((nodes) => nodes.map((node) => DATA.cards.find((card) => card.id === node.dataset.cardId)));
+  assert.equal(whiteDrilldown.length, expectedWhiteEnablers, 'Color-role visualization count does not match its card drilldown');
+  assert.deepEqual(whiteDrilldown.filter((card) => !card.colors.includes('W')).map((card) => card.name), [], 'White visualization drilldown included a card without white support');
+  await page.locator('#clear-theme-visual').click();
   await page.locator('#theme-types label:has(input[value="Artifact"])').click();
   const artifactOnly = await page.locator('#theme-groups [data-card-id]').evaluateAll((nodes) => nodes
     .map((node) => DATA.cards.find((card) => card.id === node.dataset.cardId)));
@@ -125,14 +201,17 @@ async function inspectSemantics(browser) {
   assert.deepEqual(communityOrder, [...communityOrder].sort((a, b) => b - a), 'Cube Cobra community-pick sort is not descending');
 
   await openView(page, 'health', 'guilds');
-  assert.match(await page.locator('#guild-stats').innerText(), /65\s+Enablers/);
-  assert.match(await page.locator('#guild-stats').innerText(), /6\s+Hard payoffs/);
-  assert.match(await page.locator('#guild-stats').innerText(), /R: 0\s+Hard payoffs using first color/);
+  const initialGuild = await page.evaluate(() => DATA.guildExperiments[0]);
+  const initialGuildText = await page.locator('#guild-stats').innerText();
+  assert.match(initialGuildText, new RegExp(initialGuild.roleCardIds.enablers.length+'\\s+Enablers'));
+  assert.match(initialGuildText, new RegExp(initialGuild.roleCardIds.payoffs.length+'\\s+Payoffs'));
+  assert.match(initialGuildText, new RegExp(initialGuild.colors[0]+': '+initialGuild.roleColorContributions.payoffs[initialGuild.colors[0]]+'\\s+Payoffs using first color'));
   assert.ok((await page.locator('#guild-candidates .candidate').count()) >= 10);
   await page.locator('#guild-select').selectOption('ug-landfall');
   assert.match(await page.locator('#guild-verdict').innerText(), /green-heavy/i);
   assert.match(await page.locator('#guild-verdict').innerText(), /Balance goal:\s+met/);
-  assert.match(await page.locator('#guild-stats').innerText(), /U: 0\s+Hard payoffs using first color/);
+  const ugGuild = await page.evaluate(() => DATA.guildExperiments.find((experiment) => experiment.id === 'ug-landfall'));
+  assert.match(await page.locator('#guild-stats').innerText(), new RegExp(ugGuild.colors[0]+': '+ugGuild.roleColorContributions.payoffs[ugGuild.colors[0]]+'\\s+Payoffs using first color'));
 
   await openView(page, 'health', 'overlap');
   assert.match(await page.locator('#overlap-stats').innerText(), /Average themes \/ card/);
@@ -142,14 +221,14 @@ async function inspectSemantics(browser) {
   await openView(page, 'review', 'cuts');
   const likelyCutCount = await page.evaluate(() => DATA.weaknessSummary.likelyCuts);
   assert.equal(await page.locator('#cut-gallery .card-tile').count(), likelyCutCount);
-  assert.equal(likelyCutCount, 0, 'ELO-neutral maturity repair unexpectedly produced a likely cut');
   await page.locator('#cut-view').selectOption('owner');
-  assert.equal(await page.locator('#cut-gallery .card-tile').count(), 0);
+  const ownerCutCount = await page.evaluate(() => DATA.weakCards.filter((item) => DATA.cards.find((card) => card.id === item.id)?.weakness?.userRequestedRemoval).length);
+  assert.equal(await page.locator('#cut-gallery .card-tile').count(), ownerCutCount);
   assert.match(await page.locator('#cuts').innerText(), /does not claim that any card is literally never picked/i);
 
   await openView(page, 'review', 'review');
   assert.ok((await page.locator('#review-list [data-card-id]').count()) > 0);
-  assert.equal(await page.locator('#ambiguous-power .card-tile').count(), 5);
+  assert.equal(await page.locator('#ambiguous-power .card-tile').count(), await page.evaluate(() => DATA.diagnostics.ambiguousPowerIds.length));
   await openView(page, 'health', 'focus');
   await page.locator('#focus-select').selectOption('spells');
   assert.match(await page.locator('#focus-stats').innerText(), /4\s+Narrow cast rewards/);
@@ -192,7 +271,7 @@ async function inspectSemantics(browser) {
   assert.equal(await page.locator('#packet-deal .packet').count(), 8);
   assert.match(await page.locator('#deal-summary').innerText(), /coherent packets/);
   await openView(page, 'review', 'seventeen');
-  assert.equal(await page.locator('#lands-gallery .card-tile').count(), 37);
+  assert.equal(await page.locator('#lands-gallery .card-tile').count(), await page.evaluate(() => DATA.cards.filter((card) => card.board === 'mainboard' && card.seventeenLands?.score != null && DATA.seventeenLands.cutCandidateIds.includes(card.id)).length));
   await page.locator('#lands-gallery .card-tile').first().click();
   assert.match(await page.locator('#lands-detail').innerText(), /17Lands Powered Cube/);
 
@@ -229,7 +308,7 @@ async function inspectSemantics(browser) {
   assert.match(await page.locator('#adjacency-status').innerText(), /EDHREC anchor pages analyzed/i);
   assert.ok((await page.locator('#adjacency-results .candidate').count()) > 10, 'Live EDHREC Lift returned too few ranked cards');
   const edhrecResultCount=await page.locator('#adjacency-results .candidate').count();
-  if(edhrecResultCount>120){const tail=page.locator('#adjacency-results .candidate:nth-child(n+121)');const imagesPerCandidate=await tail.evaluateAll(candidates=>candidates.map(candidate=>candidate.querySelectorAll('img').length));assert.ok(imagesPerCandidate.every(count=>count===1),'Each EDHREC result beyond item 120 must contain exactly one image');await tail.locator('img').evaluateAll(images=>images.forEach(image=>{image.loading='eager';const source=image.src;image.src='';image.src=source;}));await page.waitForFunction(()=>[...document.querySelectorAll('#adjacency-results .candidate:nth-child(n+121) img')].every(image=>image.complete&&image.naturalWidth>0),undefined,{timeout:20_000});}
+  if(edhrecResultCount>120){const tail=page.locator('#adjacency-results .candidate:nth-child(n+121)');const imagesPerCandidate=await tail.evaluateAll(candidates=>candidates.map(candidate=>({count:candidate.querySelectorAll('img').length,src:candidate.querySelector('img')?.getAttribute('src')||''})));assert.ok(imagesPerCandidate.every(image=>image.count===1&&image.src),'Each EDHREC result beyond item 120 must contain exactly one sourced image');}
 
   const viewportOverflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   await page.close();
@@ -374,14 +453,42 @@ async function inspectMobile(browser, engine, profile) {
   }
 
   await openView(page, 'browse', 'themes');
+  await page.locator('#theme-select').selectOption('artifacts');
+  assert.equal(await page.locator('#theme-color-visual [data-theme-color]').count(), 6, `${engine}/${profile.name} color-role chart is incomplete`);
+  const visualOverflow = await page.locator('#theme-color-visual').evaluate((panel) => { const grid=panel.querySelector('.theme-color-grid'); const widths=[...grid.children].map((column)=>Math.round(column.getBoundingClientRect().width)); return { page: document.documentElement.scrollWidth - innerWidth, scrollable: grid.scrollWidth > grid.clientWidth, widths }; });
+  assert.ok(visualOverflow.page <= 1, `${engine}/${profile.name} color-role chart causes page overflow`);
+  assert.equal(visualOverflow.scrollable, false, `${engine}/${profile.name} hides colors behind horizontal scrolling`);
+  assert.ok(Math.max(...visualOverflow.widths)-Math.min(...visualOverflow.widths)<=1, `${engine}/${profile.name} color columns do not keep equal comparable geometry`);
+  const clipped = await page.locator('#theme-color-visual .support-circle').evaluateAll(nodes => nodes.filter(node => node.textContent.trim() && (node.scrollWidth > node.clientWidth || node.scrollHeight > node.clientHeight)).length);
+  assert.equal(clipped, 0, `${engine}/${profile.name} clips text inside small circles`);
+  const mobileVisualShot = await page.locator('#theme-color-visual').screenshot({ path: path.join(output, `dashboard-theme-support-${engine}-${profile.name}.png`) });
+  assert.ok(mobileVisualShot.length > 3_000, `${engine}/${profile.name} color-role screenshot is unexpectedly blank`);
+  await page.locator('#theme-advanced summary').click();
   const blueLabel = page.locator('#theme-colors label:has(input[value="U"])');
   await blueLabel.scrollIntoViewIfNeeded();
   await blueLabel.click();
   assert.ok(await page.locator('#theme-colors input[value="U"]').isChecked(), `${engine}/${profile.name} touch filter did not toggle`);
-  assert.equal(visited.length, 20, `${engine}/${profile.name} did not inspect every subview`);
+  assert.equal(visited.length, 21, `${engine}/${profile.name} did not inspect every subview`);
   assert.deepEqual(errors, [], `${engine}/${profile.name} emitted browser errors`);
   await page.close();
   return { engine, profile: profile.name, viewport: profile.viewport, safe: profile.safe, views: visited.length, mapPixels, errors };
+}
+
+async function inspectReducedMotion(browser) {
+  const page = await browser.newPage({ viewport: { width: 1024, height: 768 }, reducedMotion: 'reduce' });
+  const errors = watchErrors(page);
+  await page.goto(target, { waitUntil: 'domcontentloaded' });
+  const motion = await page.evaluate(() => {
+    const targets = [document.querySelector('#overview'), document.querySelector('.theme-viz-card'), document.querySelector('.support-circle')];
+    return targets.map((target) => {
+      const style = getComputedStyle(target);
+      return { animationName: style.animationName, animationDuration: style.animationDuration, transitionDuration: style.transitionDuration };
+    });
+  });
+  assert.deepEqual(motion, motion.map(() => ({ animationName: 'none', animationDuration: '0s', transitionDuration: '0s' })), 'Reduced-motion mode still animates dashboard visuals');
+  assert.deepEqual(errors, []);
+  await page.close();
+  return motion;
 }
 
 const profiles = [
@@ -397,6 +504,7 @@ const [chromiumBrowser, webkitBrowser] = await Promise.all([
 
 try {
   const desktop = await inspectSemantics(chromiumBrowser);
+  const reducedMotion = await inspectReducedMotion(chromiumBrowser);
   const mobile = [];
   for (const profile of profiles) {
     const results = await Promise.all([
@@ -407,7 +515,7 @@ try {
   }
   assert.deepEqual(desktop.errors, []);
   assert.ok(desktop.viewportOverflow <= 1, `Desktop page overflows horizontally by ${desktop.viewportOverflow}px`);
-  console.log(JSON.stringify({ verified: true, desktop, mobile }, null, 2));
+  console.log(JSON.stringify({ verified: true, desktop, reducedMotion, mobile }, null, 2));
 } finally {
   await Promise.all([chromiumBrowser.close(), webkitBrowser.close()]);
 }

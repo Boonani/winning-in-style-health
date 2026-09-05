@@ -1,3 +1,5 @@
+import { aristocratsFodder, creatureSacrificeOutlet, creatureDeathReward, earlyPowerInput, earlyScalingPower } from './strategic-support.mjs';
+
 const COLOR_ORDER = ['W', 'U', 'B', 'R', 'G'];
 
 const CUBE_RULES_OVERRIDES = new Map([
@@ -419,13 +421,13 @@ export const STRICT_THEMES = [
     },
   },
   {
-    id: 'dies', name: 'Dies',
-    description: 'Explicit sacrifice outlets enable abilities that trigger when a permanent dies or goes from the battlefield to a graveyard.',
+    id: 'dies', name: 'Aristocrats', focusColors: ['W', 'B'],
+    description: 'Low-cost recurring or expendable bodies feed creature-sacrifice outlets and rewards for other creatures dying. Generic creatures, Treasure sacrifice, and artifact-only outlets do not qualify.',
     nominationTags: ['dies-trigger', 'death-trigger', 'creature-death-matters'],
     roles: {
-      enablers: explicitRole('Sacrifice outlets', 'dies-source', sacrificeSourcePattern, 'Strict Dies: Enabler'),
-      payoffs: strictRole('Dies rewards', 'dies-reward', (card) => Boolean(diesPayoffClause(card)), (card) => `Explicit own-side or unrestricted dies reward: "${diesPayoffClause(card)}"`, 'Strict Dies: Payoff'),
-      glue: noRole('No generic glue', 'dies-no-glue'),
+      enablers: strictRole('Fodder and recurring bodies', 'aristocrats-fodder', (card) => Boolean(aristocratsFodder(card)), aristocratsFodder, 'Strict Aristocrats: Enabler'),
+      payoffs: strictRole('Creature outlets and death rewards', 'aristocrats-reward', (card) => Boolean(creatureSacrificeOutlet(card) || creatureDeathReward(card)), (card) => creatureSacrificeOutlet(card) ? `Consumes another creature: "${creatureSacrificeOutlet(card)}"` : `Rewards creature deaths: "${creatureDeathReward(card)}"`, 'Strict Aristocrats: Payoff'),
+      glue: noRole('No generic glue', 'aristocrats-no-glue'),
     },
   },
   {
@@ -450,10 +452,10 @@ export const STRICT_THEMES = [
   },
   {
     id: 'power-four', name: 'Power 4+', focusColors: ['R', 'G'],
-    description: 'Creatures with printed power 4+ and large tokens enable literal power-4 threshold rewards.',
+    description: 'Four-power bodies available at mana value three or less enable early threshold rewards. Expensive finishers retain descriptive power tags but do not inflate early support.',
     nominationTags: ['ferocious', 'specific-power-matters', 'power-matters-individual'],
     roles: {
-      enablers: strictRole('Power 4+ creatures', 'power-four-input', (card) => (isCreature(card) && (numericPower(card) ?? -99) >= 4) || textMatches(card, createsFourPowerPattern), (card) => isCreature(card) && (numericPower(card) ?? -99) >= 4 ? `Printed power is ${card.power}.` : explicitReason(card, createsFourPowerPattern), 'Strict Power 4+: Enabler'),
+      enablers: strictRole('Early four-power bodies', 'early-power-four-input', (card) => Boolean(earlyPowerInput(card)), earlyPowerInput, 'Strict Power 4+: Enabler'),
       payoffs: explicitRole('Power 4+ rewards', 'power-four-reward', powerFourPattern, 'Strict Power 4+: Payoff'),
       glue: noRole('No generic glue', 'power-four-no-glue'),
     },
@@ -464,10 +466,10 @@ export const STRICT_THEMES = [
     nominationTags: ['scales-with-power', 'greatest-power-matters', 'power-matters-total'],
     roles: {
       enablers: strictRole(
-        'High-power creatures',
-        'power-matters-input',
-        (card) => isCreature(card) && ((numericPower(card) ?? -99) >= 4 || textMatches(card, variablePowerInputPattern)),
-        (card) => (numericPower(card) ?? -99) >= 4 ? `Printed power is ${card.power}.` : explicitReason(card, variablePowerInputPattern),
+        'Early efficient power',
+        'early-power-matters-input',
+        (card) => Boolean(earlyScalingPower(card)),
+        earlyScalingPower,
         'Strict Power Matters: Enabler',
       ),
       payoffs: explicitRole('Power-scaled effects', 'power-matters-reward', powerScalingPattern, 'Strict Power Matters: Payoff'),
