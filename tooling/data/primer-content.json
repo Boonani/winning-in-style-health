@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "documentVersion": 4,
-  "updatedAt": "2026-09-06T00:04:55.126Z",
+  "documentVersion": 5,
+  "updatedAt": "2026-09-06T00:09:03.089Z",
   "hero": {
     "eyebrow": "THE DRAFT PRIMER",
     "title": "Draft with a plan.",
@@ -35,10 +35,10 @@
           "collectorNumber": "143"
         },
         {
-          "scryfallId": "d573ef03-4730-45aa-93dd-e45ac1dbaf4a",
+          "scryfallId": "7673784e-db4b-43a1-8d55-1bb9fc1e284f",
           "name": "Lightning Bolt",
-          "set": "lea",
-          "collectorNumber": "161"
+          "set": "msc",
+          "collectorNumber": "806"
         }
       ]
     },
@@ -654,6 +654,19 @@
       "scryfallUri": "https://scryfall.com/card/otc/16/smirking-spelljacker?utm_source=api",
       "consultedAt": "2026-09-05T23:27:50.790Z",
       "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Removal example",
+      "name": "Lightning Bolt",
+      "scryfallId": "7673784e-db4b-43a1-8d55-1bb9fc1e284f",
+      "set": "msc",
+      "collectorNumber": "806",
+      "releasedAt": "2026-06-26",
+      "language": "en",
+      "oracleText": "Lightning Bolt deals 3 damage to any target.",
+      "scryfallUri": "https://scryfall.com/card/msc/806/lightning-bolt?utm_source=api",
+      "consultedAt": "2026-09-06T00:09:03.077Z",
+      "reason": "Released English normal frame with current any-target wording instead of the Alpha illustration."
     }
   ]
 }
