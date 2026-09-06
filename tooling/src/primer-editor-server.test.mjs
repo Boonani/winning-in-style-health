@@ -36,7 +36,7 @@ const request = (url, { method = 'GET', headers = {}, body = '' } = {}) => new P
 test('editor API rejects malformed, cross-origin, stale, and rebound writes; save reloads durably', async t => {
   const dirs = await fixture();
   t.after(() => fs.rm(dirs.root, { recursive: true, force: true }));
-  const instance = createPrimerEditorServer({ ...dirs, port: 0 });
+  const instance = createPrimerEditorServer({ ...dirs, port: 0, publisher: { status: async () => ({ state: 'idle' }), start: async () => ({ state: 'queued' }) } });
   await new Promise((resolve, reject) => instance.server.listen(0, '127.0.0.1').once('listening', resolve).once('error', reject));
   t.after(() => new Promise(resolve => instance.server.close(resolve)));
   const origin = instance.origin;
