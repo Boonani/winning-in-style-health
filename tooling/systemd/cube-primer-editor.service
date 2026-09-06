@@ -1,0 +1,15 @@
+[Unit]
+Description=Private Cube primer editor (loopback only)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/boon/cube-site/tooling
+ExecStart=/usr/local/bin/node /home/boon/cube-site/tooling/src/primer-editor-server.mjs
+Restart=on-failure
+RestartSec=3
+Environment=PATH=/home/boon/.local/bin:/usr/local/bin:/usr/bin:/bin
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

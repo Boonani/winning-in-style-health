@@ -1,0 +1,13 @@
+{
+  "url": "https://cube.coolasheck.com/draft-primer.html",
+  "card_mm": [
+    63,
+    88
+  ],
+  "sheet": "US Letter, 9 cards, print at 100%",
+  "qr_modules_with_quiet_zone": 41,
+  "quiet_zone_modules": 4,
+  "error_correction": "Q",
+  "qr_side_mm": 41,
+  "card_pdf_vector": true
+}

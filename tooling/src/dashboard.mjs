@@ -1,6 +1,7 @@
 import { buildThemeSupportModel, groupUpdateEvents } from './dashboard-ui.mjs';
 import { buildDesignedModel, fitsPair, laneRoles, summarizeLane } from './designed-archetypes.mjs';
 import { designCSS, designShell, mountDesignWorkspace } from './designed-ui.mjs';
+import { siteMotionCSS, siteMotionMarkup } from './site-motion.mjs';
 
 const esc = (value) =>
   String(value ?? '')
@@ -82,7 +83,7 @@ export function renderDashboard(data) {
     .band { border-top: 1px solid var(--line); padding: 18px 0 24px; }
     .table-wrap { border: 1px solid var(--line); background: var(--panel); overflow: auto; max-height: 72vh; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { position: sticky; top: 0; z-index: 2; background: #24282c; text-align: left; font-size: 11px; text-transform: uppercase; color: #c9cdd1; letter-spacing: .04em; }
+    th { position: sticky; top: 0; z-index: 2; background: #24282c; text-align: left; font-size: 11px; text-transform: uppercase; color: #c9cdd1; letter-spacing: 0; }
     th, td { padding: 9px 10px; border-bottom: 1px solid #2b2f33; vertical-align: top; }
     tbody tr:hover { background: #22262a; }
     .num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -153,10 +154,10 @@ export function renderDashboard(data) {
     .detail h3 { margin: 12px 0 5px; font-size: 15px; }
     .detail p { margin: 0 0 9px; color: var(--muted); font-size: 12px; line-height: 1.45; white-space: pre-line; }
     .detail .case { padding: 9px 0; border-top: 1px solid var(--line); color: var(--ink); }
-    .card-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px 9px; align-items: start; }
+    .card-gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; align-items: start; width: min(100%, 488px); }
     .card-tile { margin: 0; min-width: 0; border: 0; padding: 0; background: transparent; text-align: left; color: var(--ink); }
     .card-tile figure { margin: 0; }
-    .card-tile img, .card-placeholder { width: 100%; aspect-ratio: 488 / 680; display: block; object-fit: contain; background: #23272b; border-radius: 7px; box-shadow: 0 2px 9px rgba(0,0,0,.52); }
+    .card-tile img, .card-placeholder { width: 100%; height: auto; aspect-ratio: 488 / 680; display: block; object-fit: contain; background: #23272b; border-radius: 0; box-shadow: 0 2px 9px rgba(0,0,0,.52); }
     .card-tile:hover img, .card-tile:focus-visible img { outline: 3px solid var(--accent); outline-offset: 2px; }
     .card-tile:focus-visible { outline: none; }
     .card-tile figcaption { padding: 6px 2px 0; min-height: 43px; font-size: 12px; line-height: 1.25; }
@@ -175,17 +176,17 @@ export function renderDashboard(data) {
     .packet { display: grid; grid-template-columns: 125px minmax(0, 1fr); gap: 12px; border-top: 1px solid var(--line); padding-top: 9px; }
     .packet-summary { font-size: 12px; color: var(--muted); }
     .packet-summary strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 3px; }
-    .packet-cards { display: flex; gap: 6px; overflow-x: auto; min-height: 72px; }
-    .mini-card { flex: 0 0 52px; border: 0; padding: 0; background: transparent; }
-    .mini-card img { width: 52px; height: 72px; object-fit: cover; border-radius: 4px; display: block; }
+    .packet-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; min-height: 72px; width: min(100%, 488px); }
+    .mini-card { width: 100%; border: 0; padding: 0; background: transparent; }
+    .mini-card img { width: 100%; height: auto; aspect-ratio: 488 / 680; object-fit: contain; border-radius: 0; display: block; }
     .mini-card span { display: block; font-size: 9px; text-align: center; margin-top: 2px; }
     .empty { color: var(--muted); padding: 24px 0; }
     .all-card-row { cursor: pointer; }
     .canvas-wrap { border: 1px solid var(--line); background: #16191c; overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; contain: inline-size; }
     #synergy-canvas { width: 100%; height: 620px; display: block; }
-    .candidate-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px 9px; }
+    .candidate-gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; width: min(100%, 488px); }
     .candidate { margin: 0; min-width: 0; }
-    .candidate img { width: 100%; aspect-ratio: 488 / 680; object-fit: contain; display: block; border-radius: 7px; box-shadow: 0 2px 9px rgba(0,0,0,.52); background: #23272b; }
+    .candidate img { width: 100%; height: auto; aspect-ratio: 488 / 680; object-fit: contain; display: block; border-radius: 0; box-shadow: 0 2px 9px rgba(0,0,0,.52); background: #23272b; }
     .candidate figcaption { padding: 6px 2px 0; font-size: 12px; line-height: 1.3; }
     .candidate small { display: block; color: var(--muted); }
     .subview { max-width: 1600px; margin: 0 auto 18px; display: flex; align-items: center; gap: 8px; }
@@ -253,12 +254,12 @@ export function renderDashboard(data) {
     .update-event-head time, .update-event-head .undated { color: var(--muted); font-size: 11px; white-space: nowrap; }
     .update-event-body { padding: 14px; display: grid; gap: 16px; }
     .change-group h3 { margin-bottom: 9px; }
-    .change-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(102px, 1fr)); gap: 9px; }
+    .change-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; width: min(100%, 488px); }
     .change-card { min-width: 0; margin: 0; }
-    .change-card img, .change-card-placeholder { width: 100%; aspect-ratio: 488 / 680; object-fit: contain; display: block; border-radius: 6px; background: #23272b; }
+    .change-card img, .change-card-placeholder { width: 100%; height: auto; aspect-ratio: 488 / 680; object-fit: contain; display: block; border-radius: 0; background: #23272b; }
     .change-card figcaption { padding-top: 5px; font-size: 11px; line-height: 1.25; }
-    .replacement-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 520px)); gap: 10px; justify-content: start; }
-    .replacement { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); gap: 7px; align-items: center; border: 1px solid var(--line); padding: 8px; border-radius: 7px; }
+    .replacement-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 34px; width: min(100%, 488px); }
+    .replacement { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-items: center; border: 0; border-bottom: 1px solid var(--line); padding: 0 0 24px; border-radius: 0; }
     .replacement-arrow { color: var(--accent); font-size: 20px; text-align: center; }
     .attention-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .diff-list { color: var(--muted); font-size: 12px; margin-top: 8px; }
@@ -299,7 +300,8 @@ export function renderDashboard(data) {
       .adjacency-builder { grid-template-columns: 1fr; }
       .overview-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .detail { position: static; border-left: 0; border-top: 1px solid var(--line); padding: 15px 0 0; max-width: 360px; max-height: none; }
-      .card-gallery { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
+      .card-gallery, .candidate-gallery, .change-cards, .replacement-list, .packet-cards, .design-gallery { width: 100vw; max-width: none; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+      .card-tile figcaption, .candidate figcaption, .change-card figcaption, .mini-card span, .design-card strong, .design-card small { padding-left: max(12px, var(--safe-left)); padding-right: max(12px, var(--safe-right)); }
       .packet { grid-template-columns: 1fr; }
       .role-head { align-items: stretch; flex-direction: column; }
       .result-count { width: 100%; margin-left: 0; }
@@ -335,6 +337,7 @@ export function renderDashboard(data) {
       @keyframes reveal { from { opacity: .72; transform: translateY(3px); } to { opacity: 1; transform: none; } }
     }
 ${designCSS.trim()}
+${siteMotionCSS.trim()}
   </style>
 </head>
 <body>
@@ -743,8 +746,8 @@ ${designShell.trim()}
         return a.name.localeCompare(b.name);
       });
     };
-    const cardTile = card => '<button class="card-tile" data-card-id="'+e(card.id)+'"><figure><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"><figcaption><strong>'+e(card.name)+'</strong><small>'+e(card.functionRoles.map(role=>role.label).join(' + ')||'Unlabeled function')+'</small><small>'+e(card.quality.standaloneTier)+' | local '+card.quality.score+' | Avg CA '+e(card.quality.advantageLabel)+(card.seventeenLands?' | 17L '+card.seventeenLands.score+' '+e(card.seventeenLands.grade)+' | avg pick '+card.seventeenLands.avgPick:'')+' | CC picks '+card.pickCount.toLocaleString()+'</small></figcaption></figure></button>';
-    const cutCardTile = card => '<button class="card-tile" data-card-id="'+e(card.id)+'"><figure><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"><figcaption><strong>'+e(card.name)+'</strong><small class="'+statusClass(card.weakness.reviewTier)+'">'+e(card.weakness.reviewTier)+' '+card.weakness.reviewScore+' | '+card.weakness.negativeSignals+' signals | '+card.weakness.meaningfulThemeCount+' meaningful themes</small></figcaption></figure></button>';
+    const cardTile = card => '<button class="card-tile" data-motion data-card-id="'+e(card.id)+'"><figure><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"><figcaption><strong>'+e(card.name)+'</strong><small>'+e(card.functionRoles.map(role=>role.label).join(' + ')||'Unlabeled function')+'</small><small>'+e(card.quality.standaloneTier)+' | local '+card.quality.score+' | Avg CA '+e(card.quality.advantageLabel)+(card.seventeenLands?' | 17L '+card.seventeenLands.score+' '+e(card.seventeenLands.grade)+' | avg pick '+card.seventeenLands.avgPick:'')+' | CC picks '+card.pickCount.toLocaleString()+'</small></figcaption></figure></button>';
+    const cutCardTile = card => '<button class="card-tile" data-motion data-card-id="'+e(card.id)+'"><figure><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"><figcaption><strong>'+e(card.name)+'</strong><small class="'+statusClass(card.weakness.reviewTier)+'">'+e(card.weakness.reviewTier)+' '+card.weakness.reviewScore+' | '+card.weakness.negativeSignals+' signals | '+card.weakness.meaningfulThemeCount+' meaningful themes</small></figcaption></figure></button>';
     const bindCardButtons = (root, target) => root.querySelectorAll('[data-card-id]').forEach(button => button.addEventListener('click', () => showCard(button.dataset.cardId, target)));
     const showCard = (id, target) => {
       const card = byId.get(id); if (!card) return;
@@ -944,7 +947,7 @@ ${designShell.trim()}
 
     const groupUpdateEvents = ${groupUpdateEvents.toString()};
     let updatePeriod='week';
-    const updateCard=item=>'<figure class="change-card">'+(item.imageUrl?'<img src="'+e(item.imageUrl)+'" alt="'+e(item.name)+'" loading="lazy">':'<div class="change-card-placeholder" role="img" aria-label="Artwork unavailable for '+e(item.name)+'"></div>')+'<figcaption>'+e(item.name)+'</figcaption></figure>';
+    const updateCard=item=>'<figure class="change-card" data-motion>'+(item.imageUrl?'<img src="'+e(item.imageUrl)+'" alt="'+e(item.name)+'" loading="lazy">':'<div class="change-card-placeholder" role="img" aria-label="Artwork unavailable for '+e(item.name)+'"></div>')+'<figcaption>'+e(item.name)+'</figcaption></figure>';
     const updateGroup=(title,items)=>items?.length?'<div class="change-group"><h3>'+e(title)+' · '+items.length+'</h3><div class="change-cards">'+items.map(updateCard).join('')+'</div></div>':'';
     const renderUpdates=()=>{
       const history=DATA.updateHistory;
@@ -1129,7 +1132,7 @@ ${designShell.trim()}
       q('#lands-gallery').innerHTML=cards.map(cardTile).join('')||'<p class="empty">No cards match this view.</p>';q('#lands-count').textContent=cards.length+' cards';bindCardButtons(q('#lands-gallery'),'#lands-detail');
     };
     ['#lands-view','#lands-sort'].forEach(sel=>q(sel).addEventListener('change',renderSeventeen));q('#lands-search').addEventListener('input',debounce(renderSeventeen));
-    const externalCandidate=(card)=>'<figure class="candidate"><a href="'+e(card.scryfallUri)+'" target="_blank" rel="noreferrer"><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"></a><figcaption><strong>'+e(card.name)+'</strong><small>'+e(card.type)+' | MV '+card.manaValue+(card.seventeenLands?' | 17Lands '+card.seventeenLands.score+' '+e(card.seventeenLands.grade):' | no Powered Cube data')+'</small></figcaption></figure>';
+    const externalCandidate=(card)=>'<figure class="candidate" data-motion><a href="'+e(card.scryfallUri)+'" target="_blank" rel="noreferrer"><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"></a><figcaption><strong>'+e(card.name)+'</strong><small>'+e(card.type)+' | MV '+card.manaValue+(card.seventeenLands?' | 17Lands '+card.seventeenLands.score+' '+e(card.seventeenLands.grade):' | no Powered Cube data')+'</small></figcaption></figure>';
     viewInitializers.guilds=renderGuild;
     viewInitializers.seventeen=()=>{renderSeventeen();q('#signpost-body').innerHTML=DATA.seventeenLands.signposts.map(item=>{const chance=n=>item.tableChanceByCopies.find(x=>x.copies===n)?.chance??0;return '<tr><td><strong>'+e(item.name)+'</strong><br><small>'+e(item.note)+'</small></td><td class="num">'+item.currentCopies+'</td><td class="num">'+item.currentTableChance+'%</td><td class="num">'+chance(2)+'%</td><td class="num">'+chance(3)+'%</td><td class="num">'+chance(6)+'%</td><td>'+(item.rating?'score '+item.rating.score+' ('+e(item.rating.grade)+'), avg pick '+item.rating.avgPick:'No Powered Cube match')+'</td></tr>';}).join('');q('#candidate-groups').innerHTML=DATA.research.groups.map(group=>'<div class="role-section"><div class="role-head"><h3>'+e(group.label)+'</h3><span>Absent from current cube</span></div><div class="candidate-gallery">'+group.candidates.map(externalCandidate).join('')+'</div></div>').join('');};
 
@@ -1352,6 +1355,7 @@ ${designShell.trim()}
     const summarizeLane = ${summarizeLane.toString()};
     (${mountDesignWorkspace.toString()})({DATA,byId,pips,showCard,summarizeLane});
   </script>
+  ${siteMotionMarkup()}
 </body>
 </html>`;
 }

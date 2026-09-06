@@ -6,9 +6,11 @@ All CubeArena tagging, verification and publishing run on BOONBOX. The tag tools
 
 The published repository retains this source under `tooling/`. From that directory, run `npm ci`, `npm run analyze`, `npm run verify`, and `node --test src/*.test.mjs`. The bundled raw cube and historical research data are reproducible inputs, not claims of current live freshness. `npm run refresh` obtains a fresh cube snapshot. `DASHBOARD_DEPLOY_DIR=.. npm run build:dashboard` writes the website root; use the same environment variable for `npm run verify:deploy`. Without this variable, output goes into `tooling/deploy-site/`.
 
+The private primer editor runs with `npm run editor` and listens only on `127.0.0.1:8768`. It saves the versioned `data/primer-content.json` source and rebuilds the static primer; it is not copied into the public site. See [`../docs/EDITOR.md`](../docs/EDITOR.md) for the guarded save and SSH-tunnel workflow.
+
 The live writer checks the entire source snapshot against current rules, requires complete board coverage, preserves personal tags outside managed namespaces, backs up before applying, and checks every non-tag card field afterward. Use `node src/sync-tags.mjs --auth-check` to prove ownership without writing. Credentials belong only in the process environment or a private external configuration, never this repository.
 
-Local verification is not publication proof. After committing the tested site, confirm its exact HTML and data hashes at the public URL and rerun the browser checks with `DASHBOARD_URL=https://style.coolasheck.com/`.
+Local verification is not publication proof. After committing the tested site, confirm its exact HTML and data hashes at the public URL and rerun the browser checks with `DASHBOARD_URL=https://cube.coolasheck.com/`.
 
 This workspace keeps exhaustive Scryfall data local and builds a strict, evidence-backed draft taxonomy for Cube Cobra.
 

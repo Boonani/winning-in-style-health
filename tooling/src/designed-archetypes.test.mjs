@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { DESIGNED_LANES, fitsPair, laneRoles, summarizeLane, buildDesignedModel } from './designed-archetypes.mjs';
 import { renderDraftPrimer, renderCubeCobraPrimer, primerCards, orderedPrimerLanes } from './draft-primer.mjs';
+import PRIMER_FIXTURE from './fixtures/primer-content.json' with { type: 'json' };
 
 const lane=DESIGNED_LANES[0];
 const make=(id,colors,roles,type='Creature',cmc=2,board='mainboard')=>({id,name:id,colors,board,type,cmc,oracleText:'',archetypeRoles:roles.map(role=>({archetypeId:'blink',role}))});
@@ -66,16 +67,16 @@ test('primer examples exist in current mainboard and their intended pair',()=>{
   for(const l of orderedPrimerLanes(data)){
     for(const c of primerCards(data,l)){assert.equal(c.board,'mainboard');assert.ok(l.pair.union.includes(c.id));}
   }
-  const md=renderCubeCobraPrimer(data);
+  const md=renderCubeCobraPrimer(data, PRIMER_FIXTURE);
   assert.ok(!/\[\[(?!!)/.test(md),'Bare card links in primer');
   assert.ok(!/Mono Color|Mono-color|### \{[WUBRG]\} /.test(md));
   assert.equal((md.match(/^### /gm)||[]).length,10);
   assert.ok((md.match(/\[\[!/g)||[]).length>=20);
-  const html=renderDraftPrimer(data);
+  const html=renderDraftPrimer(data, PRIMER_FIXTURE);
   assert.match(html,/17 lands/);
   assert.match(html,/15 creatures/);
   assert.match(html,/8 other spells/);
-  assert.match(html,/Removal is inside the spell slots/);
+  assert.match(html,/Games are often won based on who is able to interact more\./);
   assert.match(html,/No commanders required/);
   assert.ok(!html.includes('undefined'));
 });

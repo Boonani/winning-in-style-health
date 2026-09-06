@@ -1,0 +1,12 @@
+[Unit]
+Description=Publish validated Cube primer edits
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/boon/cube-site
+Environment=PATH=/home/boon/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=CUBE_PUBLISH_STATE=/home/boon/state/cube-site-editor
+ExecStart=/usr/bin/flock -n /home/boon/state/cube-site-editor/publish.lock /usr/local/bin/node /home/boon/cube-site/tooling/scripts/publish-primer.mjs
+TimeoutStartSec=900
+NoNewPrivileges=true

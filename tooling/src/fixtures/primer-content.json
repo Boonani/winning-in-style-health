@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 1,
+  "documentVersion": 2,
+  "updatedAt": "2026-09-05T23:52:13.847Z",
+  "hero": {
+    "eyebrow": "THE DRAFT PRIMER",
+    "title": "Draft with a plan.",
+    "lede": "Pick. Build. Play."
+  },
+  "sections": [
+    {
+      "id": "draft",
+      "eyebrow": "01 · DRAFT",
+      "heading": "Pick one. Pass the rest.",
+      "body": [
+        "Keep one card. Pass the pack.",
+        "Packs usually move left, right, then left.",
+        "Good cards passed to you reveal open colors.",
+        "Your first pick is not a promise."
+      ],
+      "cards": []
+    },
+    {
+      "id": "removal",
+      "eyebrow": "02 · INTERACT",
+      "heading": "Answer their best card.",
+      "body": [
+        "Games are often won based on who is able to interact more."
+      ],
+      "cards": [
+        {
+          "scryfallId": "b4e9c870-23c0-413a-ae39-265f09da16d1",
+          "name": "Swords to Plowshares",
+          "set": "msc",
+          "collectorNumber": "143"
+        },
+        {
+          "scryfallId": "d573ef03-4730-45aa-93dd-e45ac1dbaf4a",
+          "name": "Lightning Bolt",
+          "set": "lea",
+          "collectorNumber": "161"
+        }
+      ]
+    },
+    {
+      "id": "deck",
+      "eyebrow": "03 · BUILD",
+      "heading": "Build a 40-card deck.",
+      "body": [
+        "Start with 17 lands.",
+        "Try 15 creatures and eight other spells.",
+        "Count removal inside those spell slots.",
+        "Adjust for your curve and plan."
+      ],
+      "cards": []
+    },
+    {
+      "id": "curve",
+      "eyebrow": "04 · CURVE",
+      "heading": "Play before turn four.",
+      "body": [
+        "Cheap plays keep you alive and attacking.",
+        "Too many expensive cards strand your hand."
+      ],
+      "cards": []
+    },
+    {
+      "id": "blink",
+      "eyebrow": "05 · SIGNATURE",
+      "heading": "Blink",
+      "body": [
+        ""
+      ],
+      "cards": [
+        {
+          "scryfallId": "8bc7fdf0-3e1e-487c-833d-7c74aa02c0c1",
+          "name": "Cloudshift",
+          "set": "jmp",
+          "collectorNumber": "97"
+        },
+        {
+          "scryfallId": "3d134bb2-17ec-4e65-976e-f06fa983f3fb",
+          "name": "Wall of Omens",
+          "set": "tdc",
+          "collectorNumber": "138"
+        }
+      ]
+    },
+    {
+      "id": "plans",
+      "eyebrow": "06 · EXPLORE",
+      "heading": "Pick a plan.",
+      "body": [
+        "Start with two colors. Branch when supported."
+      ],
+      "cards": []
+    },
+    {
+      "id": "ready",
+      "eyebrow": "07 · READY",
+      "heading": "Before game one.",
+      "body": [
+        "Unused cards become your sideboard."
+      ],
+      "cards": []
+    }
+  ],
+  "plans": [
+    {
+      "id": "WU",
+      "guild": "Azorius",
+      "name": "Blink",
+      "colors": [
+        "W",
+        "U"
+      ],
+      "body": "Reuse enter-the-battlefield abilities with exile-and-return effects.",
+      "cards": [
+        {
+          "scryfallId": "7e520d49-f3d5-46b3-a941-c57936648a47",
+          "name": "Conjurer's Closet",
+          "set": "drc",
+          "collectorNumber": "126"
+        },
+        {
+          "scryfallId": "f2d28a16-e119-456d-ad8b-c37cec069ab0",
+          "name": "Spirited Companion",
+          "set": "j22",
+          "collectorNumber": "248"
+        }
+      ]
+    },
+    {
+      "id": "WB",
+      "guild": "Orzhov",
+      "name": "Aristocrats",
+      "colors": [
+        "W",
+        "B"
+      ],
+      "body": "Profit when your creatures die.",
+      "cards": [
+        {
+          "scryfallId": "d7efb10f-c760-431c-8ac6-904965d850dc",
+          "name": "Guildsworn Prowler",
+          "set": "clb",
+          "collectorNumber": "130"
+        },
+        {
+          "scryfallId": "c4c1641d-c4ea-4657-a0ae-db09bba83a0f",
+          "name": "Blood Artist",
+          "set": "j22",
+          "collectorNumber": "117"
+        }
+      ]
+    },
+    {
+      "id": "GW",
+      "guild": "Selesnya",
+      "name": "Counters + go wide",
+      "colors": [
+        "G",
+        "W"
+      ],
+      "body": "Build wide, add counters, then attack.",
+      "cards": [
+        {
+          "scryfallId": "d347caf8-0c12-401f-9e33-9978cb347f89",
+          "name": "United Front",
+          "set": "tla",
+          "collectorNumber": "39"
+        },
+        {
+          "scryfallId": "9a936dcd-684a-47f6-860c-2f3541d8286c",
+          "name": "Kalonian Hydra",
+          "set": "blc",
+          "collectorNumber": "226"
+        }
+      ]
+    },
+    {
+      "id": "BR",
+      "guild": "Rakdos",
+      "name": "Artifact sacrifice",
+      "colors": [
+        "B",
+        "R"
+      ],
+      "body": "Sacrifice artifacts for damage and value.",
+      "cards": [
+        {
+          "scryfallId": "1ccdb407-ac8f-4736-89d3-ab0d086096ea",
+          "name": "Ichor Wellspring",
+          "set": "c21",
+          "collectorNumber": "245"
+        },
+        {
+          "scryfallId": "5a077de0-1893-40d0-a499-ee2e6e2258f1",
+          "name": "Legion Extruder",
+          "set": "big",
+          "collectorNumber": "12"
+        }
+      ]
+    },
+    {
+      "id": "UG",
+      "guild": "Simic",
+      "name": "+1/+1 counters",
+      "colors": [
+        "U",
+        "G"
+      ],
+      "body": "Add counters. Grow your creatures.",
+      "cards": [
+        {
+          "scryfallId": "ce137910-0f0e-4f94-9b95-6e0eeeba164e",
+          "name": "Essence Capture",
+          "set": "rna",
+          "collectorNumber": "37"
+        },
+        {
+          "scryfallId": "9a936dcd-684a-47f6-860c-2f3541d8286c",
+          "name": "Kalonian Hydra",
+          "set": "blc",
+          "collectorNumber": "226"
+        }
+      ]
+    },
+    {
+      "id": "RG",
+      "guild": "Gruul",
+      "name": "Power 4+",
+      "colors": [
+        "R",
+        "G"
+      ],
+      "body": "Reach four power early. Claim the rewards.",
+      "cards": [
+        {
+          "scryfallId": "e4775a26-0b66-40e9-8f64-41d9308ca032",
+          "name": "Surrak, Elusive Hunter",
+          "set": "tdm",
+          "collectorNumber": "161"
+        },
+        {
+          "scryfallId": "a8d5dca6-381a-4361-b265-27de8d04335c",
+          "name": "The Earth King",
+          "set": "tla",
+          "collectorNumber": "172"
+        }
+      ]
+    },
+    {
+      "id": "BG",
+      "guild": "Golgari",
+      "name": "Delirium",
+      "colors": [
+        "B",
+        "G"
+      ],
+      "body": "Load varied card types into your graveyard.",
+      "cards": [
+        {
+          "scryfallId": "2edcde06-b326-476e-884d-770187c785fe",
+          "name": "Stitcher's Supplier",
+          "set": "tdc",
+          "collectorNumber": "196"
+        },
+        {
+          "scryfallId": "16b97600-e4cf-4b9e-8f2d-2eb74298eb54",
+          "name": "Demolisher Spawn",
+          "set": "dsc",
+          "collectorNumber": "31"
+        }
+      ]
+    },
+    {
+      "id": "WR",
+      "guild": "Boros",
+      "name": "Humans",
+      "colors": [
+        "W",
+        "R"
+      ],
+      "body": "Build a Human army. Attack early.",
+      "cards": [
+        {
+          "scryfallId": "7cd21530-ca72-4986-a0f2-142b9f23c413",
+          "name": "Cathar Commando",
+          "set": "inr",
+          "collectorNumber": "15"
+        },
+        {
+          "scryfallId": "3b619bda-12ff-4390-bda7-af0a44e5f955",
+          "name": "Thalia's Lieutenant",
+          "set": "plst",
+          "collectorNumber": "SOI-43"
+        }
+      ]
+    },
+    {
+      "id": "UR",
+      "guild": "Izzet",
+      "name": "Noncombat damage",
+      "colors": [
+        "U",
+        "R"
+      ],
+      "body": "Chain small damage into lethal rewards.",
+      "cards": [
+        {
+          "scryfallId": "2d176b57-4793-485e-b033-7ba668634f62",
+          "name": "Firebrand Archer",
+          "set": "j25",
+          "collectorNumber": "548"
+        },
+        {
+          "scryfallId": "c3a0c7f3-7fb9-43de-a9af-96532c31e5ed",
+          "name": "Solphim, Mayhem Dominus",
+          "set": "one",
+          "collectorNumber": "150"
+        }
+      ]
+    },
+    {
+      "id": "UB",
+      "guild": "Dimir",
+      "name": "Theft",
+      "colors": [
+        "U",
+        "B"
+      ],
+      "body": "Disrupt them. Win with their best cards.",
+      "cards": [
+        {
+          "scryfallId": "8c3a4a44-5e75-42a4-8140-2105c2becff9",
+          "name": "Extract Brain",
+          "set": "otc",
+          "collectorNumber": "225"
+        },
+        {
+          "scryfallId": "01d1e394-1b0c-4b40-ba85-f55973703d41",
+          "name": "Smirking Spelljacker",
+          "set": "otc",
+          "collectorNumber": "16"
+        }
+      ]
+    }
+  ],
+  "checklist": [
+    "40 cards, including lands",
+    "Early creatures or defensive plays",
+    "Answers for opposing threats",
+    "Lands that cast your colors",
+    "A clear way to win"
+  ],
+  "sources": [
+    {
+      "label": "Wizards · Booster Draft",
+      "url": "https://magic.wizards.com/en/formats/booster-draft"
+    },
+    {
+      "label": "Wizards · Mana curve",
+      "url": "https://magic.wizards.com/en/news/feature/how-build-mana-curve-2017-05-18"
+    },
+    {
+      "label": "Wizards · Reading signals",
+      "url": "https://magic.wizards.com/en/news/feature/signals-booster-draft-2015-01-19"
+    }
+  ],
+  "printingProvenance": [
+    {
+      "purpose": "Removal example",
+      "name": "Swords to Plowshares",
+      "scryfallId": "b4e9c870-23c0-413a-ae39-265f09da16d1",
+      "set": "msc",
+      "collectorNumber": "143",
+      "releasedAt": "2026-06-26",
+      "language": "en",
+      "oracleText": "Exile target creature. Its controller gains life equal to its power.",
+      "scryfallUri": "https://scryfall.com/card/msc/143/swords-to-plowshares?utm_source=api",
+      "consultedAt": "2026-09-05",
+      "reason": "Recent English normal-frame printing with a complete, high-contrast rules box."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Cloudshift",
+      "scryfallId": "8bc7fdf0-3e1e-487c-833d-7c74aa02c0c1",
+      "set": "jmp",
+      "collectorNumber": "97",
+      "releasedAt": "2020-07-17",
+      "language": "en",
+      "oracleText": "Exile target creature you control, then return that card to the battlefield under your control.",
+      "scryfallUri": "https://scryfall.com/card/jmp/97/cloudshift?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:18.389Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Wall of Omens",
+      "scryfallId": "3d134bb2-17ec-4e65-976e-f06fa983f3fb",
+      "set": "tdc",
+      "collectorNumber": "138",
+      "releasedAt": "2025-04-11",
+      "language": "en",
+      "oracleText": "Defender\nWhen this creature enters, draw a card.",
+      "scryfallUri": "https://scryfall.com/card/tdc/138/wall-of-omens?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:22.509Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Conjurer's Closet",
+      "scryfallId": "7e520d49-f3d5-46b3-a941-c57936648a47",
+      "set": "drc",
+      "collectorNumber": "126",
+      "releasedAt": "2025-02-14",
+      "language": "en",
+      "oracleText": "At the beginning of your end step, you may exile target creature you control, then return that card to the battlefield under your control.",
+      "scryfallUri": "https://scryfall.com/card/drc/126/conjurers-closet?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:24.006Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Spirited Companion",
+      "scryfallId": "f2d28a16-e119-456d-ad8b-c37cec069ab0",
+      "set": "j22",
+      "collectorNumber": "248",
+      "releasedAt": "2022-12-02",
+      "language": "en",
+      "oracleText": "When this creature enters, draw a card.",
+      "scryfallUri": "https://scryfall.com/card/j22/248/spirited-companion?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:25.494Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Guildsworn Prowler",
+      "scryfallId": "d7efb10f-c760-431c-8ac6-904965d850dc",
+      "set": "clb",
+      "collectorNumber": "130",
+      "releasedAt": "2022-06-10",
+      "language": "en",
+      "oracleText": "Deathtouch\nWhen this creature dies, if it wasn't blocking, draw a card.",
+      "scryfallUri": "https://scryfall.com/card/clb/130/guildsworn-prowler?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:27.007Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Blood Artist",
+      "scryfallId": "c4c1641d-c4ea-4657-a0ae-db09bba83a0f",
+      "set": "j22",
+      "collectorNumber": "117",
+      "releasedAt": "2022-12-02",
+      "language": "en",
+      "oracleText": "Whenever this creature or another creature dies, target player loses 1 life and you gain 1 life.",
+      "scryfallUri": "https://scryfall.com/card/j22/117/blood-artist?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:28.633Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "United Front",
+      "scryfallId": "d347caf8-0c12-401f-9e33-9978cb347f89",
+      "set": "tla",
+      "collectorNumber": "39",
+      "releasedAt": "2025-11-21",
+      "language": "en",
+      "oracleText": "Create X 1/1 white Ally creature tokens, then put a +1/+1 counter on each creature you control.",
+      "scryfallUri": "https://scryfall.com/card/tla/39/united-front?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:30.128Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Kalonian Hydra",
+      "scryfallId": "9a936dcd-684a-47f6-860c-2f3541d8286c",
+      "set": "blc",
+      "collectorNumber": "226",
+      "releasedAt": "2024-08-02",
+      "language": "en",
+      "oracleText": "Trample\nThis creature enters with four +1/+1 counters on it.\nWhenever this creature attacks, double the number of +1/+1 counters on each creature you control.",
+      "scryfallUri": "https://scryfall.com/card/blc/226/kalonian-hydra?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:31.634Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Ichor Wellspring",
+      "scryfallId": "1ccdb407-ac8f-4736-89d3-ab0d086096ea",
+      "set": "c21",
+      "collectorNumber": "245",
+      "releasedAt": "2021-04-23",
+      "language": "en",
+      "oracleText": "When this artifact enters or is put into a graveyard from the battlefield, draw a card.",
+      "scryfallUri": "https://scryfall.com/card/c21/245/ichor-wellspring?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:33.113Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Legion Extruder",
+      "scryfallId": "5a077de0-1893-40d0-a499-ee2e6e2258f1",
+      "set": "big",
+      "collectorNumber": "12",
+      "releasedAt": "2024-04-19",
+      "language": "en",
+      "oracleText": "When this artifact enters, it deals 2 damage to any target.\n{2}, {T}, Sacrifice another artifact: Create a 3/3 colorless Golem artifact creature token.",
+      "scryfallUri": "https://scryfall.com/card/big/12/legion-extruder?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:34.626Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Essence Capture",
+      "scryfallId": "ce137910-0f0e-4f94-9b95-6e0eeeba164e",
+      "set": "rna",
+      "collectorNumber": "37",
+      "releasedAt": "2019-01-25",
+      "language": "en",
+      "oracleText": "Counter target creature spell. Put a +1/+1 counter on up to one target creature you control.",
+      "scryfallUri": "https://scryfall.com/card/rna/37/essence-capture?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:36.144Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Surrak, Elusive Hunter",
+      "scryfallId": "e4775a26-0b66-40e9-8f64-41d9308ca032",
+      "set": "tdm",
+      "collectorNumber": "161",
+      "releasedAt": "2025-04-11",
+      "language": "en",
+      "oracleText": "This spell can't be countered.\nTrample\nWhenever a creature you control or a creature spell you control becomes the target of a spell or ability an opponent controls, draw a card.",
+      "scryfallUri": "https://scryfall.com/card/tdm/161/surrak-elusive-hunter?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:37.561Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "The Earth King",
+      "scryfallId": "a8d5dca6-381a-4361-b265-27de8d04335c",
+      "set": "tla",
+      "collectorNumber": "172",
+      "releasedAt": "2025-11-21",
+      "language": "en",
+      "oracleText": "When The Earth King enters, create a 4/4 green Bear creature token.\nWhenever one or more creatures you control with power 4 or greater attack, search your library for up to that many basic land cards, put them onto the battlefield tapped, then shuffle.",
+      "scryfallUri": "https://scryfall.com/card/tla/172/the-earth-king?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:39.042Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Stitcher's Supplier",
+      "scryfallId": "2edcde06-b326-476e-884d-770187c785fe",
+      "set": "tdc",
+      "collectorNumber": "196",
+      "releasedAt": "2025-04-11",
+      "language": "en",
+      "oracleText": "When this creature enters or dies, mill three cards. (Put the top three cards of your library into your graveyard.)",
+      "scryfallUri": "https://scryfall.com/card/tdc/196/stitchers-supplier?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:40.533Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Demolisher Spawn",
+      "scryfallId": "16b97600-e4cf-4b9e-8f2d-2eb74298eb54",
+      "set": "dsc",
+      "collectorNumber": "31",
+      "releasedAt": "2024-09-27",
+      "language": "en",
+      "oracleText": "Trample, haste\nDelirium — Whenever this creature attacks, if there are four or more card types among cards in your graveyard, other attacking creatures get +4/+4 until end of turn.",
+      "scryfallUri": "https://scryfall.com/card/dsc/31/demolisher-spawn?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:42.037Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Cathar Commando",
+      "scryfallId": "7cd21530-ca72-4986-a0f2-142b9f23c413",
+      "set": "inr",
+      "collectorNumber": "15",
+      "releasedAt": "2025-01-24",
+      "language": "en",
+      "oracleText": "Flash\n{1}, Sacrifice this creature: Destroy target artifact or enchantment.",
+      "scryfallUri": "https://scryfall.com/card/inr/15/cathar-commando?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:43.472Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Thalia's Lieutenant",
+      "scryfallId": "3b619bda-12ff-4390-bda7-af0a44e5f955",
+      "set": "plst",
+      "collectorNumber": "SOI-43",
+      "releasedAt": "2021-11-19",
+      "language": "en",
+      "oracleText": "When this creature enters, put a +1/+1 counter on each other Human you control.\nWhenever another Human you control enters, put a +1/+1 counter on this creature.",
+      "scryfallUri": "https://scryfall.com/card/plst/SOI-43/thalias-lieutenant?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:45.004Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Firebrand Archer",
+      "scryfallId": "2d176b57-4793-485e-b033-7ba668634f62",
+      "set": "j25",
+      "collectorNumber": "548",
+      "releasedAt": "2024-11-15",
+      "language": "en",
+      "oracleText": "Whenever you cast a noncreature spell, this creature deals 1 damage to each opponent.",
+      "scryfallUri": "https://scryfall.com/card/j25/548/firebrand-archer?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:46.444Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Solphim, Mayhem Dominus",
+      "scryfallId": "c3a0c7f3-7fb9-43de-a9af-96532c31e5ed",
+      "set": "one",
+      "collectorNumber": "150",
+      "releasedAt": "2023-02-10",
+      "language": "en",
+      "oracleText": "If a source you control would deal noncombat damage to an opponent or a permanent an opponent controls, it deals double that damage to that player or permanent instead.\n{1}{R/P}{R/P}, Discard two cards: Put an indestructible counter on Solphim. ({R/P} can be paid with either {R} or 2 life.)",
+      "scryfallUri": "https://scryfall.com/card/one/150/solphim-mayhem-dominus?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:47.876Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Extract Brain",
+      "scryfallId": "8c3a4a44-5e75-42a4-8140-2105c2becff9",
+      "set": "otc",
+      "collectorNumber": "225",
+      "releasedAt": "2024-04-19",
+      "language": "en",
+      "oracleText": "Target opponent chooses X cards from their hand. Look at those cards. You may cast a spell from among them without paying its mana cost.",
+      "scryfallUri": "https://scryfall.com/card/otc/225/extract-brain?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:49.342Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    },
+    {
+      "purpose": "Concise primer example",
+      "name": "Smirking Spelljacker",
+      "scryfallId": "01d1e394-1b0c-4b40-ba85-f55973703d41",
+      "set": "otc",
+      "collectorNumber": "16",
+      "releasedAt": "2024-04-19",
+      "language": "en",
+      "oracleText": "Flash\nFlying\nWhen this creature enters, exile target spell an opponent controls.\nWhenever this creature attacks, if a card is exiled with it, you may cast the exiled card without paying its mana cost.",
+      "scryfallUri": "https://scryfall.com/card/otc/16/smirking-spelljacker?utm_source=api",
+      "consultedAt": "2026-09-05T23:27:50.790Z",
+      "reason": "Real mainboard example. Prefer a readable modern English rules box, less flavor text, then the newest printing."
+    }
+  ]
+}

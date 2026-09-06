@@ -452,7 +452,7 @@ assert.equal(html, renderDashboard(analysis), 'dashboard.html is not an exact re
 assert.equal(embedded.cube.version, analysis.cube.version);
 assert.equal(embedded.cards.length, analysis.cards.length);
 assert.equal(embedded.cubeAdjacency.source.qualifyingCubes, adjacency.source.qualifyingCubes, 'Standalone dashboard is missing embedded CubeCobra adjacency data');
-for (const tab of ['overview', 'themes', 'health', 'cuts', 'adjacency']) assert.ok(html.includes(`data-tab="${tab}"`), `Primary dashboard destination ${tab} is missing`);
+for (const [group, tab] of [['overview', 'overview'], ['browse', 'themes'], ['updates', 'updates'], ['health', 'overview'], ['review', 'cuts'], ['discover', 'adjacency']]) assert.ok(html.includes(`data-group="${group}" data-tab="${tab}"`), `Primary dashboard group ${group} / destination ${tab} is missing`);
 for (const section of ['overview', 'themes', 'guilds', 'overlap', 'cuts', 'review', 'focus', 'map', 'packets', 'seventeen', 'quality', 'health', 'blink', 'hidden', 'tribes', 'types', 'cards', 'adjacency', 'discover', 'tags']) assert.ok(html.includes(`id="${section}"`), `Dashboard section ${section} is missing`);
 assert.ok(html.includes('id="subview-select"'), 'Dashboard is missing its secondary view selector');
 assert.ok(html.includes('<option value="all">All mainboard cards</option>'), 'Strict browser is missing the All mainboard option');

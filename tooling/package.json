@@ -12,14 +12,17 @@
     "adjacency:refresh": "node src/build-cubecobra-adjacency.mjs --fetch",
     "refresh": "node src/analyze.mjs --fetch && node src/build-dashboard.mjs",
     "build:dashboard": "node src/build-dashboard.mjs",
+    "editor": "node src/primer-editor-server.mjs",
     "history:refresh": "node src/fetch-history.mjs",
     "test": "node --test src/*.test.mjs",
+    "test:primer": "node --test src/primer-*.test.mjs src/site-motion.test.mjs",
     "tags:dry-run": "node src/sync-tags.mjs",
     "tags:apply": "node src/sync-tags.mjs --apply",
     "cuts:dry-run": "node src/remove-cards.mjs",
     "cuts:apply": "node src/remove-cards.mjs --apply",
     "verify": "node src/verify.mjs",
     "verify:visual": "node src/visual-check.mjs",
+    "verify:editor": "node src/verify-primer-editor-ui.mjs",
     "verify:deploy": "node src/build-dashboard.mjs --check"
   },
   "engines": {
@@ -27,6 +30,7 @@
   },
   "dependencies": {
     "csv-parse": "^6.1.0",
+    "lucide-static": "^1.41.0",
     "stream-json": "^1.9.1"
   },
   "devDependencies": {

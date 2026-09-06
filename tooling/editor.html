@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Private Primer Editor</title>
+  <link rel="stylesheet" href="/assets/editor.css">
+</head>
+<body>
+  <header>
+    <div><span class="kicker">CUBE</span><h1>Primer editor</h1></div>
+    <div class="header-actions">
+      <button id="reload" class="icon-button" type="button" title="Reload saved content" aria-label="Reload saved content"><img src="/assets/icons/refresh-cw.svg" alt=""></button>
+      <button id="save" class="icon-button" type="button" title="Save draft" aria-label="Save draft"><img src="/assets/icons/save.svg" alt=""></button>
+      <button id="publish" class="save-button" type="button" title="Publish saved draft" disabled><img src="/assets/icons/cloud-upload.svg" alt="">Publish</button>
+    </div>
+  </header>
+  <div class="status-bar"><strong id="status" data-state="loading">Loading…</strong><span id="revision"></span><span id="publication-status" aria-live="polite"></span></div>
+  <main>
+    <section class="editor-pane" aria-label="Primer content editor">
+      <div id="editor" aria-live="polite"></div>
+    </section>
+    <section class="preview-pane" aria-label="Generated primer preview">
+      <div class="preview-head"><strong>Preview</strong></div>
+      <iframe id="preview" title="Rendered draft primer" src="/preview/draft-primer.html"></iframe>
+    </section>
+  </main>
+  <dialog id="printing-dialog">
+    <form method="dialog" class="dialog-head"><div><span class="kicker">SCRYFALL PRINTINGS</span><h2>Choose exact art</h2></div><button class="icon-button" value="cancel" title="Close printing chooser" aria-label="Close printing chooser">×</button></form>
+    <form id="printing-search" class="printing-search"><label>Exact card name<input id="card-name" type="search" required autocomplete="off"></label><button type="submit"><img src="/assets/icons/search.svg" alt="">Find English printings</button></form>
+    <div id="printing-results"></div>
+  </dialog>
+  <script src="/assets/editor.js"></script>
+</body>
+</html>

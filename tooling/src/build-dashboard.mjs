@@ -4,13 +4,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderDashboard } from './dashboard.mjs';
 import { renderDraftPrimer, renderCubeCobraPrimer } from './draft-primer.mjs';
+import { loadPrimerContent } from './primer-content.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const deployRoot = path.resolve(root, process.env.DASHBOARD_DEPLOY_DIR ?? 'deploy-site');
 const analysis = JSON.parse(await fs.readFile(path.join(root, 'outputs', 'analysis.json'), 'utf8'));
+const { content: primerContent, revision: primerRevision } = await loadPrimerContent(path.join(root, 'data', 'primer-content.json'));
 const expectedHtml = renderDashboard(analysis);
-const expectedPrimer = renderDraftPrimer(analysis);
-const expectedAbout = renderCubeCobraPrimer(analysis);
+const expectedPrimer = renderDraftPrimer(analysis, primerContent);
+const expectedAbout = renderCubeCobraPrimer(analysis, primerContent);
 const adjacencySource = path.join(root, 'data', 'cubecobra-ml', 'cubecobra-adjacency.json');
 const adjacencyDeploy = path.join(deployRoot, 'data', 'cubecobra-adjacency.json');
 const manaSymbols = ['W', 'U', 'B', 'R', 'G', 'C'];
@@ -58,6 +60,7 @@ console.log(JSON.stringify({
   verified: true,
   mode: checkOnly ? 'check' : 'write',
   cubeVersion: analysis.cube.version,
+  primerRevision,
   bytes: Buffer.byteLength(expectedHtml),
   artifacts: ['dashboard.html', 'deploy-site/index.html', 'deploy-site/assets/mana/*.svg', 'deploy-site/data/cubecobra-adjacency.json'],
 }, null, 2));

@@ -33,12 +33,12 @@ export const designCSS = `
     .design-curve i {display:block;width:100%;background:var(--accent);height:var(--height);min-height:1px}
     .design-roles {border-top:1px solid var(--line);margin-top:8px}
     .design-roles>summary {padding:12px 0;min-height:48px;font-weight:700;cursor:pointer}
-    .design-gallery {display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:12px;margin:10px 0}
+    .design-gallery {display:grid;grid-template-columns:minmax(0,1fr);gap:30px;margin:10px 0;width:min(100%,488px)}
     .design-card {border:0;background:transparent;padding:0;min-width:0;color:var(--ink);text-align:left;align-self:start}
-    .design-card img {width:100%;aspect-ratio:488/680;object-fit:contain;border-radius:6px}
+    .design-card img {width:100%;height:auto;aspect-ratio:488/680;object-fit:contain;border-radius:0}
     .design-card strong {display:block;font-size:12px;line-height:1.4;margin-top:5px;overflow-wrap:anywhere}
     .design-card small {display:block;font-size:11px;color:var(--muted);line-height:1.4}
-    .design-gallery.preview {grid-template-columns:repeat(3,minmax(0,180px))}
+    .design-gallery.preview {grid-template-columns:minmax(0,1fr)}
     .design-heat-wrap {overflow:auto;max-width:100%;border:1px solid var(--line);margin:12px 0;overscroll-behavior-inline:contain}
     .design-heat {font-size:12px;min-width:590px}
     .design-heat button {min-height:44px;width:100%;border:0;color:var(--ink);background:var(--heat);font-weight:700;padding:8px}
@@ -61,13 +61,17 @@ export const designCSS = `
     .role-section>summary {cursor:pointer;min-height:48px;padding:12px 0;font-weight:700}
     button:focus-visible,summary:focus-visible,a:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
     * {letter-spacing:0}
+    @media(max-width:980px) {
+      .design-gallery {width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+      .design-card strong,.design-card small {padding-left:max(12px,var(--safe-left));padding-right:max(12px,var(--safe-right))}
+    }
     @media(max-width:700px) {
       .design-intro {align-items:flex-start;flex-direction:column;gap:0}
       .design-intro h2 {font-size:21px}
       .design-charts {grid-template-columns:1fr 1fr;gap:16px}
       .design-chart:last-child {grid-column:1 / -1}
       .design-pie-row {align-items:flex-start;flex-direction:column;gap:8px}
-      .design-gallery.preview {grid-template-columns:repeat(3,minmax(0,1fr))}
+      .design-gallery.preview {grid-template-columns:minmax(0,1fr)}
       .design-lane>summary {gap:8px}
       .design-title strong {font-size:15px}
       .design-pair-count {font-size:12px}
@@ -95,7 +99,7 @@ export function mountDesignWorkspace({ DATA, byId, pips, showCard, summarizeLane
   const cardHTML = id => {
     const card = byId.get(id);
     const homes = model.lanes.filter(lane => lane.pair.union.includes(id));
-    return '<button class="design-card" data-design-card="'+e(id)+'"><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"><strong>'+e(card.name)+'</strong><small>'+e(homes.map(l=>l.guild).join(' / ') || 'Outside the designed pairs')+'</small></button>';
+    return '<button class="design-card" data-motion data-design-card="'+e(id)+'"><img src="'+e(card.image)+'" alt="'+e(card.name)+'" loading="lazy"><strong>'+e(card.name)+'</strong><small>'+e(homes.map(l=>l.guild).join(' / ') || 'Outside the designed pairs')+'</small></button>';
   };
   const sorted = ids => [...ids].sort((a,b) => (byId.get(b).quality?.score||0)-(byId.get(a).quality?.score||0));
   const pie = (title, parts, foot) => {
@@ -109,7 +113,7 @@ export function mountDesignWorkspace({ DATA, byId, pips, showCard, summarizeLane
     const ratio=s.payoffs.length?(s.enablers.length/s.payoffs.length).toFixed(1)+':1':'No payoffs';
     return '<div class="design-charts">'+pie('Enablers : payoffs',[['Payoff only',s.payoffOnly.length],['Enabler only',s.enablerOnly.length],['Both',s.both.length]],s.enablers.length+' enablers / '+s.payoffs.length+' payoffs = '+ratio+'. Each card occupies one slice.')+
       pie('Creatures : noncreatures',[['Creatures',s.creatures],['Noncreatures',s.noncreatures]],s.lands+' lands excluded. Unique support spells.')+
-      '<figure class="design-chart"><figcaption>Support mana curve</figcaption><div class="design-curve" role="img" aria-label="'+e(s.curve.map((n,i)=>(i===6?'6+':i)+' mana: '+n).join(', '))+'">'+s.curve.map((n,i)=>'<div><span>'+n+'</span><i style="--height:'+Math.round(n/max*60)+'px"></i><span>'+(i===6?'6+':i)+'</span></div>').join('')+'</div><p class="design-foot">Mana value of unique nonland support.</p></figure></div>';
+      '<figure class="design-chart"><figcaption>Support mana curve</figcaption><div class="design-curve" role="img" aria-label="'+e(s.curve.map((n,i)=>(i===6?'6+':i)+' mana: '+n).join(', '))+'">'+s.curve.map((n,i)=>'<div><span>'+n+'</span><i data-motion-bar style="--height:'+Math.round(n/max*60)+'px"></i><span>'+(i===6?'6+':i)+'</span></div>').join('')+'</div><p class="design-foot">Mana value of unique nonland support.</p></figure></div>';
   };
   function renderLaneBody(lane, scope='pair', includeColorless=true) {
     const body=root.querySelector('[data-lane-body="'+lane.id+'"]');
