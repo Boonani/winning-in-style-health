@@ -151,6 +151,9 @@ export async function searchScryfallPrintings(name, fetchImpl = fetch) {
 function safeStaticMap(toolingRoot, siteRoot) {
   const map = new Map([
     ['/', [path.join(toolingRoot, 'editor.html'), 'text/html; charset=utf-8']],
+    ['/stats.html', [path.join(toolingRoot, 'picks', 'stats.html'), 'text/html; charset=utf-8']],
+    ['/assets/pick-stats.js', [path.join(toolingRoot, 'picks', 'stats.js'), 'text/javascript; charset=utf-8']],
+    ['/assets/pick-stats.css', [path.join(toolingRoot, 'picks', 'stats.css'), 'text/css; charset=utf-8']],
     ['/editor.html', [path.join(toolingRoot, 'editor.html'), 'text/html; charset=utf-8']],
     ['/assets/editor.css', [path.join(toolingRoot, 'assets', 'editor.css'), 'text/css; charset=utf-8']],
     ['/assets/editor.js', [path.join(toolingRoot, 'assets', 'editor.js'), 'text/javascript; charset=utf-8']],
@@ -159,7 +162,7 @@ function safeStaticMap(toolingRoot, siteRoot) {
     ['/preview/draft-primer.html', [path.join(siteRoot, 'draft-primer.html'), 'text/html; charset=utf-8']],
     ['/preview/data/cubecobra-adjacency.json', [path.join(siteRoot, 'data', 'cubecobra-adjacency.json'), 'application/json; charset=utf-8']],
   ]);
-  for (const icon of ['arrow-up', 'arrow-down', 'trash-2', 'plus', 'save', 'refresh-cw', 'search', 'move-right', 'cloud-upload']) {
+  for (const icon of ['arrow-up', 'arrow-down', 'trash-2', 'plus', 'save', 'refresh-cw', 'search', 'move-right', 'cloud-upload', 'download']) {
     map.set(`/assets/icons/${icon}.svg`, [path.join(toolingRoot, 'assets', 'icons', `${icon}.svg`), 'image/svg+xml']);
   }
   for (const color of ['W', 'U', 'B', 'R', 'G', 'C']) {
@@ -187,6 +190,14 @@ export function createPrimerEditorServer({
     try {
       if (request.headers.host !== authority()) throw new HttpError(421, 'Host header rejected.');
       const requestUrl = new URL(request.url, origin());
+      if (request.method === 'GET' && ['/api/draft-stats', '/api/draft-export'].includes(requestUrl.pathname)) {
+        const exporting = requestUrl.pathname.endsWith('export');
+        const upstream = await fetch('http://127.0.0.1:8771/' + (exporting ? 'export.csv' : 'stats'), { signal: AbortSignal.timeout(10000) });
+        if (!upstream.ok) throw new HttpError(503, 'Draft reports unavailable.');
+        const body = Buffer.from(await upstream.arrayBuffer());
+        response.writeHead(200, { 'Content-Type': exporting ? 'text/csv; charset=utf-8' : 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', ...(exporting ? { 'Content-Disposition': 'attachment; filename="cube-pick-counts.csv"' } : {}) });
+        return response.end(body);
+      }
       if (request.method === 'GET' && requestUrl.pathname === '/api/publish') {
         return json(response, 200, await publisher.status());
       }

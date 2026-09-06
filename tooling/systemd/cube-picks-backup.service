@@ -1,0 +1,9 @@
+[Unit]
+Description=Back up anonymous Cube observations
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/boon/cube-site/tooling/picks/backup.py
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+NoNewPrivileges=true

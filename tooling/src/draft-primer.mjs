@@ -206,7 +206,7 @@ ${siteMotionCSS.trim()}
       </details>`).join('')}</div>
     </section>
     <section id="ready">${sectionHead(ready)}<div class="checklist" data-motion>${content.checklist.map(item => `<label><input type="checkbox">${esc(item)}</label>`).join('')}</div><div class="prompts" data-motion>${paragraphs(ready.body)}</div></section>
-    <footer><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples verified in cube snapshot v${esc(data.cube.version)}. No commanders required.</small></footer>
+    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples verified in cube snapshot v${esc(data.cube.version)}. No commanders required.</small></footer>
   </main>
   ${siteMotionMarkup()}
 </body>

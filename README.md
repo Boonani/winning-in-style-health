@@ -22,3 +22,9 @@ to the same page, query, and section on cube.coolasheck.com.
 
 [Design decisions](docs/DESIGN.md) and [request record](docs/REQUEST-20260905.md)
 preserve the terse teaching style and intentionally blank Blink prose.
+
+## Draft Observations
+
+Players: [First pick](https://draft.coolasheck.com/?pick=first) or [Last card](https://draft.coolasheck.com/?pick=last).
+Private counts: open the editor, then **Draft reports**. [Privacy, scale, backup, and interpretation](docs/ANONYMOUS-PICKS.md).
+Player QR PDFs are in [print](print/README.md). Counts are anonymous observations, not measured pick rates.

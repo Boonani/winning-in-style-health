@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101213"><title>Cube Picks</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header><a href="https://cube.coolasheck.com/draft-primer.html">Winning in Style</a><span>Anonymous</span></header>
+<main>
+<div class="modes" role="group" aria-label="Pick type"><button type="button" data-kind="first" aria-pressed="false">First pick</button><button type="button" data-kind="last" aria-pressed="true">Last card</button></div>
+<h1 id="question">What is the last card in the pack?</h1>
+<form id="form">
+<label for="card">Card</label>
+<div class="search"><input id="card" name="card" type="search" placeholder="Card name" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="matches" aria-expanded="false" required disabled><ul id="matches" role="listbox" hidden></ul></div>
+<p id="selection" class="selection" aria-live="polite"></p>
+<fieldset><legend>Pack</legend><div class="packs"><label><input type="radio" name="pack" value="1" required><span>1</span></label><label><input type="radio" name="pack" value="2"><span>2</span></label><label><input type="radio" name="pack" value="3"><span>3</span></label></div></fieldset>
+<label for="experience">Magic experience</label>
+<select id="experience" required><option value="">Choose</option><option value="0">0 - Never played</option><option value="1">1 - Played once</option><option value="2">2 - Played a few times</option><option value="3">3 - About once a year</option><option value="4">4 - A few times a year</option><option value="5">5 - Every 2 months+</option></select>
+<button id="submit" class="primary" type="submit" disabled><img src="/save.svg" alt="">Save pick</button>
+<p id="status" role="status" aria-live="polite">Loading cards...</p>
+</form>
+<section id="success" hidden><h2>Saved. Thank you.</h2><button id="another" type="button">Record another</button></section>
+<details id="preview" hidden><summary>Selected card</summary><img id="art" alt="" referrerpolicy="no-referrer"></details>
+<noscript><p>JavaScript is needed to save a pick.</p></noscript>
+<footer><details><summary>Privacy</summary><p>No names, accounts, player IDs, or tracking cookies. Each report stores only the card, pick type, pack, experience, cube version, and day. A one-use receipt prevents duplicate retries.</p><p>The app does not store IP addresses or browser details. Cloudflare handles website traffic under its own privacy policy. Opening card artwork contacts its image provider.</p></details></footer>
+</main></body></html>

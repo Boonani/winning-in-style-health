@@ -10,4 +10,6 @@ Private authoring runs on loopback port 8768, reached from Windows by `Open-Edit
 
 Production: https://cube.coolasheck.com/. Primer: /draft-primer.html. QR files: print/. Repository: Boonani/winning-in-style-health. Use the existing repository history rather than creating a competing site repo. The separate Boonani/cube-site-redirect repository only preserves old style.coolasheck.com bookmarks.
 
+Anonymous player observations are the narrowly authorized public-write exception: `tooling/picks/`, public `draft.coolasheck.com` -> loopback 8770, private aggregate listener 8771. Never expose the private primer editor or raw observations. Read `docs/ANONYMOUS-PICKS.md`; preserve `/home/boon/state/cube-picks/picks.sqlite3` and its backups outside Git. No names, accounts, player IDs, IP/user-agent logs, or tracking. Count first/last reports separately by pack, experience, and snapshot; never call these counts a pick rate or unique-player count.
+
 Durable task evidence: `/home/boon/state/cube-site-20260905`. Long work uses remote-task-codex or systemd/tmux with persistent logs. Follow tooling/AGENTS.md for taxonomy and generator boundaries.

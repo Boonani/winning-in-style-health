@@ -1,0 +1,14 @@
+{
+  "urls": {
+    "first": "https://draft.coolasheck.com/?pick=first",
+    "last": "https://draft.coolasheck.com/?pick=last"
+  },
+  "card_mm": [
+    63,
+    88
+  ],
+  "sheet": "US Letter, 3 first-pick and 3 last-card codes, print at 100%",
+  "quiet_zone_modules": 4,
+  "error_correction": "Q",
+  "qr_side_mm": 41
+}

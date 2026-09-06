@@ -23,7 +23,9 @@
     "verify": "node src/verify.mjs",
     "verify:visual": "node src/visual-check.mjs",
     "verify:editor": "node src/verify-primer-editor-ui.mjs",
-    "verify:deploy": "node src/build-dashboard.mjs --check"
+    "verify:deploy": "node src/build-dashboard.mjs --check",
+    "picks:catalog": "node picks/build-catalog.mjs",
+    "verify:picks": "node picks/verify-ui.mjs"
   },
   "engines": {
     "node": ">=22"

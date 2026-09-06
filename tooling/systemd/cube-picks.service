@@ -1,0 +1,19 @@
+[Unit]
+Description=Anonymous Cube pick collector
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/boon/cube-site/tooling
+ExecStart=/usr/bin/python3 /home/boon/cube-site/tooling/picks/server.py
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/home/boon/state/cube-picks
+TimeoutStopSec=15
+
+[Install]
+WantedBy=default.target
