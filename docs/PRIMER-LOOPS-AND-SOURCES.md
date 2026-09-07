@@ -4,8 +4,8 @@ Oscar's latest direction supersedes the previous red palette and smiling charact
 The accent is now #FF94AC with dark lettering. Characters have just a head and torso.
 The grounded reciprocal squash/stretch preserves area and settles after a pick.
 
-Teaching playback is opt-in and loops: draft excerpt 9 seconds (7.8 seconds of
-ordinary-speed simulation, then a short hold), concepts 5 seconds, studies 7 seconds.
+Teaching playback is opt-in and loops: draft excerpt 9 seconds (6.5 seconds of
+ordinary-speed simulation, then a settled hold with no packs in flight), concepts 5 seconds, studies 7 seconds.
 The excerpt restarts at 15 cards; it is not an accelerated full pack.
 Pause, restart, reduced-motion static reading and hidden-page suspension remain.
 Input feedback, text entrances and deck-count transitions are not independent

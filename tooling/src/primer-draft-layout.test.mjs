@@ -3,6 +3,11 @@ import assert from 'node:assert/strict';
 import {createDraftSimulation} from './primer-draft-simulation.mjs';
 import {layoutDraftPacks} from './primer-draft-layout.mjs';
 const hands=[[250,146],[354,250],[250,354],[146,250]];
+test('short loop holds after passing finishes, never with a pack frozen in flight',()=>{
+ const sim=createDraftSimulation();sim.advance(6.5);
+ assert.ok(sim.state.packs.every(p=>p.status!=='flight'));
+ assert.ok(sim.state.players.every(p=>p.picks.length>0));
+});
 test('full drafts keep every pack silhouette separated without changing state',()=>{
  for(const speeds of [[1.2,3.8,1.7,2.1],[.1,12,.2,.3],[3,3,3,3]]) {
   const sim=createDraftSimulation({speeds});

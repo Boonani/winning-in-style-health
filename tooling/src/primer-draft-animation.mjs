@@ -144,7 +144,7 @@ function mountDraftAnimation(createSimulation, layoutPacks, assets) {
       if(elapsed>=9) {
         simulation=createSimulation();elapsed=0;cycles++;
         status.textContent='';
-      } else if(elapsed<7.8) simulation.advance(delta);
+      } else if(simulation.state.time<6.5) simulation.advance(Math.min(delta,6.5-simulation.state.time));
     }
     last = now;
     render();
