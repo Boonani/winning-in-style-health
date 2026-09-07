@@ -100,7 +100,7 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
   <title>First Draft · Winning in Style</title>
   <link rel="canonical" href="https://cube.coolasheck.com/primer">
   <style>
-    :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#45D6C5;--mint:#45D6C5;--gold:#FFD166;--violet:#FE0040;--gutter:max(22px,env(safe-area-inset-left));}
+    :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#45D6C5;--mint:#45D6C5;--gold:#FFD166;--violet:#FF94AC;--gutter:max(22px,env(safe-area-inset-left));}
     * {box-sizing:border-box;letter-spacing:0}
     html {-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
     body {margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif}
@@ -233,6 +233,7 @@ ${conceptSceneCSS}
       </details>`).join('')}</div></details>
     </section>
     <section id="ready">${sectionHead(ready)}<div class="checklist" data-motion>${content.checklist.map(item => `<label><input type="checkbox">${esc(item)}</label>`).join('')}</div><div class="prompts" data-motion>${paragraphs(ready.body)}</div></section>
+    ${['starting-counts','pro-notes'].map(id => { const section=sectionById(content,id); return section ? '<details><summary>'+esc(section.heading)+'</summary>'+paragraphs(section.body)+'</details>' : ''; }).join('')}
     <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a> · <a href="./motion-studies.html">Motion studies</a><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples from cube snapshot v${esc(data.cube.version)}. No commanders required.</small><a class="practice" href="${esc(PRACTICE_URL)}" target="_blank" rel="noopener noreferrer">Practice drafting against bots and have fun!</a></footer>
   </main>
   ${siteMotionMarkup()}

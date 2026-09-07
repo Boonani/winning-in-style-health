@@ -33,7 +33,7 @@ summary{cursor:pointer;min-height:44px}
 <g id="comparison" opacity="0"><rect x="-20" y="-30" width="40" height="60" rx="3" fill="#FFD166"/></g>
 <g id="pack" transform="translate(100 195)">
 <g id="trailing"><rect x="-25" y="-35" width="40" height="60" rx="3" fill="#12161B" stroke="#FFD166" stroke-width="2"/><rect x="-16" y="-34" width="40" height="60" rx="3" fill="#12161B" stroke="#45D6C5" stroke-width="2"/></g>
-<rect x="-20" y="-30" width="40" height="60" rx="3" fill="#FE0040"/>
+<rect x="-20" y="-30" width="40" height="60" rx="3" fill="#FF94AC"/>
 <path d="M-12 -22H12M-12 22H12" stroke="#090C12" stroke-width="2"/>
 <text y="6" text-anchor="middle" fill="#090C12" font-size="18" font-weight="800">15</text>
 </g></svg>
@@ -73,13 +73,13 @@ summary{cursor:pointer;min-height:44px}
 <p id="description">The pack stretches in flight and compresses on landing. Its area stays constant.</p>
 <details><summary>All twelve studies</summary><h2>Squash and stretch</h2><p>The pack stretches in flight and compresses on landing. Its area stays constant.</p><h2>Anticipation</h2><p>A small backward movement prepares the forward pass.</p><h2>Staging</h2><p>The active pack is brighter than its surroundings.</p><h2>Straight ahead and pose to pose</h2><p>Outline poses mark the plan; the moving pack fills the intervals.</p><h2>Follow-through and overlap</h2><p>The trailing cards settle after the front card.</p><h2>Slow in and slow out</h2><p>The pack accelerates away and slows before arrival.</p><h2>Arcs</h2><p>A curved pass carries the pack around the table.</p><h2>Secondary action</h2><p>The receiving hand responds without taking focus from the pack.</p><h2>Timing</h2><p>The same distance takes different amounts of time.</p><h2>Exaggeration</h2><p>A bigger windup makes the intent easier to read.</p><h2>Solid drawing</h2><p>Layered edges retain the thickness and orientation of the pack.</p><h2>Appeal</h2><p>A clear silhouette, balanced colors and a friendly response keep the action inviting.</p></details>
 <p><small>Principle reference: <a href="https://www.clipstudio.net/en/animation/12-principles/">Clip Studio Paint</a>. These studies are our applications, not copied animations. Straight-ahead and pose-to-pose describe construction methods; the fourth study exposes the planned poses.</small></p>
-<div class="swatches"><div><i style="--swatch:#FE0040"></i><strong>Red</strong><br><small>#FE0040</small></div><div><i style="--swatch:#45D6C5"></i><strong>Aqua</strong><br><small>#45D6C5</small></div><div><i style="--swatch:#FFD166"></i><strong>Yellow</strong><br><small>#FFD166</small></div></div>
+<div class="swatches"><div><i style="--swatch:#FF94AC"></i><strong>Rose</strong><br><small>#FF94AC</small></div><div><i style="--swatch:#45D6C5"></i><strong>Aqua</strong><br><small>#45D6C5</small></div><div><i style="--swatch:#FFD166"></i><strong>Yellow</strong><br><small>#FFD166</small></div></div>
 <script>(function mount(principles,icons){
   const $=id=>document.getElementById(id), media=matchMedia('(prefers-reduced-motion: reduce)');
-  let mode=0, time=0, playing=false,last=0,frame=0;
+  let mode=0, time=0, playing=false,last=0,frame=0,visible=false;
   const duration=6, clamp=n=>Math.max(0,Math.min(1,n)),ease=n=>n*n*(3-2*n);
   function draw(){
-    const u=time/duration, launch=.2,land=.78,t=clamp((u-launch)/(land-launch));
+    const u=clamp(time/duration), launch=.2,land=.78,t=clamp((u-launch)/(land-launch));
     const eased=ease(t), wind=u<launch?Math.sin(u/launch*Math.PI):0;
     const emphasis=mode===9?1.8:mode===1?2.5:1;
     const x=100+390*eased-12*wind*emphasis;
@@ -106,14 +106,14 @@ summary{cursor:pointer;min-height:44px}
   }
   function tick(now){
     frame=0;
-    if(!playing||document.hidden){last=0;return;}
-    if(last) time=Math.min(duration,time+Math.min((now-last)/1000,.1));
+    if(!playing||!visible||document.hidden){last=0;return;}
+    if(last) time=(time+Math.min((now-last)/1000,.1))%(duration+1);
     last=now;
-    if(time===duration) playing=false;
+
     draw();
     if(playing) frame=requestAnimationFrame(tick);
   }
-  function schedule(){last=0;if(!frame&&playing&&!document.hidden)frame=requestAnimationFrame(tick);}
+  function schedule(){last=0;if(!frame&&playing&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
   $('play').onclick=()=>{
     if(media.matches){time=Math.min(duration,time+duration/4);playing=false;draw();return;}
     if(time===duration)time=0;
@@ -129,6 +129,7 @@ summary{cursor:pointer;min-height:44px}
   };
   media.addEventListener('change',()=>{if(media.matches){playing=false;draw();}});
   document.addEventListener('visibilitychange',schedule);
+  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.15}).observe(document.querySelector('.stage'));
   document.querySelector('.controls').hidden=false;$('scrub').hidden=false;
   draw();
 })([["Squash and stretch","The pack stretches in flight and compresses on landing. Its area stays constant."],["Anticipation","A small backward movement prepares the forward pass."],["Staging","The active pack is brighter than its surroundings."],["Straight ahead and pose to pose","Outline poses mark the plan; the moving pack fills the intervals."],["Follow-through and overlap","The trailing cards settle after the front card."],["Slow in and slow out","The pack accelerates away and slows before arrival."],["Arcs","A curved pass carries the pack around the table."],["Secondary action","The receiving hand responds without taking focus from the pack."],["Timing","The same distance takes different amounts of time."],["Exaggeration","A bigger windup makes the intent easier to read."],["Solid drawing","Layered edges retain the thickness and orientation of the pack."],["Appeal","A clear silhouette, balanced colors and a friendly response keep the action inviting."]],{"play":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n"});</script>

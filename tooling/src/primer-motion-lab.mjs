@@ -53,7 +53,7 @@ summary{cursor:pointer;min-height:44px}
 <g id="comparison" opacity="0"><rect x="-20" y="-30" width="40" height="60" rx="3" fill="#FFD166"/></g>
 <g id="pack" transform="translate(100 195)">
 <g id="trailing"><rect x="-25" y="-35" width="40" height="60" rx="3" fill="#12161B" stroke="#FFD166" stroke-width="2"/><rect x="-16" y="-34" width="40" height="60" rx="3" fill="#12161B" stroke="#45D6C5" stroke-width="2"/></g>
-<rect x="-20" y="-30" width="40" height="60" rx="3" fill="#FE0040"/>
+<rect x="-20" y="-30" width="40" height="60" rx="3" fill="#FF94AC"/>
 <path d="M-12 -22H12M-12 22H12" stroke="#090C12" stroke-width="2"/>
 <text y="6" text-anchor="middle" fill="#090C12" font-size="18" font-weight="800">15</text>
 </g></svg>
@@ -62,17 +62,17 @@ summary{cursor:pointer;min-height:44px}
 <p id="description">${principles[0][1]}</p>
 <details><summary>All twelve studies</summary>${principles.map(([title,description])=>`<h2>${title}</h2><p>${description}</p>`).join('')}</details>
 <p><small>Principle reference: <a href="https://www.clipstudio.net/en/animation/12-principles/">Clip Studio Paint</a>. These studies are our applications, not copied animations. Straight-ahead and pose-to-pose describe construction methods; the fourth study exposes the planned poses.</small></p>
-<div class="swatches">${[['#FE0040','Red'],['#45D6C5','Aqua'],['#FFD166','Yellow']].map(([color,label])=>`<div><i style="--swatch:${color}"></i><strong>${label}</strong><br><small>${color}</small></div>`).join('')}</div>
+<div class="swatches">${[['#FF94AC','Rose'],['#45D6C5','Aqua'],['#FFD166','Yellow']].map(([color,label])=>`<div><i style="--swatch:${color}"></i><strong>${label}</strong><br><small>${color}</small></div>`).join('')}</div>
 <script>(${mount.toString()})(${JSON.stringify(principles)},${JSON.stringify({play:icon('play'),pause:icon('pause')})});</script>
 </main></body></html>`;
 }
 
 function mount(principles,icons){
   const $=id=>document.getElementById(id), media=matchMedia('(prefers-reduced-motion: reduce)');
-  let mode=0, time=0, playing=false,last=0,frame=0;
+  let mode=0, time=0, playing=false,last=0,frame=0,visible=false;
   const duration=6, clamp=n=>Math.max(0,Math.min(1,n)),ease=n=>n*n*(3-2*n);
   function draw(){
-    const u=time/duration, launch=.2,land=.78,t=clamp((u-launch)/(land-launch));
+    const u=clamp(time/duration), launch=.2,land=.78,t=clamp((u-launch)/(land-launch));
     const eased=ease(t), wind=u<launch?Math.sin(u/launch*Math.PI):0;
     const emphasis=mode===9?1.8:mode===1?2.5:1;
     const x=100+390*eased-12*wind*emphasis;
@@ -99,14 +99,14 @@ function mount(principles,icons){
   }
   function tick(now){
     frame=0;
-    if(!playing||document.hidden){last=0;return;}
-    if(last) time=Math.min(duration,time+Math.min((now-last)/1000,.1));
+    if(!playing||!visible||document.hidden){last=0;return;}
+    if(last) time=(time+Math.min((now-last)/1000,.1))%(duration+1);
     last=now;
-    if(time===duration) playing=false;
+
     draw();
     if(playing) frame=requestAnimationFrame(tick);
   }
-  function schedule(){last=0;if(!frame&&playing&&!document.hidden)frame=requestAnimationFrame(tick);}
+  function schedule(){last=0;if(!frame&&playing&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
   $('play').onclick=()=>{
     if(media.matches){time=Math.min(duration,time+duration/4);playing=false;draw();return;}
     if(time===duration)time=0;
@@ -122,6 +122,7 @@ function mount(principles,icons){
   };
   media.addEventListener('change',()=>{if(media.matches){playing=false;draw();}});
   document.addEventListener('visibilitychange',schedule);
+  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.15}).observe(document.querySelector('.stage'));
   document.querySelector('.controls').hidden=false;$('scrub').hidden=false;
   draw();
 }

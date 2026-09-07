@@ -48,7 +48,7 @@ export function conceptSceneMarkup(kind,section){
  <g data-destination transform="translate(505 175)"><circle r="33" fill="none" stroke="#45D6C5" stroke-width="2" stroke-dasharray="3 5"/><path d="M-12 0L-3 9L15 -10" stroke="#45D6C5" stroke-width="4" fill="none" opacity="0" data-check/>
  ${plan?label(c.result,-90,58):''}</g>
  <g data-actor transform="translate(95 175)"><g data-trail><rect x="-29" y="-44" width="58" height="82" rx="4" fill="#090C12" stroke="#FFD166" transform="rotate(-9)"/></g>
- <rect x="-29" y="-42" width="58" height="82" rx="4" fill="#FE0040"/>
+ <rect x="-29" y="-42" width="58" height="82" rx="4" fill="#FF94AC"/>
  <g transform="translate(-16 -18)" color="#090C12">${icon(c.symbol).replace('width="24"','width="32"').replace('height="24"','height="32"')}</g></g>
  ${label(c.actor,5,233)}
  </svg>
@@ -81,14 +81,14 @@ function mountScene(kind,concepts,pose,icons){
  }
  function tick(now){
    frame=0;if(!playing||!visible||document.hidden){last=0;return;}
-   if(last)time=Math.min(4,time+Math.min((now-last)/1000,.1));last=now;
-   if(time===4)playing=false;draw();
+   if(last)time=(time+Math.min((now-last)/1000,.1))%5;last=now;
+   draw();
    if(playing)frame=requestAnimationFrame(tick);
  }
  function schedule(){last=0;if(!frame&&playing&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
  play.onclick=()=>{
    if(media.matches){playing=false;time=time===4?0:4;draw();return;}
-   if(time===4)time=0;playing=!playing;draw();schedule();
+   playing=!playing;draw();schedule();
  };
  root.querySelector('[data-restart]').onclick=()=>{time=0;playing=false;draw();};
  media.addEventListener('change',()=>{if(media.matches){playing=false;draw();}});

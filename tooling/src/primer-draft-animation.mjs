@@ -1,16 +1,17 @@
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
 import {createDraftSimulation} from './primer-draft-simulation.mjs';
+import {layoutDraftPacks} from './primer-draft-layout.mjs';
 
 const require = createRequire(import.meta.url);
 const icon = name => fs.readFileSync(require.resolve('lucide-static/icons/' + name + '.svg'), 'utf8')
   .replace('<svg', '<svg aria-hidden="true" focusable="false"');
-const colors = ['#FE0040', '#45D6C5', '#FFD166', '#F7F8FA'];
+const colors = ['#FF94AC', '#45D6C5', '#FFD166', '#F7F8FA'];
 const positions = [[250, 64], [436, 250], [250, 436], [64, 250]];
 const hands = [[250, 146], [354, 250], [250, 354], [146, 250]];
 
 export const draftAnimationCSS = `
-.draft-animation {--red:#FE0040;--aqua:#45D6C5;--yellow:#FFD166;margin:24px 0}
+.draft-animation {--red:#FF94AC;--aqua:#45D6C5;--yellow:#FFD166;margin:24px 0}
 .draft-animation svg.draft-table {display:block;width:100%;max-width:620px;aspect-ratio:1;margin:auto;overflow:visible}
 .draft-animation .instruction {font-size:24px;line-height:1.25;font-weight:750;max-width:520px;min-height:90px;margin:0 auto;text-align:center;color:var(--ink)}
 .draft-animation .letter {display:inline-block;white-space:pre}
@@ -40,11 +41,8 @@ export function draftAnimationMarkup(phrase = 'Pick 1 card, pass the pack to the
   const letters = phrase.split(' ').map(word => '<span class="word">' + [...word].map(c => '<span class="letter" style="--letter:' + letterIndex++ + '">' + esc(c) + '</span>').join('') + '</span>').join(' ');
   const people = positions.map(([x,y], i) => `
     <g data-player="${i}" transform="translate(${x} ${y})">
-      <g data-body><path d="M-26 22 Q-30 -8 0 -8 Q30 -8 26 22Z" fill="#232A33"/>
-      <circle cy="-14" r="17" fill="#F7F8FA"/>
-      <g data-face><circle cx="-5" cy="-16" r="1.8" fill="#090C12"/><circle cx="5" cy="-16" r="1.8" fill="#090C12"/>
-      <path d="M-5 -8 Q0 -4 5 -8" fill="none" stroke="#090C12" stroke-width="1.7"/></g>
-      <path d="M-23 9 Q-35 22 -18 27 M23 9 Q35 22 18 27" stroke="${colors[i]}" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <g data-body><path d="M-24 22 Q-27 -5 0 -5 Q27 -5 24 22Z" fill="${colors[i]}"/>
+      <circle cy="-25" r="16" fill="#F7F8FA"/></g>
       <text class="seat-label" y="48" data-picks>0 picked</text>
     </g>`).join('');
   const packs = hands.map(([x,y],i) => `
@@ -75,18 +73,18 @@ export function draftAnimationMarkup(phrase = 'Pick 1 card, pass the pack to the
     </div>
     <p class="motion-status" aria-live="polite">Four players. One card at a time.</p>
     <noscript><p>Each player keeps one card, then passes the remaining pack to their left. Packs wait in order when another player is still choosing.</p></noscript>
-    <script>(${mountDraftAnimation.toString()})(${createDraftSimulation.toString()}, ${JSON.stringify({positions,hands,play:icon('play'),pause:icon('pause')})});</script>
+    <script>(${mountDraftAnimation.toString()})(${createDraftSimulation.toString()}, ${layoutDraftPacks.toString()}, ${JSON.stringify({positions,hands,play:icon('play'),pause:icon('pause')})});</script>
   </div>`;
 }
 
-function mountDraftAnimation(createSimulation, assets) {
+function mountDraftAnimation(createSimulation, layoutPacks, assets) {
   const root = document.currentScript.closest('[data-draft-animation]');
   const svg = root.querySelector('.draft-table');
   const toggle = root.querySelector('[data-toggle]');
   const step = root.querySelector('[data-step]');
   const status = root.querySelector('.motion-status');
   const media = matchMedia('(prefers-reduced-motion: reduce)');
-  let simulation = createSimulation(), playing = false, visible = false, frame = 0, last = 0;
+  let simulation = createSimulation(), playing = false, visible = false, frame = 0, last = 0, elapsed = 0, cycles = 0;
   const clamp = n => Math.max(0, Math.min(1,n));
   const ease = n => n*n*(3-2*n);
   const packNodes = [...root.querySelectorAll('[data-pack]')];
@@ -95,32 +93,15 @@ function mountDraftAnimation(createSimulation, assets) {
     const s = simulation.state;
     root.dataset.time = s.time.toFixed(3);
     root.dataset.finished = String(s.finished);
+    const poses = layoutPacks(s, assets.hands, media.matches);
+    root.dataset.cycles = String(cycles);
     for (const pack of s.packs) {
       const node = packNodes[pack.id];
       node.style.display = pack.status === 'empty' ? 'none' : '';
       node.dataset.status = pack.status;
       node.querySelector('[data-count]').textContent = pack.remaining;
-      let [x,y] = assets.hands[pack.seat], angle = 0, stretch = 1;
-      if (pack.status === 'flight') {
-        const raw = clamp((s.time-pack.departure)/.95), t = media.matches ? 1 : ease(raw);
-        const a = assets.hands[pack.from], b = assets.hands[pack.to];
-        const cx = a[0]+b[0]-250, cy = a[1]+b[1]-250;
-        x = (1-t)*(1-t)*a[0]+2*(1-t)*t*cx+t*t*b[0];
-        y = (1-t)*(1-t)*a[1]+2*(1-t)*t*cy+t*t*b[1];
-        angle = Math.sin(t*Math.PI)*18;
-        stretch = media.matches ? 1 : 1+.09*Math.sin(raw*Math.PI);
-      } else if (pack.status === 'queued') {
-        const index = s.players[pack.seat].queue.indexOf(pack.id);
-        const offsets = [[-54,0],[0,-54],[54,0],[0,54]];
-        x += offsets[pack.seat][0]*(index+1);
-        y += offsets[pack.seat][1]*(index+1);
-        angle = -8;
-      } else if (!media.matches) {
-        const p = s.players[pack.seat];
-        const anticipation = clamp(1-(p.due-s.time)/.25);
-        y -= Math.sin(anticipation*Math.PI)*5;
-        angle = Math.sin(anticipation*Math.PI)*-8;
-      }
+      if (pack.status === 'empty') continue;
+      const {x,y,angle,stretch} = poses.find(p => p.id === pack.id);
       node.setAttribute('transform', 'translate('+x+' '+y+') rotate('+angle+') scale('+stretch+' '+(1/stretch)+')');
       node.querySelector('[data-fan]').setAttribute('transform', 'rotate('+(-angle*.45)+')');
     }
@@ -131,7 +112,8 @@ function mountDraftAnimation(createSimulation, assets) {
       const lastPick = [...s.events].reverse().find(e => e.type==='pick' && e.player===player.id);
       const age = lastPick ? s.time-lastPick.time : Infinity;
       const bounce = !media.matches && age<.6 ? Math.sin(age/.6*Math.PI)*4 : 0;
-      node.querySelector('[data-body]').setAttribute('transform','translate(0 '+(-bounce)+')');
+      const squash = !media.matches && age<.6 ? 1 + .16*Math.sin(age/.6*Math.PI*2) : 1;
+      node.querySelector('[data-body]').setAttribute('transform','translate(0 '+(22-bounce)+') scale('+squash+' '+(1/squash)+') translate(0 -22)');
       const card = root.querySelector('[data-picked-card="'+player.id+'"]');
       const t = ease(clamp(age/.48)), a = assets.hands[player.id], b = assets.positions[player.id];
       card.setAttribute('opacity', !media.matches && age<.48 ? '1' : '0');
@@ -139,7 +121,6 @@ function mountDraftAnimation(createSimulation, assets) {
     }
     svg.setAttribute('aria-label',s.players.map(p=>'Player '+(p.id+1)+': '+p.picks.length+' picked, '+p.queue.length+' packs waiting').join('. '));
     if (s.finished) {
-      playing = false;
       status.textContent = 'Pack 1 complete. Each player picked 15 cards.';
     }
     updateControls();
@@ -150,13 +131,21 @@ function mountDraftAnimation(createSimulation, assets) {
     if (toggle.getAttribute('aria-label') !== label) toggle.innerHTML = playing ? assets.pause : assets.play;
     toggle.setAttribute('aria-label',playing ? 'Pause animation' : 'Play animation');
     toggle.title = toggle.getAttribute('aria-label');
-    toggle.disabled = simulation.state.finished;
+    toggle.disabled = false;
     step.disabled = simulation.state.finished;
   }
   function tick(now) {
     frame = 0;
     if (!playing || !visible || document.hidden) {last=0;return;}
-    if (last) simulation.advance(Math.min((now-last)/1000,.1));
+    if (last) {
+      const delta=Math.min((now-last)/1000,.1);
+      elapsed+=delta;
+      // A short pick/pass excerpt with an end hold, not a sped-up full draft.
+      if(elapsed>=9) {
+        simulation=createSimulation();elapsed=0;cycles++;
+        status.textContent='';
+      } else if(elapsed<7.8) simulation.advance(delta);
+    }
     last = now;
     render();
     if (playing) frame = requestAnimationFrame(tick);
@@ -166,6 +155,7 @@ function mountDraftAnimation(createSimulation, assets) {
     if (!frame && playing && visible && !document.hidden) frame=requestAnimationFrame(tick);
   }
   toggle.addEventListener('click',()=>{
+    if(simulation.state.finished){simulation=createSimulation();elapsed=0;}
     playing=!playing;
     status.textContent=playing?'':'Paused';
     root.classList.add('running');
@@ -182,7 +172,7 @@ function mountDraftAnimation(createSimulation, assets) {
     if(!s.finished) status.textContent=s.players.map(p=>p.picks.length).join(' / ')+' cards picked';
   });
   root.querySelector('[data-replay]').addEventListener('click',()=>{
-    simulation=createSimulation();
+    simulation=createSimulation();elapsed=0;cycles=0;
     playing=false;
     root.classList.remove('running');
     status.textContent='Four players. One card at a time.';

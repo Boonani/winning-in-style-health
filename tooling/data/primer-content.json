@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "documentVersion": 7,
-  "updatedAt": "2026-09-07T22:14:16.041Z",
+  "documentVersion": 8,
+  "updatedAt": "2026-09-07T23:06:31.354Z",
   "hero": {
     "eyebrow": "THE DRAFT PRIMER",
     "title": "Winning in Style",
@@ -23,7 +23,8 @@
       "eyebrow": "04 · INTERACT",
       "heading": "Answer their best card.",
       "body": [
-        "Your opponent will have strong cards too. Give yourself a few ways to deal with a creature you can't beat in combat."
+        "Take a few cheap answers, not just threats. Removal can stop their best creature or clear a blocker so you can attack.",
+        "Destroy, exile, bounce, and counterspells all help, but they don't do the same job. Bounce buys time; a counterspell must catch the spell before it resolves."
       ],
       "cards": [
         {
@@ -46,7 +47,8 @@
       "heading": "Build a 40-card deck.",
       "body": [
         "Start with 17 lands + 23 nonlands.",
-        "Use your curve and game plan to adjust that balance. There isn't one creature count that fits every deck."
+        "Lands let you cast your spells; nonlands give you things to do. Staying at 40 cards helps you draw your best cards more often. Add basic lands after drafting.",
+        "Adjust for your curve and game plan, not one unlucky opening hand. There isn't one creature count that fits every deck."
       ],
       "cards": []
     },
@@ -55,8 +57,8 @@
       "eyebrow": "03 · CURVE",
       "heading": "Play before turn four.",
       "body": [
-        "Two- and three-mana plays give you something to do while expensive cards are still waiting in your hand.",
-        "Count cards you'll actually want to play early. A cheap combat trick still needs a creature and the right moment."
+        "Look for several plays at two and three mana. They let you join the game early instead of watching your opponent build a board.",
+        "A cheap creature or removal spell can help now and still leave mana for another spell later. A combat trick needs a creature and the right moment, so don't count it as your whole early game."
       ],
       "cards": []
     },
@@ -127,7 +129,8 @@
       "eyebrow": "05 · FINISH",
       "heading": "Have a way through.",
       "body": [
-        "Flying, menace, trample, unblockable attackers, and removal help you get through a crowded board."
+        "Have a few ways to keep making progress when the ground fills up. Flying, menace, trample, unblockable attackers, or removal can help you get through.",
+        "They can be cards you already wanted to play. You don't need a separate pile of expensive finishers."
       ],
       "cards": [
         {
@@ -209,6 +212,30 @@
       "heading": "Stuck on a pick?",
       "body": [
         "Need another color? Look for fixing. Missing early plays? Look for something cheaper. Can't handle their threats? Take an answer. Otherwise, choose a card that helps your plan."
+      ],
+      "cards": []
+    },
+    {
+      "id": "starting-counts",
+      "eyebrow": "OPTIONAL",
+      "heading": "Want some numbers to start with?",
+      "body": [
+        "Start with 17 lands and 23 nonlands. Within those nonlands, an example to check against is five two-mana plays, four three-mana plays, four answers, and three ways through a stall.",
+        "These are example counts, not quotas or a proven best list. Roles overlap: a cheap removal spell can be an early play and an answer. A flying creature can be an early play and a way through.",
+        "Frank Karsten's Arena Cube midrange example uses about five two-drops and five three-drops. His aggressive example starts much lower. Borrow the idea of a busy early curve, not a fixed creature recipe.",
+        "Why several of each? You won't draw every card. One early creature or one answer won't reliably show up when you need it. Check your pile between packs and fill the gaps.",
+        "Mana is a separate check: roughly 9 sources for a main color, 6 for a later secondary color, or 3 for one late splash are starting guidelines, not guarantees. Early double-colored costs need more. See the mana explanation before adding another color."
+      ],
+      "cards": []
+    },
+    {
+      "id": "pro-notes",
+      "eyebrow": "OPTIONAL",
+      "heading": "Advice worth keeping",
+      "body": [
+        "LSV, on Vintage Cube: \"There is no shortage of powerful cards\". His point: choose cards that work toward the deck you are building, rather than collecting impressive cards with no shared plan.",
+        "Caleb Durward: \"When in doubt on a pick, hedging towards the cheaper card\". Check what your deck is missing before your next pick: early plays, interaction, or fixing.",
+        "Reid Duke: \"There's no 'master formula' for how many cards of each mana cost you should play.\" Your plan and the speed of the games matter. The example counts above are a place to begin, not a test you have to pass."
       ],
       "cards": []
     }
@@ -508,6 +535,18 @@
     {
       "label": "David McDarby · Finding synergies in a cube",
       "url": "https://magic.wizards.com/en/news/mtg-arena/tinkerers-cube-draft-mtg-arena"
+    },
+    {
+      "label": "LSV - How to Master Vintage Cube (ChannelFireball / TCGplayer)",
+      "url": "https://www.tcgplayer.com/content/article/How-to-Master-Vintage-Cube-MTG-Deep-Dive/d1152d4e-f4bd-4cbc-af7a-d446fa000bef/"
+    },
+    {
+      "label": "Caleb Durward - How to Approach New Cubes (ChannelFireball / TCGplayer)",
+      "url": "https://www.tcgplayer.com/content/article/How-to-Approach-New-Cubes-in-MTG/8a11b81a-bdf7-47ad-a72f-9abd1755e2e4/"
+    },
+    {
+      "label": "Frank Karsten - How to Draft Aggro Decks in the MTG Arena Cube",
+      "url": "https://www.tcgplayer.com/content/article/How-to-Draft-Aggro-Decks-in-the-MTG-Arena-Cube/2e1fda45-e52f-4a56-ae88-507ce3872a68/"
     }
   ],
   "printingProvenance": [

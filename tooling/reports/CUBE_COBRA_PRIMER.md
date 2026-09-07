@@ -10,7 +10,7 @@ Commander-style stories in a normal draft. No commanders required.
 
 **Pick one. Pass the rest.**
 
-**Draft interaction.** Your opponent will have strong cards too. Give yourself a few ways to deal with a creature you can't beat in combat.
+**Draft interaction.** Take a few cheap answers, not just threats. Removal can stop their best creature or clear a blocker so you can attack.
 
 **Fixing gives you permission to play more colors.** Take lands and fixing seriously.
 

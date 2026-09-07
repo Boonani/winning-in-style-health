@@ -14,13 +14,13 @@ This is independent of the larger CubeArena advice addition.
 
 ## Brand
 Three brand accents:
-- Red: RGB(254, 0, 64), #FE0040. Primary action and the card being considered.
+- Rose: RGB(255, 148, 172), #FF94AC. Replaces the hard-to-see red at Oscar's request.
 - Aqua: RGB(69, 214, 197), #45D6C5. Mana support, continuity and passing paths.
 - Yellow: RGB(255, 209, 102), #FFD166. Attention, open choices and supporting comparisons.
 
 Neutral canvas #090C12, surfaces #12161B, text #F7F8FA.
-Use red for emphasis, never for long body text. White text on red must be
-contrast-tested at its actual size before use. Pair color with labels, shapes
+Use rose for emphasis, with dark lettering on rose-filled cards. Contrast must
+be tested at the actual size before use. Pair color with labels, shapes
 or patterns: pack identifiers A-D and explicit counts distinguish the packs.
 No hue is assigned to a Magic mana color; actual mana symbols retain their
 conventional identities.
@@ -64,7 +64,8 @@ The following are implementation choices, not quotations.
 9. Timing: independently paced players make the queue behavior legible.
 10. Exaggeration: the pre-pick windup and selected-card lift amplify a small act.
 11. Solid drawing: offset back cards and reciprocal scaling retain stack volume.
-12. Appeal: restrained, smiling players and a clear repeated silhouette.
+12. Appeal: faceless circle heads and simple torsos, with no arms. A grounded,
+    reciprocal squash/stretch after each pick expresses a small happy response.
 
 motion-studies.html now provides twelve selectable studies with a play/pause
 control and scrubber. Each shares the same coordinated pass, emphasizing the
