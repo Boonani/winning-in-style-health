@@ -15,7 +15,7 @@ await fs.mkdir(path.join(fixture, 'data'), { recursive: true });
 await fs.symlink(path.join(tooling, 'assets'), path.join(fixture, 'assets'));
 await fs.symlink(path.join(tooling, 'outputs'), path.join(fixture, 'outputs'));
 await fs.copyFile(path.join(tooling, 'editor.html'), path.join(fixture, 'editor.html'));
-const original = await fs.readFile(path.join(tooling, 'src/fixtures/primer-content.json'), 'utf8');
+const original = await fs.readFile(path.join(tooling, 'data/primer-content.json'), 'utf8');
 let publication = { state: 'idle' };
 const instance = await startPrimerEditorServer({
   port: 0, toolingRoot: fixture, siteRoot: root, backupRoot: path.join(root, 'backups'),
@@ -44,6 +44,13 @@ try {
         await saved();
         assert.equal(await page.locator('iframe').contentFrame().locator('h1').isVisible(), true);
         assert.ok(await page.locator('.edit-card').count() > 20);
+        const manaGroup = page.locator('.edit-group').filter({ has: page.getByRole('heading', { name: 'Fix first. Add colors later.', exact: true }) });
+        const finishGroup = page.locator('.edit-group').filter({ has: page.getByRole('heading', { name: 'Have a way through.', exact: true }) });
+        assert.equal(await finishGroup.locator('.add-card').count(), 1);
+        await manaGroup.locator('.add-card').click();
+        await page.locator('#card-name').fill('Swords to Plowshares');
+        await page.locator('#printing-search button[type="submit"]').click();
+        await page.getByRole('button', { name: 'Use this printing' }).click();
         // Section controls close over their source object; consecutive saves must rebind it.
         const heading = page.getByLabel('Heading', { exact: true }).first();
         for (const value of ['First saved heading', 'Second saved heading']) {
@@ -53,6 +60,7 @@ try {
           assert.equal(await heading.inputValue(), value);
           const disk = JSON.parse(await fs.readFile(path.join(fixture, 'data/primer-content.json'), 'utf8'));
           assert.equal(disk.sections[0].heading, value);
+          assert.equal(disk.sections.find(s => s.id === 'mana').cards.length, JSON.parse(original).sections.find(s => s.id === 'mana').cards.length + 1);
           assert.match(await fs.readFile(path.join(root, 'primer.html'), 'utf8'), new RegExp(value));
         }
         await page.reload();

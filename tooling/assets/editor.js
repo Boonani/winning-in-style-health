@@ -197,7 +197,7 @@
         textField('Heading', sectionData.heading, value => { sectionData.heading = value; }),
       );
       section.append(fields, textField('Paragraphs', sectionData.body.join('\n'), value => { sectionData.body = value.split('\n'); }, true));
-      if (sectionData.id === 'removal' || sectionData.id === 'blink') section.append(cardEditor(`section:${sectionData.id}`));
+      if (['removal', 'blink', 'mana', 'finish'].includes(sectionData.id)) section.append(cardEditor(`section:${sectionData.id}`));
       editor.append(section);
     }
 
