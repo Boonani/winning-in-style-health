@@ -18,6 +18,7 @@ async function fixture() {
   await fs.writeFile(path.join(toolingRoot, 'data', 'primer-content.json'), `${JSON.stringify(DEFAULT_PRIMER_CONTENT, null, 2)}\n`);
   await fs.writeFile(path.join(toolingRoot, 'outputs', 'analysis.json'), JSON.stringify({ cube: { version: 1 } }));
   await fs.writeFile(path.join(siteRoot, 'primer.html'), '<!doctype html><title>old</title>');
+  await fs.writeFile(path.join(siteRoot, 'motion-studies.html'), '<!doctype html><title>studies</title>');
   return { root, toolingRoot, siteRoot, backupRoot };
 }
 
@@ -44,6 +45,12 @@ test('editor API rejects malformed, cross-origin, stale, and rebound writes; sav
   const loaded = await request(`${origin}/api/content`);
   assert.equal(loaded.status, 200);
   const initial = JSON.parse(loaded.body);
+  for (const route of ['/preview/primer', '/preview/primer.html', '/preview/draft-primer.html']) {
+    const preview = await request(origin + route);
+    assert.equal(preview.status, 200);
+    assert.match(preview.body, /<title>old<\/title>/);
+  }
+  assert.match((await request(origin + '/preview/motion-studies.html')).body, /<title>studies<\/title>/);
   assert.equal((await request(`${origin}/.git/config`)).status, 404);
   assert.equal((await request(`${origin}/src/primer-editor-server.mjs`)).status, 404);
 

@@ -160,6 +160,9 @@ function safeStaticMap(toolingRoot, siteRoot) {
     ['/preview/', [path.join(siteRoot, 'index.html'), 'text/html; charset=utf-8']],
     ['/preview/index.html', [path.join(siteRoot, 'index.html'), 'text/html; charset=utf-8']],
     ['/preview/draft-primer.html', [path.join(siteRoot, 'primer.html'), 'text/html; charset=utf-8']],
+    ['/preview/primer', [path.join(siteRoot, 'primer.html'), 'text/html; charset=utf-8']],
+    ['/preview/primer.html', [path.join(siteRoot, 'primer.html'), 'text/html; charset=utf-8']],
+    ['/preview/motion-studies.html', [path.join(siteRoot, 'motion-studies.html'), 'text/html; charset=utf-8']],
     ['/preview/data/cubecobra-adjacency.json', [path.join(siteRoot, 'data', 'cubecobra-adjacency.json'), 'application/json; charset=utf-8']],
   ]);
   for (const icon of ['arrow-up', 'arrow-down', 'trash-2', 'plus', 'save', 'refresh-cw', 'search', 'move-right', 'cloud-upload', 'download']) {

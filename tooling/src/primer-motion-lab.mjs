@@ -41,7 +41,7 @@ small{font-size:13px;color:#B9C0C8}details{border-top:1px solid #29313D;padding:
 summary{cursor:pointer;min-height:44px}
 [hidden]{display:none}
 </style></head><body><main>
-<header><strong>Winning in Style</strong><a href="./primer.html">Primer</a></header>
+<header><strong>Winning in Style</strong><a href="./primer">Primer</a></header>
 <h1>Motion studies</h1>
 <label for="principle">Principle</label><select id="principle">${principles.map(([title],i)=>`<option value="${i}">${i+1}. ${title}</option>`).join('')}</select>
 <svg class="stage" viewBox="0 0 600 300" role="img" aria-label="A pack passes from one hand to another.">
