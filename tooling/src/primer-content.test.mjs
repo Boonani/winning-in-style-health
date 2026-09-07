@@ -11,7 +11,7 @@ test('primer keeps requested copy and owner Blink prose blank', () => {
   assert.equal((html.match(/Games are often won based on who is able to interact more\./g) ?? []).length, 1);
   assert.doesNotMatch(html, /Take good removal highly|Blink is the heart of this cube|Payoff:|Enabler:/);
   assert.equal(DEFAULT_PRIMER_CONTENT.sections.find(section => section.id === 'blink').body[0], '');
-  assert.match(html, /<section id="blink">[\s\S]*?<h2>Blink<\/h2>/);
+  assert.match(html, /<div id="blink">[\s\S]*?<h2>Blink<\/h2>/);
 });
 
 test('primer escapes source text and derives only known Scryfall image URLs', () => {

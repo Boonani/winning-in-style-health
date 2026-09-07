@@ -88,7 +88,7 @@
   };
 
   const groups = () => [
-    ...content.sections.filter(section => section.id === 'removal' || section.id === 'blink')
+    ...content.sections.filter(section => ['removal', 'blink', 'mana', 'finish'].includes(section.id))
       .map(section => ({ id: `section:${section.id}`, label: section.heading, cards: section.cards })),
     ...content.plans.map(plan => ({ id: `plan:${plan.id}`, label: `${plan.guild} · ${plan.name}`, cards: plan.cards })),
   ];

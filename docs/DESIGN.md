@@ -1,5 +1,7 @@
 # Cube Primer Design
 
+September 7: `BEGINNER-RESEARCH-20260907.md` supersedes the older removal copy and mandatory Blink placement below. The primer now teaches fixing before curve, with optional card examples and strategies.
+
 ## Direction
 
 The primer is phone-first, quiet, and visual. It uses the installed system sans-serif stack so type remains crisp and familiar on iOS, Android, macOS, and Windows without a font download. Mint, blue, gold, and violet create a meaningful teaching hierarchy against a near-black canvas.

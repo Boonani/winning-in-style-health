@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderDashboard } from './dashboard.mjs';
-import { renderDraftPrimer, renderCubeCobraPrimer } from './draft-primer.mjs';
+import { renderDraftPrimer, renderCubeCobraPrimer, PRIMER_REDIRECT } from './draft-primer.mjs';
 import { loadPrimerContent } from './primer-content.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -31,7 +31,8 @@ if (checkOnly) {
   assert.equal(standalone, expectedHtml, 'dashboard.html does not match src/dashboard.mjs and outputs/analysis.json');
   assert.equal(deployed, expectedHtml, 'deploy-site/index.html does not match the verified standalone dashboard');
   assert.deepEqual(deployedAdjacency, sourceAdjacency, 'Deployed CubeCobra adjacency matrix is stale');
-  assert.equal(await fs.readFile(path.join(deployRoot, 'draft-primer.html'), 'utf8'), expectedPrimer, 'Draft primer is stale');
+  assert.equal(await fs.readFile(path.join(deployRoot, 'primer.html'), 'utf8'), expectedPrimer, 'Draft primer is stale');
+  assert.equal(await fs.readFile(path.join(deployRoot, 'draft-primer.html'), 'utf8'), PRIMER_REDIRECT, 'Legacy redirect is stale');
   assert.equal(await fs.readFile(path.join(root, 'reports', 'CUBE_COBRA_PRIMER.md'), 'utf8'), expectedAbout, 'Cube Cobra primer is stale');
   for (const symbol of manaSymbols) {
     const [source, deployedAsset] = await Promise.all([
@@ -46,7 +47,8 @@ if (checkOnly) {
   await Promise.all([
     fs.writeFile(path.join(root, 'dashboard.html'), expectedHtml),
     fs.writeFile(path.join(deployRoot, 'index.html'), expectedHtml),
-    fs.writeFile(path.join(deployRoot, 'draft-primer.html'), expectedPrimer),
+    fs.writeFile(path.join(deployRoot, 'primer.html'), expectedPrimer),
+    fs.writeFile(path.join(deployRoot, 'draft-primer.html'), PRIMER_REDIRECT),
     fs.writeFile(path.join(root, 'reports', 'CUBE_COBRA_PRIMER.md'), expectedAbout),
     fs.copyFile(adjacencySource, adjacencyDeploy),
     ...manaSymbols.map((symbol) => fs.copyFile(

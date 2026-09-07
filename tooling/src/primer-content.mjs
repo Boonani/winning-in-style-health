@@ -6,6 +6,7 @@ export const SCRYFALL_IMAGE_HOST = 'cards.scryfall.io';
 export const CARD_GROUP_IDS = new Set([
   'section:removal',
   'section:blink',
+  'section:mana', 'section:finish', 'plan:WUBRG',
   'plan:WU', 'plan:UB', 'plan:BR', 'plan:RG', 'plan:GW',
   'plan:WB', 'plan:UR', 'plan:BG', 'plan:WR', 'plan:UG',
 ]);
@@ -76,11 +77,12 @@ export function validatePrimerContent(value) {
   if (new Set(sections.map(section => section.id)).size !== sections.length) fail('content.sections', 'section IDs must be unique');
   for (const id of requiredSections) if (!sections.some(section => section.id === id)) fail('content.sections', `missing ${id}`);
 
-  const plans = list(source.plans, 'content.plans', { min: 10, max: 10 }).map((entry, index) => {
+  const plans = list(source.plans, 'content.plans', { min: 10, max: 11 }).map((entry, index) => {
     const plan = object(entry, `content.plans[${index}]`);
-    const id = text(plan.id, `content.plans[${index}].id`, { max: 2 });
-    if (!/^(WU|UB|BR|RG|GW|WB|UR|BG|WR|UG)$/.test(id)) fail(`content.plans[${index}].id`, 'expected a supported color pair');
-    const colors = list(plan.colors, `content.plans[${index}].colors`, { min: 2, max: 2 });
+    const id = text(plan.id, `content.plans[${index}].id`, { max: 5 });
+    if (!/^(WU|UB|BR|RG|GW|WB|UR|BG|WR|UG|WUBRG)$/.test(id)) fail(`content.plans[${index}].id`, 'expected a supported strategy');
+    const colors = list(plan.colors, `content.plans[${index}].colors`, { min: id === 'WUBRG' ? 5 : 2, max: id === 'WUBRG' ? 5 : 2 });
+    if (new Set(colors).size !== colors.length || [...id].some(color => !colors.includes(color))) fail(`content.plans[${index}].colors`, 'colors must match strategy');
     if (colors.some(value => typeof value !== 'string' || !COLOR.test(value))) fail(`content.plans[${index}].colors`, 'expected mana-color letters');
     return {
       id,

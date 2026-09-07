@@ -25,7 +25,7 @@ async function run(cmd, args, cwd = root) {
     child.on('close', code => code === 0 ? resolve(result.trim()) : reject(new Error(cmd + ' failed (' + code + '). See publish.log.')));
   });
 }
-const allowed = ['tooling/data/primer-content.json', 'draft-primer.html', 'tooling/reports/CUBE_COBRA_PRIMER.md'];
+const allowed = ['tooling/data/primer-content.json', 'primer.html', 'tooling/reports/CUBE_COBRA_PRIMER.md'];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 try {
   await status({ state: 'running', phase: 'Checking saved changes' });
@@ -57,17 +57,17 @@ try {
   await run('git', ['push', 'origin', 'main']);
   const commit = await run('git', ['rev-parse', 'HEAD']);
   await status({ state: 'running', phase: 'Waiting for the public site', commit });
-  const expected = hash(await fs.readFile(path.join(root, 'draft-primer.html')));
+  const expected = hash(await fs.readFile(path.join(root, 'primer.html')));
   let live = false;
   for (let attempt = 0; attempt < 24; attempt++) {
     try {
-      const response = await fetch('https://cube.coolasheck.com/draft-primer.html?publish=' + commit + '-' + attempt, { signal: AbortSignal.timeout(20000), headers: { 'Cache-Control': 'no-cache' } });
+      const response = await fetch('https://cube.coolasheck.com/primer?publish=' + commit + '-' + attempt, { signal: AbortSignal.timeout(20000), headers: { 'Cache-Control': 'no-cache' } });
       if (response.ok && hash(Buffer.from(await response.arrayBuffer())) === expected) { live = true; break; }
     } catch { /* A deploy can briefly fail while Pages switches versions. */ }
     await new Promise(resolve => setTimeout(resolve, 15000));
   }
   if (!live) throw new Error('Changes were pushed, but public verification timed out. Check GitHub Pages before retrying.');
-  await status({ state: 'complete', phase: 'Live', commit, url: 'https://cube.coolasheck.com/draft-primer.html', sha256: expected, sourceRevision: hash(await fs.readFile(path.join(root, 'tooling/data/primer-content.json'))) });
+  await status({ state: 'complete', phase: 'Live', commit, url: 'https://cube.coolasheck.com/primer', sha256: expected, sourceRevision: hash(await fs.readFile(path.join(root, 'tooling/data/primer-content.json'))) });
 } catch (error) {
   await status({ state: 'failed', phase: error.message });
   await log.appendFile('\nERROR: ' + error.message + '\n');

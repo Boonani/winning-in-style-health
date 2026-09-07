@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "documentVersion": 5,
-  "updatedAt": "2026-09-06T00:09:03.089Z",
+  "documentVersion": 6,
+  "updatedAt": "2026-09-07T18:50:50.792Z",
   "hero": {
     "eyebrow": "THE DRAFT PRIMER",
-    "title": "Draft with a plan.",
+    "title": "Draft cards you can cast.",
     "lede": "Pick. Build. Play."
   },
   "sections": [
@@ -13,19 +13,17 @@
       "eyebrow": "01 · DRAFT",
       "heading": "Pick one. Pass the rest.",
       "body": [
-        "Keep one card. Pass the pack.",
-        "Packs usually move left, right, then left.",
-        "Good cards passed to you reveal open colors.",
-        "Your first pick is not a promise."
+        "Your first pick is not a promise.",
+        "Strong cards coming late are clues about what is open."
       ],
       "cards": []
     },
     {
       "id": "removal",
-      "eyebrow": "02 · INTERACT",
+      "eyebrow": "04 · INTERACT",
       "heading": "Answer their best card.",
       "body": [
-        "Games are often won based on who is able to interact more."
+        "Take efficient interaction highly. Have several answers for their best threats."
       ],
       "cards": [
         {
@@ -44,29 +42,27 @@
     },
     {
       "id": "deck",
-      "eyebrow": "03 · BUILD",
+      "eyebrow": "07 · BUILD",
       "heading": "Build a 40-card deck.",
       "body": [
-        "Start with 17 lands.",
-        "Try 15 creatures and eight other spells.",
-        "Count removal inside those spell slots.",
-        "Adjust for your curve and plan."
+        "Start with 17 lands + 23 nonlands.",
+        "Adjust for your curve and plan, not a fixed creature quota."
       ],
       "cards": []
     },
     {
       "id": "curve",
-      "eyebrow": "04 · CURVE",
+      "eyebrow": "03 · CURVE",
       "heading": "Play before turn four.",
       "body": [
-        "Cheap plays keep you alive and attacking.",
-        "Too many expensive cards strand your hand."
+        "Have several real plays at two and three mana. Don't overload on expensive cards.",
+        "Two cards look equally good? Take the cheaper one."
       ],
       "cards": []
     },
     {
       "id": "blink",
-      "eyebrow": "05 · SIGNATURE",
+      "eyebrow": "BLINK",
       "heading": "Blink",
       "body": [
         ""
@@ -88,19 +84,67 @@
     },
     {
       "id": "plans",
-      "eyebrow": "06 · EXPLORE",
-      "heading": "Pick a plan.",
+      "eyebrow": "OPTIONAL · EXPLORE",
+      "heading": "Find a strategy.",
       "body": [
-        "Start with two colors. Branch when supported."
+        "Ideas, not rules. Your fixing can connect several colors."
       ],
       "cards": []
     },
     {
       "id": "ready",
-      "eyebrow": "07 · READY",
+      "eyebrow": "READY",
       "heading": "Before game one.",
       "body": [
         "Unused cards become your sideboard."
+      ],
+      "cards": []
+    },
+    {
+      "id": "mana",
+      "eyebrow": "02 · MANA",
+      "heading": "Fix first. Add colors later.",
+      "body": [
+        "Fixing gives you permission to play more colors.",
+        "Lands and mana fixing are real picks. More powerful spells only help when you can cast them."
+      ],
+      "cards": []
+    },
+    {
+      "id": "mana-detail",
+      "eyebrow": "MANA SOURCES",
+      "heading": "Count sources, not just basics.",
+      "body": [
+        "Need a color early? About 9 sources is a starting point. Need it later? Around 6. One late splash card? Around 3.",
+        "These are rough guidelines, not guarantees. Multiple colored symbols and early spells need stronger support.",
+        "A dual land can supply either of its colors. A fetch only helps if your deck has a land it can find.",
+        "Mana creatures and Treasure makers are conditional: you must cast or create them first. If green casts your fixing, support green before adding other colors."
+      ],
+      "cards": []
+    },
+    {
+      "id": "finish",
+      "eyebrow": "05 · FINISH",
+      "heading": "Have a way through.",
+      "body": [
+        "Flying, menace, trample, unblockable attackers, and removal help you get through a crowded board."
+      ],
+      "cards": [
+        {
+          "scryfallId": "e4775a26-0b66-40e9-8f64-41d9308ca032",
+          "name": "Surrak, Elusive Hunter",
+          "set": "tdm",
+          "collectorNumber": "161"
+        }
+      ]
+    },
+    {
+      "id": "plan-lesson",
+      "eyebrow": "06 · PLAN",
+      "heading": "Draft a deck, not a pile.",
+      "body": [
+        "What is your deck trying to do?",
+        "Each pick should support that plan or solve something your deck is missing. Stay flexible."
       ],
       "cards": []
     }
@@ -345,14 +389,28 @@
           "collectorNumber": "16"
         }
       ]
+    },
+    {
+      "id": "WUBRG",
+      "guild": "Multicolor",
+      "name": "Five-color good stuff",
+      "colors": [
+        "W",
+        "U",
+        "B",
+        "R",
+        "G"
+      ],
+      "body": "Draft fixing early. Build a strong base color. Splash powerful cards when your mana supports them; five colors is an option, not a requirement.",
+      "cards": []
     }
   ],
   "checklist": [
-    "40 cards, including lands",
-    "Early creatures or defensive plays",
-    "Answers for opposing threats",
-    "Lands that cast your colors",
-    "A clear way to win"
+    "Can I play early?",
+    "Can I cast my colors?",
+    "Can I answer a threat?",
+    "Can I break a stalled board?",
+    "How does my deck win?"
   ],
   "sources": [
     {

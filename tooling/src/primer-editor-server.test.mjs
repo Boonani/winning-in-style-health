@@ -17,7 +17,7 @@ async function fixture() {
   await fs.mkdir(siteRoot, { recursive: true });
   await fs.writeFile(path.join(toolingRoot, 'data', 'primer-content.json'), `${JSON.stringify(DEFAULT_PRIMER_CONTENT, null, 2)}\n`);
   await fs.writeFile(path.join(toolingRoot, 'outputs', 'analysis.json'), JSON.stringify({ cube: { version: 1 } }));
-  await fs.writeFile(path.join(siteRoot, 'draft-primer.html'), '<!doctype html><title>old</title>');
+  await fs.writeFile(path.join(siteRoot, 'primer.html'), '<!doctype html><title>old</title>');
   return { root, toolingRoot, siteRoot, backupRoot };
 }
 
@@ -73,7 +73,7 @@ test('editor API rejects malformed, cross-origin, stale, and rebound writes; sav
   const savedBody = JSON.parse(saved.body);
   assert.equal(savedBody.state, 'saved-and-rendered');
   assert.notEqual(savedBody.revision, initial.revision);
-  assert.match(await fs.readFile(path.join(dirs.siteRoot, 'draft-primer.html'), 'utf8'), /Saved through the editor\./);
+  assert.match(await fs.readFile(path.join(dirs.siteRoot, 'primer.html'), 'utf8'), /Saved through the editor\./);
   assert.equal(JSON.parse((await request(`${origin}/api/content`)).body).content.hero.title, 'Saved through the editor.');
   assert.equal((await fs.readdir(dirs.backupRoot)).length, 1);
 
@@ -89,7 +89,7 @@ test('failed render leaves source and public artifact unchanged', async t => {
   t.after(() => fs.rm(dirs.root, { recursive: true, force: true }));
   const sourceFile = path.join(dirs.toolingRoot, 'data', 'primer-content.json');
   const beforeSource = await fs.readFile(sourceFile, 'utf8');
-  const beforePublic = await fs.readFile(path.join(dirs.siteRoot, 'draft-primer.html'), 'utf8');
+  const beforePublic = await fs.readFile(path.join(dirs.siteRoot, 'primer.html'), 'utf8');
   const revision = (await import('./primer-content.mjs')).primerRevision(beforeSource);
   await assert.rejects(savePrimerContent({
     ...dirs,
@@ -98,7 +98,7 @@ test('failed render leaves source and public artifact unchanged', async t => {
     renderer: () => { throw new Error('synthetic render failure'); },
   }), /synthetic render failure/);
   assert.equal(await fs.readFile(sourceFile, 'utf8'), beforeSource);
-  assert.equal(await fs.readFile(path.join(dirs.siteRoot, 'draft-primer.html'), 'utf8'), beforePublic);
+  assert.equal(await fs.readFile(path.join(dirs.siteRoot, 'primer.html'), 'utf8'), beforePublic);
 });
 
 test('rebinding reads, concurrent saves, and publication share a guarded queue', async t => {

@@ -4,15 +4,15 @@ Big plays. Shared synergies. Flashy finishes.
 
 Commander-style stories in a normal draft. No commanders required.
 
-**First draft?** [Open the visual primer](https://cube.coolasheck.com/draft-primer.html). [Cube health](https://cube.coolasheck.com/) shows exact support.
+**First draft?** [Open the visual primer](https://cube.coolasheck.com/primer). [Cube health](https://cube.coolasheck.com/) shows exact support.
 
 ## Draft in four moves
 
 **Pick one. Pass the rest.**
 
-**Draft interaction.** Games are often won based on who is able to interact more.
+**Draft interaction.** Take efficient interaction highly. Have several answers for their best threats.
 
-**Start with two colors.** Branch when supported.
+**Fixing gives you permission to play more colors.** Take lands and fixing seriously.
 
 **Build 40 cards.** Start near 17 lands.
 
@@ -77,6 +77,12 @@ Chain small damage into lethal rewards.
 Disrupt them. Win with their best cards.
 
 <<[[!Extract Brain|8c3a4a44-5e75-42a4-8140-2105c2becff9]][[!Smirking Spelljacker|01d1e394-1b0c-4b40-ba85-f55973703d41]]>>
+
+### {W}{U}{B}{R}{G} Multicolor / Five-color good stuff
+
+Draft fixing early. Build a strong base color. Splash powerful cards when your mana supports them; five colors is an option, not a requirement.
+
+<<>>
 
 ## Stay flexible
 

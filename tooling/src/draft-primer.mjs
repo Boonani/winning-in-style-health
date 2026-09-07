@@ -39,11 +39,11 @@ export function renderCubeCobraPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
     '# Winning in Style',
     'Big plays. Shared synergies. Flashy finishes.',
     'Commander-style stories in a normal draft. No commanders required.',
-    '**First draft?** [Open the visual primer](https://cube.coolasheck.com/draft-primer.html). [Cube health](https://cube.coolasheck.com/) shows exact support.',
+    '**First draft?** [Open the visual primer](https://cube.coolasheck.com/primer). [Cube health](https://cube.coolasheck.com/) shows exact support.',
     '## Draft in four moves',
     '**Pick one. Pass the rest.**',
     '**Draft interaction.** ' + content.sections.find(section => section.id === 'removal').body[0],
-    '**Start with two colors.** Branch when supported.',
+    '**Fixing gives you permission to play more colors.** Take lands and fixing seriously.',
     '**Build 40 cards.** Start near 17 lands.',
     '## Pick a plan',
     ...content.plans.flatMap(plan => [
@@ -66,6 +66,9 @@ const sectionById = (content, id) => content.sections.find(section => section.id
 const sectionHead = section => `<div class="section-head" data-motion><span>${esc(section.eyebrow)}</span><h2>${esc(section.heading)}</h2></div>`;
 const gallery = cards => `<div class="card-gallery">${cards.map(cardFigure).join('')}</div>`;
 
+export const PRACTICE_URL = 'https://draftmancer.com/?cubeCobraID=1fd964c1-9092-46f8-8188-5e933e12e190&cubeCobraName=%E2%9C%A8%20Winning%20in%20Style%20%E2%9C%A8%20';
+export const PRIMER_REDIRECT = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/primer"><link rel="canonical" href="https://cube.coolasheck.com/primer"><title>Draft primer</title></head><body><a href="/primer">Open the primer</a><script>location.replace("/primer"+location.search+location.hash)</script></body></html>\n';
+
 export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
   const content = validatePrimerContent(input);
   const draft = sectionById(content, 'draft');
@@ -75,11 +78,15 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
   const blink = sectionById(content, 'blink');
   const plans = sectionById(content, 'plans');
   const ready = sectionById(content, 'ready');
+  const mana = sectionById(content, 'mana') ?? { eyebrow: 'MANA', heading: 'Fix first. Add colors later.', body: ['Fixing gives you permission to play more colors.'], cards: [] };
+  const manaDetail = sectionById(content, 'mana-detail') ?? { body: ['Count sources, not just basic lands. Fixing that costs mana must be cast first.'] };
+  const finish = sectionById(content, 'finish') ?? { eyebrow: 'FINISH', heading: 'Have a way through.', body: ['Flying, menace, trample, and removal help break board stalls.'], cards: [] };
+  const planLesson = sectionById(content, 'plan-lesson') ?? { eyebrow: 'PLAN', heading: 'Draft a deck, not a pile.', body: ['What is your deck trying to do? Each pick should help that plan or fill a gap.'] };
   const colors = { W: 'White', U: 'Blue', B: 'Black', R: 'Red', G: 'Green' };
   const deckCells = Array.from({ length: 40 }, (_, index) =>
-    `<i class="${index < 17 ? 'land' : index < 32 ? 'creature' : 'spell'}" aria-hidden="true"></i>`).join('');
+    `<i class="${index < 17 ? 'land' : 'spell'}" aria-hidden="true"></i>`).join('');
   const curveBars = [1, 5, 4, 3, 1, 1].map((count, index) =>
-    `<div><strong>${count}</strong><i data-motion-bar style="--bar:${count / 5}"></i><span>${index === 5 ? '6+' : index + 1}</span></div>`).join('');
+    `<div><strong>${index === 1 || index === 2 ? 'Prioritize' : ''}</strong><i data-motion-bar style="--bar:${count / 5}"></i><span>${index === 5 ? '6+' : index + 1}</span></div>`).join('');
 
   return `<!doctype html>
 <html lang="en">
@@ -88,6 +95,7 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#090c12">
   <title>First Draft · Winning in Style</title>
+  <link rel="canonical" href="https://cube.coolasheck.com/primer">
   <style>
     :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#7db8ff;--mint:#74d7b0;--gold:#f0c66f;--violet:#b9a4ff;--gutter:max(22px,env(safe-area-inset-left));}
     * {box-sizing:border-box;letter-spacing:0}
@@ -155,6 +163,12 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
     footer summary {min-height:56px}
     .source-list {display:grid;gap:2px;padding-bottom:18px}
     .source-list a {min-height:44px;display:flex;align-items:center}
+    .practice {display:flex;align-items:center;justify-content:center;min-height:52px;padding:16px 20px;margin-top:28px;background:var(--mint);color:var(--paper);font-weight:750;text-align:center;text-decoration:none;border-radius:6px;overflow-wrap:anywhere}
+    .quick-reference {position:sticky;top:0;z-index:3;background:var(--paper);border-bottom:1px solid var(--line)}
+    .quick-reference summary {min-height:48px;font-size:14px}
+    .quick-reference p {font-size:14px;margin:8px 0}
+    .curve strong {font-size:10px}
+    .pips {flex-wrap:wrap;max-width:80px}
     footer>small {display:block;margin-top:18px}
 ${siteMotionCSS.trim()}
     @media (max-width:900px) {
@@ -181,6 +195,7 @@ ${siteMotionCSS.trim()}
   <header><strong>Winning in Style</strong><a href="./">Cube health →</a></header>
   <main>
     <div class="hero" data-motion><span>${esc(content.hero.eyebrow)}</span><h1>${esc(content.hero.title)}</h1><p>${esc(content.hero.lede)}</p></div>
+    <details class="quick-reference"><summary>Stuck on a pick?</summary><p>Need colors? Fixing. Too slow? Cheaper plays. Need answers? Interaction. Stalled? A way through. Otherwise, choose for your plan.</p></details>
     <section id="draft">${sectionHead(draft)}
       <div class="draft-flow" role="img" aria-label="Three packs: pass left, then right, then left" data-motion>
         <div><small>PACK 1</small><strong>Pick one</strong><b aria-hidden="true">←</b></div>
@@ -188,25 +203,28 @@ ${siteMotionCSS.trim()}
         <div><small>PACK 3</small><strong>Pick one</strong><b aria-hidden="true">←</b></div>
       </div><div class="prompts" data-motion>${paragraphs(draft.body)}</div>
     </section>
-    <section id="removal">${sectionHead(removal)}${gallery(removal.cards)}<div class="prompts" data-motion>${paragraphs(removal.body)}</div></section>
-    <section id="deck">${sectionHead(deck)}
-      <div class="deck" role="img" aria-label="40 cards: 17 lands, 15 creatures, and 8 other spells" data-motion>${deckCells}</div>
-      <div class="legend" data-motion><span><i style="--color:var(--mint)"></i>17 lands</span><span><i style="--color:var(--blue)"></i>15 creatures</span><span><i style="--color:var(--gold)"></i>8 other spells</span></div>
-      <div class="prompts" data-motion>${paragraphs(deck.body)}</div>
-    </section>
+    <section id="mana">${sectionHead(mana)}${paragraphs(mana.body)}<details><summary>Count your mana sources</summary>${paragraphs(manaDetail.body)}${gallery(mana.cards)}</details></section>
     <section id="curve">${sectionHead(curve)}
-      <div class="curve" role="img" aria-label="Example creature curve: one at 1 mana, five at 2, four at 3, three at 4, one at 5, one at 6 or more" data-motion>${curveBars}</div>
+      <div class="curve" role="img" aria-label="Illustrative curve, not quotas: prioritize real plays at two and three mana; fewer expensive cards" data-motion>${curveBars}</div>
       <div class="prompts" data-motion>${paragraphs(curve.body)}</div>
     </section>
-    <section id="blink">${sectionHead(blink)}${gallery(blink.cards)}${blink.body.some(Boolean) ? `<div class="prompts" data-motion>${paragraphs(blink.body)}</div>` : ''}</section>
+    <section id="removal">${sectionHead(removal)}<div class="prompts" data-motion>${paragraphs(removal.body)}</div><details><summary>See interaction</summary>${gallery(removal.cards)}</details></section>
+    <section id="finish">${sectionHead(finish)}${paragraphs(finish.body)}<details><summary>See a way through</summary>${gallery(finish.cards)}</details></section>
+    <section id="plan-lesson">${sectionHead(planLesson)}${paragraphs(planLesson.body)}</section>
+    <section id="deck">${sectionHead(deck)}
+      <div class="deck" role="img" aria-label="40 cards: start with 17 lands and 23 nonlands" data-motion>${deckCells}</div>
+      <div class="legend" data-motion><span><i style="--color:var(--mint)"></i>17 lands</span><span><i style="--color:var(--gold)"></i>23 nonlands</span></div>
+      <div class="prompts" data-motion>${paragraphs(deck.body)}</div>
+    </section>
     <section id="plans">${sectionHead(plans)}<div class="prompts" data-motion>${paragraphs(plans.body)}</div>
-      <div class="plans">${content.plans.map((plan, index) => `<details ${index === 0 ? 'open' : ''}>
+      <details id="explore-strategies"><summary>Explore strategies</summary>
+      <div class="plans">${content.plans.map(plan => `<details>
         <summary><span class="pips">${plan.colors.map(color => `<img src="assets/mana/${color}.svg" alt="${colors[color]}">`).join('')}</span><span class="plan-title"><strong>${esc(plan.name)}</strong><small>${esc(plan.guild)}</small></span></summary>
-        <div class="plan-body">${gallery(plan.cards)}<p data-motion>${esc(plan.body)}</p><a href="./index.html?pair=${esc(plan.id)}">Explore ${esc(plan.guild)} support →</a></div>
-      </details>`).join('')}</div>
+        <div class="plan-body"><p data-motion>${esc(plan.body)}</p>${gallery(plan.cards)}${plan.id === 'WU' ? `<div id="blink">${sectionHead(blink)}${paragraphs(blink.body)}${gallery(blink.cards)}</div>` : ''}${plan.id !== 'WUBRG' ? `<a href="./index.html?pair=${esc(plan.id)}">Explore ${esc(plan.guild)} support →</a>` : ''}</div>
+      </details>`).join('')}</div></details>
     </section>
     <section id="ready">${sectionHead(ready)}<div class="checklist" data-motion>${content.checklist.map(item => `<label><input type="checkbox">${esc(item)}</label>`).join('')}</div><div class="prompts" data-motion>${paragraphs(ready.body)}</div></section>
-    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples verified in cube snapshot v${esc(data.cube.version)}. No commanders required.</small></footer>
+    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples from cube snapshot v${esc(data.cube.version)}. No commanders required.</small><a class="practice" href="${esc(PRACTICE_URL)}" target="_blank" rel="noopener noreferrer">Practice drafting against bots and have fun!</a></footer>
   </main>
   ${siteMotionMarkup()}
 </body>

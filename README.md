@@ -10,7 +10,7 @@ The generator, taxonomy, regression tests and reproducible data inputs are prese
 
 ## Open The Cube
 
-- [Draft primer](https://cube.coolasheck.com/draft-primer.html)
+- [Draft primer](https://cube.coolasheck.com/primer)
 - [Cube health](https://cube.coolasheck.com/)
 - [Cube Cobra list](https://cubecobra.com/cube/list/style)
 - [Printable QR card](print/cube-primer-card.pdf) and [nine-card Letter sheet](print/cube-primer-sheet-letter.pdf), print at 100%.

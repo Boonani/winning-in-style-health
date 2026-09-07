@@ -73,7 +73,7 @@ export async function savePrimerContent({
   }
   const sourceFile = path.join(toolingRoot, 'data', 'primer-content.json');
   const analysisFile = path.join(toolingRoot, 'outputs', 'analysis.json');
-  const publicFile = path.join(siteRoot, 'draft-primer.html');
+  const publicFile = path.join(siteRoot, 'primer.html');
   const current = await loadPrimerContent(sourceFile);
   if (current.revision !== expectedRevision) throw new HttpError(409, 'The primer changed after you loaded it. Reload before saving.');
 
@@ -159,7 +159,7 @@ function safeStaticMap(toolingRoot, siteRoot) {
     ['/assets/editor.js', [path.join(toolingRoot, 'assets', 'editor.js'), 'text/javascript; charset=utf-8']],
     ['/preview/', [path.join(siteRoot, 'index.html'), 'text/html; charset=utf-8']],
     ['/preview/index.html', [path.join(siteRoot, 'index.html'), 'text/html; charset=utf-8']],
-    ['/preview/draft-primer.html', [path.join(siteRoot, 'draft-primer.html'), 'text/html; charset=utf-8']],
+    ['/preview/draft-primer.html', [path.join(siteRoot, 'primer.html'), 'text/html; charset=utf-8']],
     ['/preview/data/cubecobra-adjacency.json', [path.join(siteRoot, 'data', 'cubecobra-adjacency.json'), 'application/json; charset=utf-8']],
   ]);
   for (const icon of ['arrow-up', 'arrow-down', 'trash-2', 'plus', 'save', 'refresh-cw', 'search', 'move-right', 'cloud-upload', 'download']) {

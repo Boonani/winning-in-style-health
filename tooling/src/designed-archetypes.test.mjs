@@ -74,8 +74,7 @@ test('primer examples exist in current mainboard and their intended pair',()=>{
   assert.ok((md.match(/\[\[!/g)||[]).length>=20);
   const html=renderDraftPrimer(data, PRIMER_FIXTURE);
   assert.match(html,/17 lands/);
-  assert.match(html,/15 creatures/);
-  assert.match(html,/8 other spells/);
+  assert.match(html,/23 nonlands/);
   assert.match(html,/Games are often won based on who is able to interact more\./);
   assert.match(html,/No commanders required/);
   assert.ok(!html.includes('undefined'));

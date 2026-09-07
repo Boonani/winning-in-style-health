@@ -35,7 +35,7 @@ try {
       for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 844, height: 390 }, { width: 1440, height: 1000 }]) {
         publication = { state: 'idle' };
         await fs.writeFile(path.join(fixture, 'data/primer-content.json'), original);
-        await fs.copyFile(path.join(tooling, '../draft-primer.html'), path.join(root, 'draft-primer.html'));
+        await fs.copyFile(path.join(tooling, '../primer.html'), path.join(root, 'primer.html'));
         const page = await browser.newPage({ viewport });
         const errors = [];
         page.on('pageerror', error => errors.push(error.message));
@@ -53,7 +53,7 @@ try {
           assert.equal(await heading.inputValue(), value);
           const disk = JSON.parse(await fs.readFile(path.join(fixture, 'data/primer-content.json'), 'utf8'));
           assert.equal(disk.sections[0].heading, value);
-          assert.match(await fs.readFile(path.join(root, 'draft-primer.html'), 'utf8'), new RegExp(value));
+          assert.match(await fs.readFile(path.join(root, 'primer.html'), 'utf8'), new RegExp(value));
         }
         await page.reload();
         await saved();

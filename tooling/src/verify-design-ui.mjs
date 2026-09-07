@@ -78,13 +78,15 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]]){
   for(const stack of replacements)for(let i=1;i<stack.length;i++)assert.ok(stack[i].top>=stack[i-1].bottom-1,'replacement cards must be one per row');
   if(viewport.width<=980&&await page.locator('.change-cards .change-card').count())assert.ok((await page.locator('.change-cards .change-card').first().boundingBox()).width>=viewport.width-2,'history phone artwork uses the viewport width');
   if(viewport.width<=980&&await page.locator('.replacement .change-card').count())assert.ok((await page.locator('.replacement .change-card').first().boundingBox()).width>=viewport.width-2,'replacement phone artwork uses the viewport width');
-  const primer=new URL('draft-primer.html',target).href;
+  const primer=new URL(target.startsWith('file:') ? 'primer.html' : 'primer',target).href;
   await page.goto(primer,{waitUntil:'domcontentloaded'});
   assert.equal(await page.locator('.deck i').count(),40);
   assert.equal(await page.locator('.checklist input').count(),5);
   await page.locator('.checklist input').first().check();
   assert.equal(await page.locator('.checklist input').first().isChecked(),true);
-  assert.equal(await page.locator('details summary').count(),11);
+  assert.equal(await page.locator('.plans > details').count(),11);
+  await page.locator('#removal > details > summary').click();
+  await page.locator('#explore-strategies > summary').click();
   const removalCards=await page.locator('#removal .primer-card').evaluateAll(nodes=>nodes.map(node=>node.getBoundingClientRect()).map(({top,bottom,width})=>({top,bottom,width})));
   for(let i=1;i<removalCards.length;i++)assert.ok(removalCards[i].top>=removalCards[i-1].bottom-1,'primer cards must be one per row');
   if(viewport.width<=900)assert.ok(removalCards[0].width>=viewport.width-2,'primer phone artwork uses the viewport width');
@@ -106,6 +108,7 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]]){
   await page.evaluate(()=>scrollTo(0,0));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'primer page overflow');
   await page.screenshot({path:path.join(out,engine+'-'+viewport.width+'-primer.png')});
+  await page.locator('#explore-strategies').evaluate(el=>el.open=true);
   await page.locator('a[href="./index.html?pair=RG"]').evaluate(el=>el.closest('details').open=true);
   await page.locator('a[href="./index.html?pair=RG"]').click();
   await page.waitForSelector('[data-lane="RG"][open]');
@@ -114,7 +117,8 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]]){
   const noJs=await browser.newPage({viewport,javaScriptEnabled:false});
   await noJs.goto(primer,{waitUntil:'domcontentloaded'});
   assert.equal(await noJs.locator('h1').isVisible(),true,'no-JS primer title remains visible');
-  assert.equal(await noJs.locator('#removal .primer-card').first().isVisible(),true,'no-JS primer cards remain visible');
+  await noJs.locator('#removal > details > summary').click();
+  assert.equal(await noJs.locator('#removal .primer-card').first().isVisible(),true,'no-JS primer cards remain accessible');
   assert.equal(await noJs.locator('[data-motion]').first().evaluate(node=>getComputedStyle(node).opacity),'1');
   await noJs.close();
   report.push({engine,viewport,passed:true,pairs:10,images:true});

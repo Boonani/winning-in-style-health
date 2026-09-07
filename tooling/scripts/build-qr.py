@@ -11,7 +11,7 @@ from reportlab.lib.pagesizes import letter
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "print"
 OUT.mkdir(exist_ok=True)
-URL = "https://cube.coolasheck.com/draft-primer.html"
+URL = "https://cube.coolasheck.com/primer"
 qr = qrcode.QRCode(error_correction=ERROR_CORRECT_Q, box_size=24, border=4)
 qr.add_data(URL)
 qr.make(fit=True)

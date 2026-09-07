@@ -17,10 +17,10 @@ async function assetsBelow(relative) {
   }
   return files;
 }
-const files = ['index.html', 'draft-primer.html', 'data/cubecobra-adjacency.json', ...await assetsBelow('assets'), ...await assetsBelow('print')].sort();
+const files = ['index.html', 'primer.html', 'draft-primer.html', 'data/cubecobra-adjacency.json', ...await assetsBelow('assets'), ...await assetsBelow('print')].sort();
 const receipts = [];
 for (const relative of files) {
-  const url = new URL(relative === 'index.html' ? './' : relative, origin);
+  const url = new URL(relative === 'index.html' ? './' : relative === 'primer.html' ? 'primer' : relative, origin);
   url.searchParams.set('verification', String(Date.now()));
   const response = await fetch(url, { signal: AbortSignal.timeout(60000), headers: { 'Cache-Control': 'no-cache' } });
   assert.equal(response.status, 200, `${relative}: HTTP ${response.status}`);
