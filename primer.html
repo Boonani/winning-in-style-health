@@ -7,7 +7,7 @@
   <title>First Draft · Winning in Style</title>
   <link rel="canonical" href="https://cube.coolasheck.com/primer">
   <style>
-    :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#7db8ff;--mint:#74d7b0;--gold:#f0c66f;--violet:#b9a4ff;--gutter:max(22px,env(safe-area-inset-left));}
+    :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#45D6C5;--mint:#45D6C5;--gold:#FFD166;--violet:#FE0040;--gutter:max(22px,env(safe-area-inset-left));}
     * {box-sizing:border-box;letter-spacing:0}
     html {-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
     body {margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif}
@@ -50,7 +50,7 @@
     .curve {height:210px;display:grid;grid-template-columns:repeat(6,1fr);align-items:end;gap:10px;margin:24px 0 18px;max-width:610px}
     .curve div {height:100%;display:grid;grid-template-rows:22px 1fr 26px;align-items:end;text-align:center;font-size:12px;color:var(--muted)}
     .curve strong {color:var(--ink)}
-    .curve i {display:block;height:calc(var(--bar) * 100%);min-height:2px;background:linear-gradient(to top,var(--violet),var(--blue));transform-origin:bottom}
+    .curve i {display:block;height:calc(var(--bar) * 100%);min-height:2px;background:var(--blue);transform-origin:bottom}
     .curve span::after {content:' mana';font-size:10px}
     .plans {border-top:1px solid var(--line)}
     details {border-bottom:1px solid var(--line)}
@@ -78,6 +78,7 @@
     .quick-reference summary {min-height:48px;font-size:14px}
     .quick-reference p {font-size:14px;margin:8px 0}
     .curve strong {font-size:10px}
+    .curve div:nth-child(2) i,.curve div:nth-child(3) i {background:var(--gold)}
     .pips {flex-wrap:wrap;max-width:80px}
     footer>small {display:block;margin-top:18px}
 [data-motion] { opacity: 1; transform: none; }
@@ -105,6 +106,81 @@
     }
     [data-motion], [data-motion-bar] { opacity: 1 !important; transform: none !important; }
   }
+
+.draft-animation {--red:#FE0040;--aqua:#45D6C5;--yellow:#FFD166;margin:24px 0}
+.draft-animation svg.draft-table {display:block;width:100%;max-width:620px;aspect-ratio:1;margin:auto;overflow:visible}
+.draft-animation .instruction {font-size:24px;line-height:1.25;font-weight:750;max-width:520px;min-height:90px;margin:0 auto;text-align:center;color:var(--ink)}
+.draft-animation .letter {display:inline-block;white-space:pre}
+.draft-animation .word {display:inline-block;white-space:normal;max-width:100%}
+.draft-animation:not([data-playing="true"]) .letter {animation-play-state:paused}
+.draft-animation.running .letter {animation:letter-in .48s both;animation-delay:calc(var(--letter)*.038s)}
+@keyframes letter-in {from{opacity:0;transform:translateY(7px) scale(.94)}to{opacity:1;transform:none}}
+.draft-animation .motion-controls {display:flex;justify-content:center;gap:8px;align-items:center}
+.draft-animation button {display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:6px;cursor:pointer;touch-action:manipulation}
+.draft-animation button:hover {border-color:var(--aqua)}
+.draft-animation button:focus-visible {outline:3px solid var(--aqua);outline-offset:3px}
+.draft-animation button svg {width:22px;height:22px}
+.draft-animation button:disabled {opacity:.4;cursor:default}
+.draft-animation .motion-status {font-size:13px;color:var(--muted);text-align:center;min-height:40px;margin:10px auto}
+.draft-animation [hidden] {display:none}
+.draft-animation .seat-label {fill:#F7F8FA;font-size:13px;font-weight:650;text-anchor:middle}
+.draft-animation .pack-count {fill:#090C12;font-size:15px;font-weight:800;text-anchor:middle}
+.draft-animation .queue-label {fill:#A9B1BD;font-size:11px;text-anchor:middle}
+.draft-animation .sr-only {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(max-width:400px){.draft-animation .instruction{font-size:21px;min-height:80px}}
+@media(prefers-reduced-motion:reduce){.draft-animation.running .letter{animation:none!important}}
+
+
+.visual-lesson{margin:26px 0;position:relative}
+.visual-lesson label{font-size:14px;display:block;margin:12px 0 6px}
+.visual-lesson select{max-width:100%;width:100%;min-height:48px;background:var(--paper);color:var(--ink);border:1px solid #65717E;border-radius:4px;padding:8px;font:inherit}
+.visual-lesson select:focus-visible,.visual-lesson button:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.visual-lesson .heatmap{width:100%;border-collapse:collapse;font-size:14px;margin:22px 0}
+.visual-lesson th,.visual-lesson td{height:54px;padding:5px;text-align:center;border-bottom:1px solid var(--line)}
+.visual-lesson th:first-child{text-align:left;width:42%;font-weight:500}
+.visual-lesson th img{width:24px;height:24px;vertical-align:middle}
+.visual-lesson .source-cell{background:rgba(69,214,197,.15);color:var(--mint);font-weight:800}
+.visual-lesson .conditional-cell{background:rgba(255,209,102,.13);color:var(--gold);font-weight:800}
+.visual-lesson .target-toggle{display:flex;align-items:center;gap:12px;min-height:48px}
+.visual-lesson input[type=checkbox]{width:22px;height:22px;accent-color:var(--mint)}
+.visual-lesson .explanation{min-height:100px;font-size:16px}
+.visual-lesson [hidden]{display:none!important}
+.visual-lesson .composition{display:block;width:100%;max-width:420px;aspect-ratio:1;margin:auto}
+.visual-lesson .deck-adjustment{display:flex;align-items:center;justify-content:center;gap:16px;min-height:52px}
+.visual-lesson button{display:grid;place-items:center;width:48px;height:48px;background:transparent;border:1px solid #65717E;color:var(--ink);border-radius:4px;touch-action:manipulation;cursor:pointer}
+.visual-lesson button svg{width:22px;height:22px}
+.visual-lesson button:disabled{opacity:.4;cursor:default}
+.visual-lesson output{font-size:18px;min-width:96px;text-align:center}
+.visual-lesson .composition-legend{display:flex;justify-content:center;gap:28px;flex-wrap:wrap}
+.visual-lesson .composition-legend strong{font-size:28px;display:block}
+.visual-lesson .land-count{color:var(--mint)}
+.visual-lesson .nonland-count{color:var(--gold)}
+.visual-lesson .composition-card{transform-origin:200px 200px}
+.visual-lesson.changing .composition-card{animation:deck-transfer .75s both}
+.visual-lesson .deck-trailing{transform-origin:200px 200px}
+.visual-lesson.changing .deck-trailing{animation:deck-overlap .9s both}
+.visual-lesson.changing [data-land-arc]{animation:deck-response .8s both}
+@keyframes deck-overlap{0%,15%{transform:rotate(0)}50%{transform:rotate(-6deg)}85%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+@keyframes deck-response{0%,65%,100%{stroke-opacity:1}80%{stroke-opacity:.65}}
+@keyframes deck-transfer{
+ 0%{transform:translate(0,0) rotate(0) scale(1)}
+ 16%{transform:translate(-8px,4px) rotate(-9deg) scale(.96,1.04)}
+ 55%{transform:translate(16px,-30px) rotate(12deg) scale(1.08,.926)}
+ 82%{transform:translate(0,3px) rotate(-3deg) scale(1.04,.96)}
+ 100%{transform:translate(0,0) rotate(0) scale(1)}
+}
+@media(prefers-reduced-motion:reduce){.visual-lesson.changing .composition-card,.visual-lesson.changing .deck-trailing,.visual-lesson.changing [data-land-arc]{animation:none}}
+
+
+.concept-scene{margin:22px 0 30px}
+.concept-scene>svg{display:block;width:100%;aspect-ratio:2/1}
+.concept-scene .scene-controls{display:flex;gap:8px;justify-content:center}
+.concept-scene button{display:grid;place-items:center;width:48px;height:48px;border:1px solid #65717E;border-radius:4px;color:var(--ink);background:transparent;cursor:pointer;touch-action:manipulation}
+.concept-scene button svg{width:22px;height:22px}
+.concept-scene button:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
+.concept-scene .scene-caption{font-size:13px;color:var(--muted);text-align:center;min-height:22px}
+.concept-scene [hidden]{display:none}
+
     @media (max-width:900px) {
       .card-gallery {width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);gap:30px}
       .primer-card figcaption {padding-inline:var(--gutter)}
@@ -128,42 +204,805 @@
 <body>
   <header><strong>Winning in Style</strong><a href="./">Cube health →</a></header>
   <main>
-    <div class="hero" data-motion><span>THE DRAFT PRIMER</span><h1>Draft cards you can cast.</h1><p>Pick. Build. Play.</p></div>
-    <details class="quick-reference"><summary>Stuck on a pick?</summary><p>Need colors? Fixing. Too slow? Cheaper plays. Need answers? Interaction. Stalled? A way through. Otherwise, choose for your plan.</p></details>
-    <section id="draft"><div class="section-head" data-motion><span>01 · DRAFT</span><h2>Pick one. Pass the rest.</h2></div>
+    <div class="hero" data-motion><span>THE DRAFT PRIMER</span><h1>Winning in Style</h1><p>Choose your cards. Build a deck. Play.</p></div>
+    <details class="quick-reference"><summary>Stuck on a pick?</summary><p>Need another color? Look for fixing. Missing early plays? Look for something cheaper. Can't handle their threats? Take an answer. Otherwise, choose a card that helps your plan.</p></details>
+    <section id="draft"><div class="section-head"><span>01 · DRAFT</span></div>
+      <div class="draft-animation" data-draft-animation>
+    <h2 class="instruction"><span class="sr-only">Pick 1 card, pass the pack to the left</span><span aria-hidden="true"><span class="word"><span class="letter" style="--letter:0">P</span><span class="letter" style="--letter:1">i</span><span class="letter" style="--letter:2">c</span><span class="letter" style="--letter:3">k</span></span> <span class="word"><span class="letter" style="--letter:4">1</span></span> <span class="word"><span class="letter" style="--letter:5">c</span><span class="letter" style="--letter:6">a</span><span class="letter" style="--letter:7">r</span><span class="letter" style="--letter:8">d</span><span class="letter" style="--letter:9">,</span></span> <span class="word"><span class="letter" style="--letter:10">p</span><span class="letter" style="--letter:11">a</span><span class="letter" style="--letter:12">s</span><span class="letter" style="--letter:13">s</span></span> <span class="word"><span class="letter" style="--letter:14">t</span><span class="letter" style="--letter:15">h</span><span class="letter" style="--letter:16">e</span></span> <span class="word"><span class="letter" style="--letter:17">p</span><span class="letter" style="--letter:18">a</span><span class="letter" style="--letter:19">c</span><span class="letter" style="--letter:20">k</span></span> <span class="word"><span class="letter" style="--letter:21">t</span><span class="letter" style="--letter:22">o</span></span> <span class="word"><span class="letter" style="--letter:23">t</span><span class="letter" style="--letter:24">h</span><span class="letter" style="--letter:25">e</span></span> <span class="word"><span class="letter" style="--letter:26">l</span><span class="letter" style="--letter:27">e</span><span class="letter" style="--letter:28">f</span><span class="letter" style="--letter:29">t</span></span></span></h2>
+    <svg class="draft-table" viewBox="0 0 500 500" role="img" aria-label="Four players around a table, each holding a pack of fifteen cards. Packs pass clockwise to each player's left.">
+      <rect x="105" y="105" width="290" height="290" rx="80" fill="#12161B" stroke="#29313D"/>
+      <path d="M285 115 Q370 120 385 205 M385 285 Q370 370 285 385 M215 385 Q130 370 115 285 M115 215 Q130 130 215 115" fill="none" stroke="#45D6C5" stroke-opacity=".3" stroke-width="2"/>
+      <text x="250" y="244" text-anchor="middle" fill="#F7F8FA" font-size="16" font-weight="750">PACK 1</text>
+      <text x="250" y="265" text-anchor="middle" fill="#A9B1BD" font-size="12">Pass left</text>
+
+    <g data-player="0" transform="translate(250 64)">
+      <g data-body><path d="M-26 22 Q-30 -8 0 -8 Q30 -8 26 22Z" fill="#232A33"/>
+      <circle cy="-14" r="17" fill="#F7F8FA"/>
+      <g data-face><circle cx="-5" cy="-16" r="1.8" fill="#090C12"/><circle cx="5" cy="-16" r="1.8" fill="#090C12"/>
+      <path d="M-5 -8 Q0 -4 5 -8" fill="none" stroke="#090C12" stroke-width="1.7"/></g>
+      <path d="M-23 9 Q-35 22 -18 27 M23 9 Q35 22 18 27" stroke="#FE0040" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <text class="seat-label" y="48" data-picks>0 picked</text>
+    </g>
+    <g data-player="1" transform="translate(436 250)">
+      <g data-body><path d="M-26 22 Q-30 -8 0 -8 Q30 -8 26 22Z" fill="#232A33"/>
+      <circle cy="-14" r="17" fill="#F7F8FA"/>
+      <g data-face><circle cx="-5" cy="-16" r="1.8" fill="#090C12"/><circle cx="5" cy="-16" r="1.8" fill="#090C12"/>
+      <path d="M-5 -8 Q0 -4 5 -8" fill="none" stroke="#090C12" stroke-width="1.7"/></g>
+      <path d="M-23 9 Q-35 22 -18 27 M23 9 Q35 22 18 27" stroke="#45D6C5" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <text class="seat-label" y="48" data-picks>0 picked</text>
+    </g>
+    <g data-player="2" transform="translate(250 436)">
+      <g data-body><path d="M-26 22 Q-30 -8 0 -8 Q30 -8 26 22Z" fill="#232A33"/>
+      <circle cy="-14" r="17" fill="#F7F8FA"/>
+      <g data-face><circle cx="-5" cy="-16" r="1.8" fill="#090C12"/><circle cx="5" cy="-16" r="1.8" fill="#090C12"/>
+      <path d="M-5 -8 Q0 -4 5 -8" fill="none" stroke="#090C12" stroke-width="1.7"/></g>
+      <path d="M-23 9 Q-35 22 -18 27 M23 9 Q35 22 18 27" stroke="#FFD166" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <text class="seat-label" y="48" data-picks>0 picked</text>
+    </g>
+    <g data-player="3" transform="translate(64 250)">
+      <g data-body><path d="M-26 22 Q-30 -8 0 -8 Q30 -8 26 22Z" fill="#232A33"/>
+      <circle cy="-14" r="17" fill="#F7F8FA"/>
+      <g data-face><circle cx="-5" cy="-16" r="1.8" fill="#090C12"/><circle cx="5" cy="-16" r="1.8" fill="#090C12"/>
+      <path d="M-5 -8 Q0 -4 5 -8" fill="none" stroke="#090C12" stroke-width="1.7"/></g>
+      <path d="M-23 9 Q-35 22 -18 27 M23 9 Q35 22 18 27" stroke="#F7F8FA" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+      <text class="seat-label" y="48" data-picks>0 picked</text>
+    </g>
+      <text data-queue="0" class="queue-label" x="250" y="190"></text><text data-queue="1" class="queue-label" x="354" y="294"></text><text data-queue="2" class="queue-label" x="250" y="398"></text><text data-queue="3" class="queue-label" x="146" y="294"></text>
+
+    <g data-pack="0" transform="translate(250 146)">
+      <g data-fan><rect x="-19" y="-26" width="36" height="49" rx="3" fill="#090C12" stroke="#FE0040" transform="rotate(-12)"/>
+      <rect x="-15" y="-25" width="36" height="49" rx="3" fill="#090C12" stroke="#FE0040" transform="rotate(9)"/></g>
+      <rect x="-18" y="-25" width="36" height="49" rx="3" fill="#FE0040"/>
+      <path d="M-12 -19H12 M-12 17H12" stroke="#090C12" stroke-opacity=".4"/>
+      <text class="pack-count" y="5" data-count>15</text>
+      <text class="pack-count" y="-10" style="font-size:8px">A</text>
+    </g>
+    <g data-pack="1" transform="translate(354 250)">
+      <g data-fan><rect x="-19" y="-26" width="36" height="49" rx="3" fill="#090C12" stroke="#45D6C5" transform="rotate(-12)"/>
+      <rect x="-15" y="-25" width="36" height="49" rx="3" fill="#090C12" stroke="#45D6C5" transform="rotate(9)"/></g>
+      <rect x="-18" y="-25" width="36" height="49" rx="3" fill="#45D6C5"/>
+      <path d="M-12 -19H12 M-12 17H12" stroke="#090C12" stroke-opacity=".4"/>
+      <text class="pack-count" y="5" data-count>15</text>
+      <text class="pack-count" y="-10" style="font-size:8px">B</text>
+    </g>
+    <g data-pack="2" transform="translate(250 354)">
+      <g data-fan><rect x="-19" y="-26" width="36" height="49" rx="3" fill="#090C12" stroke="#FFD166" transform="rotate(-12)"/>
+      <rect x="-15" y="-25" width="36" height="49" rx="3" fill="#090C12" stroke="#FFD166" transform="rotate(9)"/></g>
+      <rect x="-18" y="-25" width="36" height="49" rx="3" fill="#FFD166"/>
+      <path d="M-12 -19H12 M-12 17H12" stroke="#090C12" stroke-opacity=".4"/>
+      <text class="pack-count" y="5" data-count>15</text>
+      <text class="pack-count" y="-10" style="font-size:8px">C</text>
+    </g>
+    <g data-pack="3" transform="translate(146 250)">
+      <g data-fan><rect x="-19" y="-26" width="36" height="49" rx="3" fill="#090C12" stroke="#F7F8FA" transform="rotate(-12)"/>
+      <rect x="-15" y="-25" width="36" height="49" rx="3" fill="#090C12" stroke="#F7F8FA" transform="rotate(9)"/></g>
+      <rect x="-18" y="-25" width="36" height="49" rx="3" fill="#F7F8FA"/>
+      <path d="M-12 -19H12 M-12 17H12" stroke="#090C12" stroke-opacity=".4"/>
+      <text class="pack-count" y="5" data-count>15</text>
+      <text class="pack-count" y="-10" style="font-size:8px">D</text>
+    </g>
+      <rect data-picked-card="0" width="20" height="28" x="-10" y="-14" rx="2" fill="#FE0040" opacity="0"/><rect data-picked-card="1" width="20" height="28" x="-10" y="-14" rx="2" fill="#45D6C5" opacity="0"/><rect data-picked-card="2" width="20" height="28" x="-10" y="-14" rx="2" fill="#FFD166" opacity="0"/><rect data-picked-card="3" width="20" height="28" x="-10" y="-14" rx="2" fill="#F7F8FA" opacity="0"/>
+    </svg>
+    <div class="motion-controls" hidden>
+      <button type="button" data-toggle aria-label="Play animation" title="Play animation"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true" focusable="false"
+  class="lucide lucide-play"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+</svg>
+</button>
+      <button type="button" data-step aria-label="Next pick" title="Next pick"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true" focusable="false"
+  class="lucide lucide-step-forward"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10.029 4.285A2 2 0 0 0 7 6v12a2 2 0 0 0 3.029 1.715l9.997-5.998a2 2 0 0 0 .003-3.432z" />
+  <path d="M3 4v16" />
+</svg>
+</button>
+      <button type="button" data-replay aria-label="Restart animation" title="Restart animation"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true" focusable="false"
+  class="lucide lucide-rotate-ccw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+</svg>
+</button>
+    </div>
+    <p class="motion-status" aria-live="polite">Four players. One card at a time.</p>
+    <noscript><p>Each player keeps one card, then passes the remaining pack to their left. Packs wait in order when another player is still choosing.</p></noscript>
+    <script>(function mountDraftAnimation(createSimulation, assets) {
+  const root = document.currentScript.closest('[data-draft-animation]');
+  const svg = root.querySelector('.draft-table');
+  const toggle = root.querySelector('[data-toggle]');
+  const step = root.querySelector('[data-step]');
+  const status = root.querySelector('.motion-status');
+  const media = matchMedia('(prefers-reduced-motion: reduce)');
+  let simulation = createSimulation(), playing = false, visible = false, frame = 0, last = 0;
+  const clamp = n => Math.max(0, Math.min(1,n));
+  const ease = n => n*n*(3-2*n);
+  const packNodes = [...root.querySelectorAll('[data-pack]')];
+  const playerNodes = [...root.querySelectorAll('[data-player]')];
+  function render() {
+    const s = simulation.state;
+    root.dataset.time = s.time.toFixed(3);
+    root.dataset.finished = String(s.finished);
+    for (const pack of s.packs) {
+      const node = packNodes[pack.id];
+      node.style.display = pack.status === 'empty' ? 'none' : '';
+      node.dataset.status = pack.status;
+      node.querySelector('[data-count]').textContent = pack.remaining;
+      let [x,y] = assets.hands[pack.seat], angle = 0, stretch = 1;
+      if (pack.status === 'flight') {
+        const raw = clamp((s.time-pack.departure)/.95), t = media.matches ? 1 : ease(raw);
+        const a = assets.hands[pack.from], b = assets.hands[pack.to];
+        const cx = a[0]+b[0]-250, cy = a[1]+b[1]-250;
+        x = (1-t)*(1-t)*a[0]+2*(1-t)*t*cx+t*t*b[0];
+        y = (1-t)*(1-t)*a[1]+2*(1-t)*t*cy+t*t*b[1];
+        angle = Math.sin(t*Math.PI)*18;
+        stretch = media.matches ? 1 : 1+.09*Math.sin(raw*Math.PI);
+      } else if (pack.status === 'queued') {
+        const index = s.players[pack.seat].queue.indexOf(pack.id);
+        const offsets = [[-54,0],[0,-54],[54,0],[0,54]];
+        x += offsets[pack.seat][0]*(index+1);
+        y += offsets[pack.seat][1]*(index+1);
+        angle = -8;
+      } else if (!media.matches) {
+        const p = s.players[pack.seat];
+        const anticipation = clamp(1-(p.due-s.time)/.25);
+        y -= Math.sin(anticipation*Math.PI)*5;
+        angle = Math.sin(anticipation*Math.PI)*-8;
+      }
+      node.setAttribute('transform', 'translate('+x+' '+y+') rotate('+angle+') scale('+stretch+' '+(1/stretch)+')');
+      node.querySelector('[data-fan]').setAttribute('transform', 'rotate('+(-angle*.45)+')');
+    }
+    for (const player of s.players) {
+      const node = playerNodes[player.id];
+      node.querySelector('[data-picks]').textContent = player.picks.length+' picked';
+      root.querySelector('[data-queue="'+player.id+'"]').textContent = player.queue.length ? player.queue.length+' waiting' : '';
+      const lastPick = [...s.events].reverse().find(e => e.type==='pick' && e.player===player.id);
+      const age = lastPick ? s.time-lastPick.time : Infinity;
+      const bounce = !media.matches && age<.6 ? Math.sin(age/.6*Math.PI)*4 : 0;
+      node.querySelector('[data-body]').setAttribute('transform','translate(0 '+(-bounce)+')');
+      const card = root.querySelector('[data-picked-card="'+player.id+'"]');
+      const t = ease(clamp(age/.48)), a = assets.hands[player.id], b = assets.positions[player.id];
+      card.setAttribute('opacity', !media.matches && age<.48 ? '1' : '0');
+      card.setAttribute('transform','translate('+(a[0]+(b[0]-a[0])*t)+' '+(a[1]+(b[1]-a[1])*t-12*Math.sin(t*Math.PI))+') rotate('+(t*12)+')');
+    }
+    svg.setAttribute('aria-label',s.players.map(p=>'Player '+(p.id+1)+': '+p.picks.length+' picked, '+p.queue.length+' packs waiting').join('. '));
+    if (s.finished) {
+      playing = false;
+      status.textContent = 'Pack 1 complete. Each player picked 15 cards.';
+    }
+    updateControls();
+  }
+  function updateControls() {
+    root.dataset.playing = String(playing);
+    const label = playing ? 'Pause animation' : 'Play animation';
+    if (toggle.getAttribute('aria-label') !== label) toggle.innerHTML = playing ? assets.pause : assets.play;
+    toggle.setAttribute('aria-label',playing ? 'Pause animation' : 'Play animation');
+    toggle.title = toggle.getAttribute('aria-label');
+    toggle.disabled = simulation.state.finished;
+    step.disabled = simulation.state.finished;
+  }
+  function tick(now) {
+    frame = 0;
+    if (!playing || !visible || document.hidden) {last=0;return;}
+    if (last) simulation.advance(Math.min((now-last)/1000,.1));
+    last = now;
+    render();
+    if (playing) frame = requestAnimationFrame(tick);
+  }
+  function schedule() {
+    last=0;
+    if (!frame && playing && visible && !document.hidden) frame=requestAnimationFrame(tick);
+  }
+  toggle.addEventListener('click',()=>{
+    playing=!playing;
+    status.textContent=playing?'':'Paused';
+    root.classList.add('running');
+    updateControls();
+    schedule();
+  });
+  step.addEventListener('click',()=>{
+    playing=false;
+    const s=simulation.state;
+    const next=Math.min(...s.players.map(p=>p.due));
+    if(Number.isFinite(next)) simulation.advance(Math.max(0,next-s.time));
+    else simulation.advance(.95);
+    render();
+    if(!s.finished) status.textContent=s.players.map(p=>p.picks.length).join(' / ')+' cards picked';
+  });
+  root.querySelector('[data-replay]').addEventListener('click',()=>{
+    simulation=createSimulation();
+    playing=false;
+    root.classList.remove('running');
+    status.textContent='Four players. One card at a time.';
+    render();
+  });
+  media.addEventListener('change',()=>{
+    if(media.matches){playing=false;status.textContent='Paused';render();}
+  });
+  document.addEventListener('visibilitychange',schedule);
+  new IntersectionObserver(entries=>{
+    visible=entries[0].isIntersecting;
+    schedule();
+  },{threshold:.15}).observe(root);
+  root.querySelector('.motion-controls').hidden=false;
+  render();
+})(function createDraftSimulation({cardsPerPack = 15, speeds = [1.2, 3.8, 1.7, 2.1]} = {}) {
+  if (!Number.isInteger(cardsPerPack) || cardsPerPack < 1 || cardsPerPack > 15
+      || speeds.length !== 4 || speeds.some(n => !Number.isFinite(n) || n <= 0)) throw new Error('Invalid simulation settings');
+  const state = {
+    time: 0, finished: false, events: [],
+    players: speeds.map((speed, id) => ({id, speed, queue: [id], held: null, due: Infinity, picks: []})),
+    packs: speeds.map((_, id) => ({id, remaining: cardsPerPack, status: 'queued', seat: id, from: id, to: id, departure: 0, arrival: Infinity})),
+  };
+  function receive() {
+    for (const player of state.players) {
+      if (player.held !== null || !player.queue.length) continue;
+      const id = player.queue.shift(), pack = state.packs[id];
+      player.held = id;
+      pack.status = 'held';
+      pack.seat = player.id;
+      player.due = state.time + player.speed * (1 + .13 * Math.sin(player.picks.length * 2 + player.id));
+      state.events.push({type: 'receive', time: state.time, player: player.id, pack: id});
+    }
+  }
+  receive();
+  function advance(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) throw new Error('Invalid time increment');
+    const target = state.time + seconds;
+    while (!state.finished) {
+      const due = Math.min(...state.players.map(p => p.due), ...state.packs.map(p => p.arrival));
+      if (due > target || !Number.isFinite(due)) break;
+      state.time = due;
+      for (const pack of state.packs) {
+        if (pack.arrival !== due) continue;
+        pack.arrival = Infinity;
+        pack.status = 'queued';
+        pack.seat = pack.to;
+        state.players[pack.to].queue.push(pack.id);
+        state.events.push({type: 'arrive', time: due, player: pack.to, pack: pack.id});
+      }
+      for (const player of state.players) {
+        if (player.due !== due) continue;
+        const pack = state.packs[player.held];
+        player.picks.push(pack.id + ':' + pack.remaining);
+        state.events.push({type: 'pick', time: due, player: player.id, pack: pack.id});
+        pack.remaining--;
+        player.held = null;
+        player.due = Infinity;
+        if (pack.remaining) {
+          pack.status = 'flight';
+          pack.from = player.id;
+          pack.to = (player.id + 1) % 4;
+          pack.departure = due;
+          pack.arrival = due + .95;
+        } else pack.status = 'empty';
+      }
+      receive();
+      state.finished = state.packs.every(p => p.status === 'empty');
+    }
+    state.time = target;
+    return state;
+  }
+  return {state, advance};
+}, {"positions":[[250,64],[436,250],[250,436],[64,250]],"hands":[[250,146],[354,250],[250,354],[146,250]],"play":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n"});</script>
+  </div>
       <div class="draft-flow" role="img" aria-label="Three packs: pass left, then right, then left" data-motion>
         <div><small>PACK 1</small><strong>Pick one</strong><b aria-hidden="true">←</b></div>
         <div><small>PACK 2</small><strong>Pick one</strong><b aria-hidden="true">→</b></div>
         <div><small>PACK 3</small><strong>Pick one</strong><b aria-hidden="true">←</b></div>
-      </div><div class="prompts" data-motion><p>Your first pick is not a promise.</p><p>Strong cards coming late are clues about what is open.</p></div>
+      </div><div class="prompts" data-motion><p>Keep one card, then pass the rest. Your next choice comes from the pack your neighbor passes you.</p><p>You don't have to settle on colors right away. Good cards coming late can help you see what's available.</p></div>
     </section>
-    <section id="mana"><div class="section-head" data-motion><span>02 · MANA</span><h2>Fix first. Add colors later.</h2></div><p>Fixing gives you permission to play more colors.</p><p>Lands and mana fixing are real picks. More powerful spells only help when you can cast them.</p><details><summary>Count your mana sources</summary><p>Need a color early? About 9 sources is a starting point. Need it later? Around 6. One late splash card? Around 3.</p><p>These are rough guidelines, not guarantees. Multiple colored symbols and early spells need stronger support.</p><p>A dual land can supply either of its colors. A fetch only helps if your deck has a land it can find.</p><p>Mana creatures and Treasure makers are conditional: you must cast or create them first. If green casts your fixing, support green before adding other colors.</p><div class="card-gallery"></div></details></section>
+    <section id="mana"><div class="section-head" data-motion><span>02 · MANA</span><h2>Fix first. Add colors later.</h2></div><div class="visual-lesson" data-mana-lesson>
+ <label for="mana-example">Which colors can this card help with?</label>
+ <select id="mana-example" disabled><option value="0">Forest</option><option value="1">Breeding Pool</option><option value="2">Windswept Heath</option><option value="3">Llanowar Elves</option></select>
+ <label class="target-toggle" hidden><input type="checkbox" data-pool-target>Breeding Pool in the library (alongside a Forest)</label>
+ <table class="heatmap"><caption class="sr-only">One-card source illustration</caption><thead><tr><th scope="col">One card</th><th scope="col"><img src="assets/mana/W.svg" alt="White"></th><th scope="col"><img src="assets/mana/U.svg" alt="Blue"></th><th scope="col"><img src="assets/mana/B.svg" alt="Black"></th><th scope="col"><img src="assets/mana/R.svg" alt="Red"></th><th scope="col"><img src="assets/mana/G.svg" alt="Green"></th></tr></thead>
+ <tbody><tr data-land-row><th scope="row">Land sources</th><td data-color="W" class="">0</td><td data-color="U" class="">0</td><td data-color="B" class="">0</td><td data-color="R" class="">0</td><td data-color="G" class="source-cell">1</td></tr>
+ <tr data-spell-row><th scope="row">After casting</th><td data-color="W">0</td><td data-color="U">0</td><td data-color="B">0</td><td data-color="R">0</td><td data-color="G">0</td></tr></tbody></table>
+ <p class="explanation" aria-live="polite">A Forest gives you green mana.</p>
+ <details><summary>See the card</summary><div class="card-gallery"><figure class="primer-card"><img data-example-image src="https://cards.scryfall.io/normal/front/1/9/19e71532-3f79-4fec-974f-b0e85c7fe701.jpg" alt="Forest" loading="lazy"><figcaption><a data-example-source href="https://scryfall.com/card/unh/140/forest">Forest</a></figcaption></figure></div></details>
+ <noscript><p>Breeding Pool can give you green or blue. It is still one land and makes one mana per tap, not both colors at once. It enters tapped unless you pay 2 life.</p><p>Windswept Heath finds a Forest or Plains in your library. Breeding Pool has the Forest type, so it can be a target too. No target left means no mana from the fetch.</p><p>Llanowar Elves is not a land. You need green mana to cast it before it can help, and it cannot tap immediately unless it has haste.</p></noscript>
+ <script>(function mountMana(cards,copy,calculate){
+ const root=document.currentScript.closest('[data-mana-lesson]');
+ const select=root.querySelector('select'),target=root.querySelector('[data-pool-target]');
+ function render(){
+   const index=Number(select.value),card=cards[index],state=calculate(index,target.checked,cards);
+   root.querySelector('.target-toggle').hidden=card.kind!=='fetch';
+   for(const [selector,colors,className] of [['[data-land-row]',state.landSources,'source-cell'],['[data-spell-row]',state.castDependent,'conditional-cell']]){
+     for(const cell of root.querySelectorAll(selector+' td')){
+       const matches=colors.includes(cell.dataset.color);cell.textContent=matches?'1':'0';cell.className=matches?className:'';
+     }
+   }
+   root.querySelector('.explanation').textContent=copy[index]||'';
+   const img=root.querySelector('[data-example-image]'),id=card.cardID;
+   img.src='https://cards.scryfall.io/normal/front/'+id[0]+'/'+id[1]+'/'+id+'.jpg';img.alt=card.name;
+   const source=root.querySelector('[data-example-source]');source.href=card.url;source.textContent=card.name;
+ }
+ select.disabled=false;select.addEventListener('change',render);target.addEventListener('change',render);render();
+})([{"id":"forest","name":"Forest","cardID":"19e71532-3f79-4fec-974f-b0e85c7fe701","kind":"land","colors":["G"],"url":"https://scryfall.com/card/unh/140/forest"},{"id":"pool","name":"Breeding Pool","cardID":"b98b2a35-ec2b-47fe-903d-dd292e469a3c","kind":"land","colors":["G","U"],"url":"https://scryfall.com/card/dis/172/breeding-pool"},{"id":"heath","name":"Windswept Heath","cardID":"26343f80-4d60-407a-a44a-ee6295d2e5ec","kind":"fetch","colors":[],"url":"https://scryfall.com/card/mh3/360/windswept-heath"},{"id":"elves","name":"Llanowar Elves","cardID":"cd43a84a-cde2-48f8-b6ab-1ec023c9e0c3","kind":"spell","colors":["G"],"url":"https://scryfall.com/card/fdn/429/llanowar-elves"}],["A Forest gives you green mana.","Breeding Pool can give you green or blue. It is still one land and makes one mana per tap, not both colors at once. It enters tapped unless you pay 2 life.","Windswept Heath finds a Forest or Plains in your library. Breeding Pool has the Forest type, so it can be a target too. No target left means no mana from the fetch.","Llanowar Elves is not a land. You need green mana to cast it before it can help, and it cannot tap immediately unless it has haste."],function manaExample(index=0,hasPoolTarget=false,examples=MANA_EXAMPLES){
+ const card=examples[index];
+ if(!card)throw new RangeError('Unknown mana example');
+ const colors=card.kind==='fetch'?(hasPoolTarget?['G','U']:['G']):card.colors;
+ return {landSources:card.kind==='spell'?[]:[...colors],castDependent:card.kind==='spell'?[...colors]:[],
+   fetchTargets:card.kind==='fetch'?(hasPoolTarget?['Forest','Breeding Pool']:['Forest']):[],cardCount:1};
+});</script>
+ </div><p>Fixing gives you permission to play more colors.</p><p>A great spell doesn't help much if it stays in your hand. Take the lands and fixing that let you cast the cards you want to play.</p><details><summary>Count your mana sources</summary><p>Need a color early? About 9 sources is a starting point. Need it later? Around 6. One late splash card? Around 3.</p><p>These are rough guidelines, not guarantees. Multiple colored symbols and early spells need stronger support.</p><p>A dual land can supply either of its colors. A fetch only helps if your deck has a land it can find.</p><p>Mana creatures and Treasure makers are conditional: you must cast or create them first. If green casts your fixing, support green before adding other colors.</p><div class="card-gallery"></div></details></section>
     <section id="curve"><div class="section-head" data-motion><span>03 · CURVE</span><h2>Play before turn four.</h2></div>
       <div class="curve" role="img" aria-label="Illustrative curve, not quotas: prioritize real plays at two and three mana; fewer expensive cards" data-motion><div><strong></strong><i data-motion-bar style="--bar:0.2"></i><span>1</span></div><div><strong>Prioritize</strong><i data-motion-bar style="--bar:1"></i><span>2</span></div><div><strong>Prioritize</strong><i data-motion-bar style="--bar:0.8"></i><span>3</span></div><div><strong></strong><i data-motion-bar style="--bar:0.6"></i><span>4</span></div><div><strong></strong><i data-motion-bar style="--bar:0.2"></i><span>5</span></div><div><strong></strong><i data-motion-bar style="--bar:0.2"></i><span>6+</span></div></div>
-      <div class="prompts" data-motion><p>Have several real plays at two and three mana. Don't overload on expensive cards.</p><p>Two cards look equally good? Take the cheaper one.</p></div>
+      <div class="prompts" data-motion><p>Two- and three-mana plays give you something to do while expensive cards are still waiting in your hand.</p><p>Count cards you'll actually want to play early. A cheap combat trick still needs a creature and the right moment.</p></div>
     </section>
-    <section id="removal"><div class="section-head" data-motion><span>04 · INTERACT</span><h2>Answer their best card.</h2></div><div class="prompts" data-motion><p>Take efficient interaction highly. Have several answers for their best threats.</p></div><details><summary>See interaction</summary><div class="card-gallery"><figure class="primer-card" data-motion>
+    <section id="removal"><div class="section-head" data-motion><span>04 · INTERACT</span><h2>Answer their best card.</h2></div><div class="concept-scene" data-concept="removal">
+ <svg viewBox="0 0 600 310" style="aspect-ratio:600/310" role="img" aria-label="An answer for their threat">
+ <path d="M70 245H535" stroke="#29313D" stroke-width="2"/>
+
+ <g data-obstacle transform="translate(300 175)"><rect x="-31" y="-44" width="62" height="88" rx="4" fill="#252C34" stroke="#65717E"/><path d="M-12 0H12M0 -12V12" stroke="#A9B1BD" stroke-width="3"/>
+ <foreignObject x="-90" y="58" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Threat</div></foreignObject></g>
+ <g data-destination transform="translate(505 175)"><circle r="33" fill="none" stroke="#45D6C5" stroke-width="2" stroke-dasharray="3 5"/><path d="M-12 0L-3 9L15 -10" stroke="#45D6C5" stroke-width="4" fill="none" opacity="0" data-check/>
+ </g>
+ <g data-actor transform="translate(95 175)"><g data-trail><rect x="-29" y="-44" width="58" height="82" rx="4" fill="#090C12" stroke="#FFD166" transform="rotate(-9)"/></g>
+ <rect x="-29" y="-42" width="58" height="82" rx="4" fill="#FE0040"/>
+ <g transform="translate(-16 -18)" color="#090C12"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-sparkles"
+  xmlns="http://www.w3.org/2000/svg"
+  width="32"
+  height="32"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+  <path d="M20 2v4" />
+  <path d="M22 4h-4" />
+  <circle cx="4" cy="20" r="2" />
+</svg>
+</g></g>
+ <foreignObject x="5" y="233" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Removal</div></foreignObject>
+ </svg>
+ <div class="scene-controls" hidden><button data-play aria-label="Play An answer for their threat" title="Play An answer for their threat"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-play"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+</svg>
+</button><button data-restart aria-label="Restart An answer for their threat" title="Restart An answer for their threat"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-rotate-ccw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+</svg>
+</button></div>
+ <p class="scene-caption" aria-live="polite">Illustration</p>
+ <script>(function mountScene(kind,concepts,pose,icons){
+ const root=document.currentScript.closest('[data-concept]'),c=concepts[kind];
+ const media=matchMedia('(prefers-reduced-motion: reduce)');
+ const play=root.querySelector('[data-play]'),caption=root.querySelector('.scene-caption');
+ let time=0,playing=false,last=0,frame=0,visible=false;
+ const calculate=seconds=>pose(kind,seconds,concepts);
+ function draw(){
+   const p=calculate(time),actor=root.querySelector('[data-actor]');
+   actor.setAttribute('transform','translate('+p.x+' '+p.y+') rotate('+p.angle+') scale('+p.scale+' '+(1/p.scale)+')');
+   root.querySelector('[data-trail]').setAttribute('transform','rotate('+p.trail+')');
+   root.querySelector('[data-obstacle]').setAttribute('opacity',1-p.answered);
+   root.querySelector('[data-check]').setAttribute('opacity',p.u>.8?'1':'0');
+   if(kind==='plan-lesson'){
+     root.querySelector('[data-obstacle] rect').setAttribute('stroke',p.focus===1?'#FFD166':'#65717E');
+     root.querySelector('[data-destination] circle').setAttribute('stroke',p.focus===2?'#FFD166':'#45D6C5');
+   }
+   root.dataset.progress=p.u.toFixed(3);
+   caption.textContent=p.u===1?c.result:'Illustration';
+   const label=(playing?'Pause ':'Play ')+c.name;
+   if(play.getAttribute('aria-label')!==label)play.innerHTML=playing?icons.pause:icons.play;
+   play.setAttribute('aria-label',label);play.title=label;
+ }
+ function tick(now){
+   frame=0;if(!playing||!visible||document.hidden){last=0;return;}
+   if(last)time=Math.min(4,time+Math.min((now-last)/1000,.1));last=now;
+   if(time===4)playing=false;draw();
+   if(playing)frame=requestAnimationFrame(tick);
+ }
+ function schedule(){last=0;if(!frame&&playing&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
+ play.onclick=()=>{
+   if(media.matches){playing=false;time=time===4?0:4;draw();return;}
+   if(time===4)time=0;playing=!playing;draw();schedule();
+ };
+ root.querySelector('[data-restart]').onclick=()=>{time=0;playing=false;draw();};
+ media.addEventListener('change',()=>{if(media.matches){playing=false;draw();}});
+ document.addEventListener('visibilitychange',schedule);
+ new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.2}).observe(root);
+ root.querySelector('.scene-controls').hidden=false;draw();
+})("removal",{"removal":{"actor":"Removal","obstacle":"Threat","result":"Threat answered","symbol":"sparkles","name":"An answer for their threat"},"finish":{"actor":"Flying attacker","obstacle":"Ground blocker","result":"Past the blocker","symbol":"wind","name":"A way past ground blockers"},"plan-lesson":{"actor":"Early play","obstacle":"Interaction","result":"Finisher","symbol":"swords","name":"Cards working toward a plan"}},function conceptPose(kind,seconds,concepts=CONCEPTS){
+ if(!Object.prototype.hasOwnProperty.call(concepts,kind))throw new RangeError('Unknown concept');
+ if(!Number.isFinite(seconds))throw new RangeError('Expected finite illustration time');
+ const u=Math.max(0,Math.min(1,seconds/4)), t=Math.max(0,Math.min(1,(u-.18)/.58));
+ const ease=t*t*(3-2*t),wind=u<.18?Math.sin(u/.18*Math.PI):0;
+ const settle=u>.76?Math.sin((u-.76)/.24*Math.PI*3)*Math.exp(-(u-.76)*16):0;
+ return {u,x:95+410*ease-10*wind,y:kind==='finish'?175-360*t*(1-t):175-100*t*(1-t),
+   angle:-10*wind+12*Math.sin(t*Math.PI)+6*settle,scale:1+.08*Math.sin(t*Math.PI)-.08*settle,
+   trail:-8*Math.sin(t*Math.PI)+5*settle,answered:kind==='removal'?Math.max(0,Math.min(1,(u-.6)/.2)):0,
+   focus:kind==='plan-lesson'?(u<.35?0:u<.72?1:2):0};
+},{"play":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n"});</script>
+ </div><div class="prompts" data-motion><p>Your opponent will have strong cards too. Give yourself a few ways to deal with a creature you can't beat in combat.</p></div><details><summary>See interaction</summary><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/b/4/b4e9c870-23c0-413a-ae39-265f09da16d1.jpg" alt="Swords to Plowshares" loading="lazy" decoding="async">
   <figcaption><strong>Swords to Plowshares</strong><span>MSC · 143</span></figcaption>
 </figure><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/7/6/7673784e-db4b-43a1-8d55-1bb9fc1e284f.jpg" alt="Lightning Bolt" loading="lazy" decoding="async">
   <figcaption><strong>Lightning Bolt</strong><span>MSC · 806</span></figcaption>
 </figure></div></details></section>
-    <section id="finish"><div class="section-head" data-motion><span>05 · FINISH</span><h2>Have a way through.</h2></div><p>Flying, menace, trample, unblockable attackers, and removal help you get through a crowded board.</p><details><summary>See a way through</summary><div class="card-gallery"><figure class="primer-card" data-motion>
+    <section id="finish"><div class="section-head" data-motion><span>05 · FINISH</span><h2>Have a way through.</h2></div><div class="concept-scene" data-concept="finish">
+ <svg viewBox="0 0 600 310" style="aspect-ratio:600/310" role="img" aria-label="A way past ground blockers">
+ <path d="M70 245H535" stroke="#29313D" stroke-width="2"/>
+
+ <g data-obstacle transform="translate(300 175)"><rect x="-31" y="-44" width="62" height="88" rx="4" fill="#252C34" stroke="#65717E"/><path d="M-12 0H12M0 -12V12" stroke="#A9B1BD" stroke-width="3"/>
+ <foreignObject x="-90" y="58" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Ground blocker</div></foreignObject></g>
+ <g data-destination transform="translate(505 175)"><circle r="33" fill="none" stroke="#45D6C5" stroke-width="2" stroke-dasharray="3 5"/><path d="M-12 0L-3 9L15 -10" stroke="#45D6C5" stroke-width="4" fill="none" opacity="0" data-check/>
+ </g>
+ <g data-actor transform="translate(95 175)"><g data-trail><rect x="-29" y="-44" width="58" height="82" rx="4" fill="#090C12" stroke="#FFD166" transform="rotate(-9)"/></g>
+ <rect x="-29" y="-42" width="58" height="82" rx="4" fill="#FE0040"/>
+ <g transform="translate(-16 -18)" color="#090C12"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-wind"
+  xmlns="http://www.w3.org/2000/svg"
+  width="32"
+  height="32"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12.8 19.6A2 2 0 1 0 14 16H2" />
+  <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" />
+  <path d="M9.8 4.4A2 2 0 1 1 11 8H2" />
+</svg>
+</g></g>
+ <foreignObject x="5" y="233" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Flying attacker</div></foreignObject>
+ </svg>
+ <div class="scene-controls" hidden><button data-play aria-label="Play A way past ground blockers" title="Play A way past ground blockers"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-play"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+</svg>
+</button><button data-restart aria-label="Restart A way past ground blockers" title="Restart A way past ground blockers"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-rotate-ccw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+</svg>
+</button></div>
+ <p class="scene-caption" aria-live="polite">Illustration</p>
+ <script>(function mountScene(kind,concepts,pose,icons){
+ const root=document.currentScript.closest('[data-concept]'),c=concepts[kind];
+ const media=matchMedia('(prefers-reduced-motion: reduce)');
+ const play=root.querySelector('[data-play]'),caption=root.querySelector('.scene-caption');
+ let time=0,playing=false,last=0,frame=0,visible=false;
+ const calculate=seconds=>pose(kind,seconds,concepts);
+ function draw(){
+   const p=calculate(time),actor=root.querySelector('[data-actor]');
+   actor.setAttribute('transform','translate('+p.x+' '+p.y+') rotate('+p.angle+') scale('+p.scale+' '+(1/p.scale)+')');
+   root.querySelector('[data-trail]').setAttribute('transform','rotate('+p.trail+')');
+   root.querySelector('[data-obstacle]').setAttribute('opacity',1-p.answered);
+   root.querySelector('[data-check]').setAttribute('opacity',p.u>.8?'1':'0');
+   if(kind==='plan-lesson'){
+     root.querySelector('[data-obstacle] rect').setAttribute('stroke',p.focus===1?'#FFD166':'#65717E');
+     root.querySelector('[data-destination] circle').setAttribute('stroke',p.focus===2?'#FFD166':'#45D6C5');
+   }
+   root.dataset.progress=p.u.toFixed(3);
+   caption.textContent=p.u===1?c.result:'Illustration';
+   const label=(playing?'Pause ':'Play ')+c.name;
+   if(play.getAttribute('aria-label')!==label)play.innerHTML=playing?icons.pause:icons.play;
+   play.setAttribute('aria-label',label);play.title=label;
+ }
+ function tick(now){
+   frame=0;if(!playing||!visible||document.hidden){last=0;return;}
+   if(last)time=Math.min(4,time+Math.min((now-last)/1000,.1));last=now;
+   if(time===4)playing=false;draw();
+   if(playing)frame=requestAnimationFrame(tick);
+ }
+ function schedule(){last=0;if(!frame&&playing&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
+ play.onclick=()=>{
+   if(media.matches){playing=false;time=time===4?0:4;draw();return;}
+   if(time===4)time=0;playing=!playing;draw();schedule();
+ };
+ root.querySelector('[data-restart]').onclick=()=>{time=0;playing=false;draw();};
+ media.addEventListener('change',()=>{if(media.matches){playing=false;draw();}});
+ document.addEventListener('visibilitychange',schedule);
+ new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.2}).observe(root);
+ root.querySelector('.scene-controls').hidden=false;draw();
+})("finish",{"removal":{"actor":"Removal","obstacle":"Threat","result":"Threat answered","symbol":"sparkles","name":"An answer for their threat"},"finish":{"actor":"Flying attacker","obstacle":"Ground blocker","result":"Past the blocker","symbol":"wind","name":"A way past ground blockers"},"plan-lesson":{"actor":"Early play","obstacle":"Interaction","result":"Finisher","symbol":"swords","name":"Cards working toward a plan"}},function conceptPose(kind,seconds,concepts=CONCEPTS){
+ if(!Object.prototype.hasOwnProperty.call(concepts,kind))throw new RangeError('Unknown concept');
+ if(!Number.isFinite(seconds))throw new RangeError('Expected finite illustration time');
+ const u=Math.max(0,Math.min(1,seconds/4)), t=Math.max(0,Math.min(1,(u-.18)/.58));
+ const ease=t*t*(3-2*t),wind=u<.18?Math.sin(u/.18*Math.PI):0;
+ const settle=u>.76?Math.sin((u-.76)/.24*Math.PI*3)*Math.exp(-(u-.76)*16):0;
+ return {u,x:95+410*ease-10*wind,y:kind==='finish'?175-360*t*(1-t):175-100*t*(1-t),
+   angle:-10*wind+12*Math.sin(t*Math.PI)+6*settle,scale:1+.08*Math.sin(t*Math.PI)-.08*settle,
+   trail:-8*Math.sin(t*Math.PI)+5*settle,answered:kind==='removal'?Math.max(0,Math.min(1,(u-.6)/.2)):0,
+   focus:kind==='plan-lesson'?(u<.35?0:u<.72?1:2):0};
+},{"play":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n"});</script>
+ </div><p>Flying, menace, trample, unblockable attackers, and removal help you get through a crowded board.</p><details><summary>See a way through</summary><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/e/4/e4775a26-0b66-40e9-8f64-41d9308ca032.jpg" alt="Surrak, Elusive Hunter" loading="lazy" decoding="async">
   <figcaption><strong>Surrak, Elusive Hunter</strong><span>TDM · 161</span></figcaption>
 </figure></div></details></section>
-    <section id="plan-lesson"><div class="section-head" data-motion><span>06 · PLAN</span><h2>Draft a deck, not a pile.</h2></div><p>What is your deck trying to do?</p><p>Each pick should support that plan or solve something your deck is missing. Stay flexible.</p></section>
+    <section id="plan-lesson"><div class="section-head" data-motion><span>06 · PLAN</span><h2>Draft a deck, not a pile.</h2></div><div class="concept-scene" data-concept="plan-lesson">
+ <svg viewBox="0 0 600 310" style="aspect-ratio:600/310" role="img" aria-label="Cards working toward a plan">
+ <path d="M70 245H535" stroke="#29313D" stroke-width="2"/>
+ <path d="M95 175H505" stroke="#45D6C5" stroke-width="3" stroke-dasharray="5 7"/>
+ <g data-obstacle transform="translate(300 175)"><rect x="-31" y="-44" width="62" height="88" rx="4" fill="#252C34" stroke="#65717E"/><path d="M-12 0H12M0 -12V12" stroke="#A9B1BD" stroke-width="3"/>
+ <foreignObject x="-90" y="58" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Interaction</div></foreignObject></g>
+ <g data-destination transform="translate(505 175)"><circle r="33" fill="none" stroke="#45D6C5" stroke-width="2" stroke-dasharray="3 5"/><path d="M-12 0L-3 9L15 -10" stroke="#45D6C5" stroke-width="4" fill="none" opacity="0" data-check/>
+ <foreignObject x="-90" y="58" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Finisher</div></foreignObject></g>
+ <g data-actor transform="translate(95 175)"><g data-trail><rect x="-29" y="-44" width="58" height="82" rx="4" fill="#090C12" stroke="#FFD166" transform="rotate(-9)"/></g>
+ <rect x="-29" y="-42" width="58" height="82" rx="4" fill="#FE0040"/>
+ <g transform="translate(-16 -18)" color="#090C12"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-swords"
+  xmlns="http://www.w3.org/2000/svg"
+  width="32"
+  height="32"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m13 19 6-6" />
+  <path d="M14.5 17.5 3.586 6.586A2 2 0 013 5.172V3h2.172a2 2 0 011.414.586L17.5 14.5" />
+  <path d="m14.828 6.172 2.586-2.586A2 2 0 0118.828 3H21v2.172a2 2 0 01-.586 1.414l-2.586 2.586" />
+  <path d="m16 16 4 4" />
+  <path d="m19 21 2-2" />
+  <path d="m5 14 4 4" />
+  <path d="m5 21-2-2" />
+  <path d="M7.5 16.5 4 20" />
+</svg>
+</g></g>
+ <foreignObject x="5" y="233" width="180" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="font:20px/24px system-ui,sans-serif;color:#D8DDE5;text-align:center;overflow-wrap:anywhere">Early play</div></foreignObject>
+ </svg>
+ <div class="scene-controls" hidden><button data-play aria-label="Play Cards working toward a plan" title="Play Cards working toward a plan"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-play"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
+</svg>
+</button><button data-restart aria-label="Restart Cards working toward a plan" title="Restart Cards working toward a plan"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-rotate-ccw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+</svg>
+</button></div>
+ <p class="scene-caption" aria-live="polite">Illustration</p>
+ <script>(function mountScene(kind,concepts,pose,icons){
+ const root=document.currentScript.closest('[data-concept]'),c=concepts[kind];
+ const media=matchMedia('(prefers-reduced-motion: reduce)');
+ const play=root.querySelector('[data-play]'),caption=root.querySelector('.scene-caption');
+ let time=0,playing=false,last=0,frame=0,visible=false;
+ const calculate=seconds=>pose(kind,seconds,concepts);
+ function draw(){
+   const p=calculate(time),actor=root.querySelector('[data-actor]');
+   actor.setAttribute('transform','translate('+p.x+' '+p.y+') rotate('+p.angle+') scale('+p.scale+' '+(1/p.scale)+')');
+   root.querySelector('[data-trail]').setAttribute('transform','rotate('+p.trail+')');
+   root.querySelector('[data-obstacle]').setAttribute('opacity',1-p.answered);
+   root.querySelector('[data-check]').setAttribute('opacity',p.u>.8?'1':'0');
+   if(kind==='plan-lesson'){
+     root.querySelector('[data-obstacle] rect').setAttribute('stroke',p.focus===1?'#FFD166':'#65717E');
+     root.querySelector('[data-destination] circle').setAttribute('stroke',p.focus===2?'#FFD166':'#45D6C5');
+   }
+   root.dataset.progress=p.u.toFixed(3);
+   caption.textContent=p.u===1?c.result:'Illustration';
+   const label=(playing?'Pause ':'Play ')+c.name;
+   if(play.getAttribute('aria-label')!==label)play.innerHTML=playing?icons.pause:icons.play;
+   play.setAttribute('aria-label',label);play.title=label;
+ }
+ function tick(now){
+   frame=0;if(!playing||!visible||document.hidden){last=0;return;}
+   if(last)time=Math.min(4,time+Math.min((now-last)/1000,.1));last=now;
+   if(time===4)playing=false;draw();
+   if(playing)frame=requestAnimationFrame(tick);
+ }
+ function schedule(){last=0;if(!frame&&playing&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
+ play.onclick=()=>{
+   if(media.matches){playing=false;time=time===4?0:4;draw();return;}
+   if(time===4)time=0;playing=!playing;draw();schedule();
+ };
+ root.querySelector('[data-restart]').onclick=()=>{time=0;playing=false;draw();};
+ media.addEventListener('change',()=>{if(media.matches){playing=false;draw();}});
+ document.addEventListener('visibilitychange',schedule);
+ new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.2}).observe(root);
+ root.querySelector('.scene-controls').hidden=false;draw();
+})("plan-lesson",{"removal":{"actor":"Removal","obstacle":"Threat","result":"Threat answered","symbol":"sparkles","name":"An answer for their threat"},"finish":{"actor":"Flying attacker","obstacle":"Ground blocker","result":"Past the blocker","symbol":"wind","name":"A way past ground blockers"},"plan-lesson":{"actor":"Early play","obstacle":"Interaction","result":"Finisher","symbol":"swords","name":"Cards working toward a plan"}},function conceptPose(kind,seconds,concepts=CONCEPTS){
+ if(!Object.prototype.hasOwnProperty.call(concepts,kind))throw new RangeError('Unknown concept');
+ if(!Number.isFinite(seconds))throw new RangeError('Expected finite illustration time');
+ const u=Math.max(0,Math.min(1,seconds/4)), t=Math.max(0,Math.min(1,(u-.18)/.58));
+ const ease=t*t*(3-2*t),wind=u<.18?Math.sin(u/.18*Math.PI):0;
+ const settle=u>.76?Math.sin((u-.76)/.24*Math.PI*3)*Math.exp(-(u-.76)*16):0;
+ return {u,x:95+410*ease-10*wind,y:kind==='finish'?175-360*t*(1-t):175-100*t*(1-t),
+   angle:-10*wind+12*Math.sin(t*Math.PI)+6*settle,scale:1+.08*Math.sin(t*Math.PI)-.08*settle,
+   trail:-8*Math.sin(t*Math.PI)+5*settle,answered:kind==='removal'?Math.max(0,Math.min(1,(u-.6)/.2)):0,
+   focus:kind==='plan-lesson'?(u<.35?0:u<.72?1:2):0};
+},{"play":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.41.0 - ISC -->\n<svg aria-hidden=\"true\"\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n"});</script>
+ </div><p>Think about how your cards work together. Are you attacking early, building toward a big turn, or answering threats until you can take over?</p><p>You don't need a perfect combo. A deck with reliable mana and useful early plays can work well without much synergy.</p></section>
     <section id="deck"><div class="section-head" data-motion><span>07 · BUILD</span><h2>Build a 40-card deck.</h2></div>
-      <div class="deck" role="img" aria-label="40 cards: start with 17 lands and 23 nonlands" data-motion><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i></div>
-      <div class="legend" data-motion><span><i style="--color:var(--mint)"></i>17 lands</span><span><i style="--color:var(--gold)"></i>23 nonlands</span></div>
-      <div class="prompts" data-motion><p>Start with 17 lands + 23 nonlands.</p><p>Adjust for your curve and plan, not a fixed creature quota.</p></div>
+      <div class="visual-lesson" data-deck-lesson>
+ <svg class="composition" viewBox="0 0 400 400" role="img" aria-label="40 cards: 17 lands and 23 nonlands">
+ <circle cx="200" cy="200" r="138" fill="none" stroke="#FFD166" stroke-width="36"/>
+ <circle data-land-arc cx="200" cy="200" r="138" fill="none" stroke="#45D6C5" stroke-width="36" pathLength="40" stroke-dasharray="17 23" transform="rotate(-90 200 200)"/>
+ <g class="composition-card"><g class="deck-trailing"><rect x="167" y="153" width="70" height="94" rx="4" fill="#090C12" stroke="#FFD166" transform="rotate(-9 200 200)"/><rect x="164" y="151" width="70" height="94" rx="4" fill="#12161B" stroke="#45D6C5" transform="rotate(7 200 200)"/></g><rect x="164" y="150" width="70" height="94" rx="4" fill="#FE0040"/>
+ <text x="199" y="195" text-anchor="middle" fill="#090C12" font-size="28" font-weight="800">40</text><text x="199" y="219" text-anchor="middle" fill="#090C12" font-size="13">cards</text></g></svg>
+ <div class="composition-legend"><span><strong class="land-count">17</strong>lands</span><span><strong class="nonland-count">23</strong>nonlands</span></div>
+ <div class="deck-adjustment" hidden><button data-less-land aria-label="One fewer land" title="One fewer land"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-minus"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+</svg>
+</button><output>17 lands</output><button data-more-land aria-label="One more land" title="One more land"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-plus"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="M12 5v14" />
+</svg>
+</button><button data-reset-land aria-label="Reset to 17 lands" title="Reset to 17 lands"><!-- @license lucide-static v1.41.0 - ISC -->
+<svg aria-hidden="true"
+  class="lucide lucide-rotate-ccw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+</svg>
+</button></div>
+ <p class="explanation">Your curve and your fixing may call for a different balance. The deck stays at 40 cards in this illustration.</p>
+ <script>(function mountDeck(composition){
+ const root=document.currentScript.closest('[data-deck-lesson]'),less=root.querySelector('[data-less-land]'),more=root.querySelector('[data-more-land]');
+ let lands=17;
+ function render(){
+   const state=composition(lands);
+   root.querySelector('[data-land-arc]').setAttribute('stroke-dasharray',state.lands+' '+state.nonlands);
+   root.querySelector('.land-count').textContent=state.lands;root.querySelector('.nonland-count').textContent=state.nonlands;
+   root.querySelector('output').textContent=lands+' lands';
+   root.querySelector('svg').setAttribute('aria-label','40 cards: '+state.lands+' lands and '+state.nonlands+' nonlands');
+   less.disabled=lands===14;more.disabled=lands===20;
+   root.classList.remove('changing');
+   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){void root.offsetWidth;root.classList.add('changing');}
+ }
+ less.onclick=()=>{lands=Math.max(14,lands-1);render();};
+ more.onclick=()=>{lands=Math.min(20,lands+1);render();};
+ root.querySelector('[data-reset-land]').onclick=()=>{lands=17;render();};
+ root.querySelector('.deck-adjustment').hidden=false;
+})(function deckComposition(lands=17){
+ if(!Number.isInteger(lands)||lands<14||lands>20)throw new RangeError('Illustration supports 14-20 lands');
+ return {lands,nonlands:40-lands,total:40,landPercent:lands/40*100};
+});</script>
+ </div>
+      <details><summary>Lands and nonlands</summary><div class="deck" role="img" aria-label="40 cards: start with 17 lands and 23 nonlands" data-motion><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="land" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i><i class="spell" aria-hidden="true"></i></div>
+      <div class="legend" data-motion><span><i style="--color:var(--mint)"></i>17 lands</span><span><i style="--color:var(--gold)"></i>23 nonlands</span></div></details>
+      <div class="prompts" data-motion><p>Start with 17 lands + 23 nonlands.</p><p>Use your curve and game plan to adjust that balance. There isn't one creature count that fits every deck.</p></div>
     </section>
-    <section id="plans"><div class="section-head" data-motion><span>OPTIONAL · EXPLORE</span><h2>Find a strategy.</h2></div><div class="prompts" data-motion><p>Ideas, not rules. Your fixing can connect several colors.</p></div>
+    <section id="plans"><div class="section-head" data-motion><span>OPTIONAL · EXPLORE</span><h2>Find a strategy.</h2></div><div class="prompts" data-motion><p>These are starting points, not commitments. You can combine ideas when your cards and mana support them.</p></div>
       <details id="explore-strategies"><summary>Explore strategies</summary>
       <div class="plans"><details>
         <summary><span class="pips"><img src="assets/mana/W.svg" alt="White"><img src="assets/mana/U.svg" alt="Blue"></span><span class="plan-title"><strong>Blink</strong><small>Azorius</small></span></summary>
-        <div class="plan-body"><p data-motion>Reuse enter-the-battlefield abilities with exile-and-return effects.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>You get more out of creatures whose abilities trigger when they enter. Blink them to use those abilities again.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/7/e/7e520d49-f3d5-46b3-a941-c57936648a47.jpg" alt="Conjurer's Closet" loading="lazy" decoding="async">
   <figcaption><strong>Conjurer's Closet</strong><span>DRC · 126</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -178,7 +1017,7 @@
 </figure></div></div><a href="./index.html?pair=WU">Explore Azorius support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/W.svg" alt="White"><img src="assets/mana/B.svg" alt="Black"></span><span class="plan-title"><strong>Aristocrats</strong><small>Orzhov</small></span></summary>
-        <div class="plan-body"><p data-motion>Profit when your creatures die.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>Look for creatures you don't mind losing, and cards that reward you when they die.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/d/7/d7efb10f-c760-431c-8ac6-904965d850dc.jpg" alt="Guildsworn Prowler" loading="lazy" decoding="async">
   <figcaption><strong>Guildsworn Prowler</strong><span>CLB · 130</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -187,7 +1026,7 @@
 </figure></div><a href="./index.html?pair=WB">Explore Orzhov support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/G.svg" alt="Green"><img src="assets/mana/W.svg" alt="White"></span><span class="plan-title"><strong>Counters + go wide</strong><small>Selesnya</small></span></summary>
-        <div class="plan-body"><p data-motion>Build wide, add counters, then attack.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>Make several creatures, then improve them together with counters. A small board can turn into a real attack.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/d/3/d347caf8-0c12-401f-9e33-9978cb347f89.jpg" alt="United Front" loading="lazy" decoding="async">
   <figcaption><strong>United Front</strong><span>TLA · 39</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -196,7 +1035,7 @@
 </figure></div><a href="./index.html?pair=GW">Explore Selesnya support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/B.svg" alt="Black"><img src="assets/mana/R.svg" alt="Red"></span><span class="plan-title"><strong>Artifact sacrifice</strong><small>Rakdos</small></span></summary>
-        <div class="plan-body"><p data-motion>Sacrifice artifacts for damage and value.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>An artifact can do a job twice: once when it enters, and again when you sacrifice it for another effect.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/1/c/1ccdb407-ac8f-4736-89d3-ab0d086096ea.jpg" alt="Ichor Wellspring" loading="lazy" decoding="async">
   <figcaption><strong>Ichor Wellspring</strong><span>C21 · 245</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -205,7 +1044,7 @@
 </figure></div><a href="./index.html?pair=BR">Explore Rakdos support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/U.svg" alt="Blue"><img src="assets/mana/G.svg" alt="Green"></span><span class="plan-title"><strong>+1/+1 counters</strong><small>Simic</small></span></summary>
-        <div class="plan-body"><p data-motion>Add counters. Grow your creatures.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>+1/+1 counters let your smaller creatures keep growing. Look for cards that add counters and cards that multiply them.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/c/e/ce137910-0f0e-4f94-9b95-6e0eeeba164e.jpg" alt="Essence Capture" loading="lazy" decoding="async">
   <figcaption><strong>Essence Capture</strong><span>RNA · 37</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -214,7 +1053,7 @@
 </figure></div><a href="./index.html?pair=UG">Explore Simic support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/R.svg" alt="Red"><img src="assets/mana/G.svg" alt="Green"></span><span class="plan-title"><strong>Power 4+</strong><small>Gruul</small></span></summary>
-        <div class="plan-body"><p data-motion>Reach four power early. Claim the rewards.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>Creatures with at least four power turn on cards like The Earth King. Get that board in place, then attack.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/e/4/e4775a26-0b66-40e9-8f64-41d9308ca032.jpg" alt="Surrak, Elusive Hunter" loading="lazy" decoding="async">
   <figcaption><strong>Surrak, Elusive Hunter</strong><span>TDM · 161</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -223,7 +1062,7 @@
 </figure></div><a href="./index.html?pair=RG">Explore Gruul support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/B.svg" alt="Black"><img src="assets/mana/G.svg" alt="Green"></span><span class="plan-title"><strong>Delirium</strong><small>Golgari</small></span></summary>
-        <div class="plan-body"><p data-motion>Load varied card types into your graveyard.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>Delirium needs four card types in your graveyard. Cards that mill you can help turn it on.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/2/e/2edcde06-b326-476e-884d-770187c785fe.jpg" alt="Stitcher's Supplier" loading="lazy" decoding="async">
   <figcaption><strong>Stitcher's Supplier</strong><span>TDC · 196</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -232,7 +1071,7 @@
 </figure></div><a href="./index.html?pair=BG">Explore Golgari support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/W.svg" alt="White"><img src="assets/mana/R.svg" alt="Red"></span><span class="plan-title"><strong>Humans</strong><small>Boros</small></span></summary>
-        <div class="plan-body"><p data-motion>Build a Human army. Attack early.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>Humans can make each other stronger. Cheap Humans let you build the board before cards like Thalia's Lieutenant reward you.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/7/c/7cd21530-ca72-4986-a0f2-142b9f23c413.jpg" alt="Cathar Commando" loading="lazy" decoding="async">
   <figcaption><strong>Cathar Commando</strong><span>INR · 15</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -241,7 +1080,7 @@
 </figure></div><a href="./index.html?pair=WR">Explore Boros support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/U.svg" alt="Blue"><img src="assets/mana/R.svg" alt="Red"></span><span class="plan-title"><strong>Noncombat damage</strong><small>Izzet</small></span></summary>
-        <div class="plan-body"><p data-motion>Chain small damage into lethal rewards.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>Small damage adds up. Pair repeatable damage from cards like Firebrand Archer with effects that make each hit larger.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/2/d/2d176b57-4793-485e-b033-7ba668634f62.jpg" alt="Firebrand Archer" loading="lazy" decoding="async">
   <figcaption><strong>Firebrand Archer</strong><span>J25 · 548</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -250,7 +1089,7 @@
 </figure></div><a href="./index.html?pair=UR">Explore Izzet support →</a></div>
       </details><details>
         <summary><span class="pips"><img src="assets/mana/U.svg" alt="Blue"><img src="assets/mana/B.svg" alt="Black"></span><span class="plan-title"><strong>Theft</strong><small>Dimir</small></span></summary>
-        <div class="plan-body"><p data-motion>Disrupt them. Win with their best cards.</p><div class="card-gallery"><figure class="primer-card" data-motion>
+        <div class="plan-body"><p data-motion>You can use an opponent's spells as part of your own plan. Keep enough interaction to reach the turn when it matters.</p><div class="card-gallery"><figure class="primer-card" data-motion>
   <img src="https://cards.scryfall.io/normal/front/8/c/8c3a4a44-5e75-42a4-8140-2105c2becff9.jpg" alt="Extract Brain" loading="lazy" decoding="async">
   <figcaption><strong>Extract Brain</strong><span>OTC · 225</span></figcaption>
 </figure><figure class="primer-card" data-motion>
@@ -263,7 +1102,7 @@
       </details></div></details>
     </section>
     <section id="ready"><div class="section-head" data-motion><span>READY</span><h2>Before game one.</h2></div><div class="checklist" data-motion><label><input type="checkbox">Can I play early?</label><label><input type="checkbox">Can I cast my colors?</label><label><input type="checkbox">Can I answer a threat?</label><label><input type="checkbox">Can I break a stalled board?</label><label><input type="checkbox">How does my deck win?</label></div><div class="prompts" data-motion><p>Unused cards become your sideboard.</p></div></section>
-    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a><details><summary>Sources and deeper reading</summary><div class="source-list"><a href="https://magic.wizards.com/en/formats/booster-draft">Wizards · Booster Draft</a><a href="https://magic.wizards.com/en/news/feature/how-build-mana-curve-2017-05-18">Wizards · Mana curve</a><a href="https://magic.wizards.com/en/news/feature/signals-booster-draft-2015-01-19">Wizards · Reading signals</a></div></details><small>Card examples from cube snapshot v558. No commanders required.</small><a class="practice" href="https://draftmancer.com/?cubeCobraID=1fd964c1-9092-46f8-8188-5e933e12e190&amp;cubeCobraName=%E2%9C%A8%20Winning%20in%20Style%20%E2%9C%A8%20" target="_blank" rel="noopener noreferrer">Practice drafting against bots and have fun!</a></footer>
+    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a> · <a href="./motion-studies.html">Motion studies</a><details><summary>Sources and deeper reading</summary><div class="source-list"><a href="https://magic.wizards.com/en/formats/booster-draft">Wizards · Booster Draft</a><a href="https://magic.wizards.com/en/news/feature/how-build-mana-curve-2017-05-18">Wizards · Mana curve</a><a href="https://magic.wizards.com/en/news/feature/signals-booster-draft-2015-01-19">Wizards · Reading signals</a><a href="https://magic.wizards.com/en/news/feature/basics-booster-draft-2014-11-03">Reid Duke · The basics of drafting</a><a href="https://magic.wizards.com/en/news/feature/basics-mana-2015-07-06">Reid Duke · Mana and colored sources</a><a href="https://magic.wizards.com/en/news/feature/how-booster-draft-2016-04-05">Marshall Sutcliffe · How to Booster Draft</a><a href="https://magic.wizards.com/en/news/mtg-arena/planar-cube-draft">Zach Barash · Drafting a cube</a><a href="https://magic.wizards.com/en/news/mtg-arena/tinkerers-cube-draft-mtg-arena">David McDarby · Finding synergies in a cube</a></div></details><small>Card examples from cube snapshot v558. No commanders required.</small><a class="practice" href="https://draftmancer.com/?cubeCobraID=1fd964c1-9092-46f8-8188-5e933e12e190&amp;cubeCobraName=%E2%9C%A8%20Winning%20in%20Style%20%E2%9C%A8%20" target="_blank" rel="noopener noreferrer">Practice drafting against bots and have fun!</a></footer>
   </main>
   <script>
 (() => {

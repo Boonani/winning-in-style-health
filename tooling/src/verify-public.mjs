@@ -17,7 +17,7 @@ async function assetsBelow(relative) {
   }
   return files;
 }
-const files = ['index.html', 'primer.html', 'draft-primer.html', 'data/cubecobra-adjacency.json', ...await assetsBelow('assets'), ...await assetsBelow('print')].sort();
+const files = ['index.html', 'primer.html', 'motion-studies.html', 'draft-primer.html', 'data/cubecobra-adjacency.json', ...await assetsBelow('assets'), ...await assetsBelow('print')].sort();
 const receipts = [];
 for (const relative of files) {
   const url = new URL(relative === 'index.html' ? './' : relative === 'primer.html' ? 'primer' : relative, origin);

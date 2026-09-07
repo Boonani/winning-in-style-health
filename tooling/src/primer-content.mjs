@@ -69,10 +69,14 @@ export function validatePrimerContent(value) {
       eyebrow: text(section.eyebrow, `content.sections[${index}].eyebrow`, { max: 80 }),
       heading: text(section.heading, `content.sections[${index}].heading`, { max: 120 }),
       body: list(section.body, `content.sections[${index}].body`, { min: 1, max: 12 })
-        .map((line, lineIndex) => text(line, `content.sections[${index}].body[${lineIndex}]`, { max: 500, blank: id === 'blink' })),
+        .map((line, lineIndex) => text(line, `content.sections[${index}].body[${lineIndex}]`, { max: id.startsWith('scene-') ? 80 : 500, blank: id === 'blink' })),
       cards: cards(section.cards, `content.sections[${index}].cards`),
     };
   });
+  for (const [id, paragraphs] of [['mana-example', 4], ['deck-example', 2], ['scene-removal', 3], ['scene-finish', 3], ['scene-plan-lesson', 3]]) {
+    const example = sections.find(section => section.id === id);
+    if (example && example.body.length !== paragraphs) fail('content.sections.' + id + '.body', 'expected ' + paragraphs + ' example paragraphs');
+  }
   const requiredSections = ['draft', 'removal', 'deck', 'curve', 'blink', 'plans', 'ready'];
   if (new Set(sections.map(section => section.id)).size !== sections.length) fail('content.sections', 'section IDs must be unique');
   for (const id of requiredSections) if (!sections.some(section => section.id === id)) fail('content.sections', `missing ${id}`);

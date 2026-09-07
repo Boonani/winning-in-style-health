@@ -4,6 +4,9 @@ import { fileURLToPath } from 'node:url';
 import { buildDesignedModel } from './designed-archetypes.mjs';
 import { scryfallImageUrl, validatePrimerContent } from './primer-content.mjs';
 import { siteMotionCSS, siteMotionMarkup } from './site-motion.mjs';
+import { draftAnimationCSS, draftAnimationMarkup } from './primer-draft-animation.mjs';
+import { visualLessonCSS, manaLessonMarkup, deckLessonMarkup } from './primer-visual-lessons.mjs';
+import { conceptSceneCSS, conceptSceneMarkup } from './primer-concept-scenes.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_PRIMER_CONTENT = validatePrimerContent(JSON.parse(
@@ -97,7 +100,7 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
   <title>First Draft · Winning in Style</title>
   <link rel="canonical" href="https://cube.coolasheck.com/primer">
   <style>
-    :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#7db8ff;--mint:#74d7b0;--gold:#f0c66f;--violet:#b9a4ff;--gutter:max(22px,env(safe-area-inset-left));}
+    :root {color-scheme:dark;--paper:#090c12;--ink:#f7f8fa;--muted:#a9b1bd;--line:#29313d;--blue:#45D6C5;--mint:#45D6C5;--gold:#FFD166;--violet:#FE0040;--gutter:max(22px,env(safe-area-inset-left));}
     * {box-sizing:border-box;letter-spacing:0}
     html {-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
     body {margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif}
@@ -140,7 +143,7 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
     .curve {height:210px;display:grid;grid-template-columns:repeat(6,1fr);align-items:end;gap:10px;margin:24px 0 18px;max-width:610px}
     .curve div {height:100%;display:grid;grid-template-rows:22px 1fr 26px;align-items:end;text-align:center;font-size:12px;color:var(--muted)}
     .curve strong {color:var(--ink)}
-    .curve i {display:block;height:calc(var(--bar) * 100%);min-height:2px;background:linear-gradient(to top,var(--violet),var(--blue));transform-origin:bottom}
+    .curve i {display:block;height:calc(var(--bar) * 100%);min-height:2px;background:var(--blue);transform-origin:bottom}
     .curve span::after {content:' mana';font-size:10px}
     .plans {border-top:1px solid var(--line)}
     details {border-bottom:1px solid var(--line)}
@@ -168,9 +171,13 @@ export function renderDraftPrimer(data, input = DEFAULT_PRIMER_CONTENT) {
     .quick-reference summary {min-height:48px;font-size:14px}
     .quick-reference p {font-size:14px;margin:8px 0}
     .curve strong {font-size:10px}
+    .curve div:nth-child(2) i,.curve div:nth-child(3) i {background:var(--gold)}
     .pips {flex-wrap:wrap;max-width:80px}
     footer>small {display:block;margin-top:18px}
 ${siteMotionCSS.trim()}
+${draftAnimationCSS}
+${visualLessonCSS}
+${conceptSceneCSS}
     @media (max-width:900px) {
       .card-gallery {width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);gap:30px}
       .primer-card figcaption {padding-inline:var(--gutter)}
@@ -195,25 +202,27 @@ ${siteMotionCSS.trim()}
   <header><strong>Winning in Style</strong><a href="./">Cube health →</a></header>
   <main>
     <div class="hero" data-motion><span>${esc(content.hero.eyebrow)}</span><h1>${esc(content.hero.title)}</h1><p>${esc(content.hero.lede)}</p></div>
-    <details class="quick-reference"><summary>Stuck on a pick?</summary><p>Need colors? Fixing. Too slow? Cheaper plays. Need answers? Interaction. Stalled? A way through. Otherwise, choose for your plan.</p></details>
-    <section id="draft">${sectionHead(draft)}
+    <details class="quick-reference"><summary>${esc(sectionById(content, 'quick-reference')?.heading || 'Stuck on a pick?')}</summary>${paragraphs(sectionById(content, 'quick-reference')?.body || ['Look for a card that helps your plan.'])}</details>
+    <section id="draft"><div class="section-head"><span>${esc(draft.eyebrow)}</span></div>
+      ${draftAnimationMarkup(draft.heading)}
       <div class="draft-flow" role="img" aria-label="Three packs: pass left, then right, then left" data-motion>
         <div><small>PACK 1</small><strong>Pick one</strong><b aria-hidden="true">←</b></div>
         <div><small>PACK 2</small><strong>Pick one</strong><b aria-hidden="true">→</b></div>
         <div><small>PACK 3</small><strong>Pick one</strong><b aria-hidden="true">←</b></div>
       </div><div class="prompts" data-motion>${paragraphs(draft.body)}</div>
     </section>
-    <section id="mana">${sectionHead(mana)}${paragraphs(mana.body)}<details><summary>Count your mana sources</summary>${paragraphs(manaDetail.body)}${gallery(mana.cards)}</details></section>
+    <section id="mana">${sectionHead(mana)}${manaLessonMarkup(sectionById(content, 'mana-example'))}${paragraphs(mana.body)}<details><summary>Count your mana sources</summary>${paragraphs(manaDetail.body)}${gallery(mana.cards)}</details></section>
     <section id="curve">${sectionHead(curve)}
       <div class="curve" role="img" aria-label="Illustrative curve, not quotas: prioritize real plays at two and three mana; fewer expensive cards" data-motion>${curveBars}</div>
       <div class="prompts" data-motion>${paragraphs(curve.body)}</div>
     </section>
-    <section id="removal">${sectionHead(removal)}<div class="prompts" data-motion>${paragraphs(removal.body)}</div><details><summary>See interaction</summary>${gallery(removal.cards)}</details></section>
-    <section id="finish">${sectionHead(finish)}${paragraphs(finish.body)}<details><summary>See a way through</summary>${gallery(finish.cards)}</details></section>
-    <section id="plan-lesson">${sectionHead(planLesson)}${paragraphs(planLesson.body)}</section>
+    <section id="removal">${sectionHead(removal)}${conceptSceneMarkup('removal', sectionById(content, 'scene-removal'))}<div class="prompts" data-motion>${paragraphs(removal.body)}</div><details><summary>See interaction</summary>${gallery(removal.cards)}</details></section>
+    <section id="finish">${sectionHead(finish)}${conceptSceneMarkup('finish', sectionById(content, 'scene-finish'))}${paragraphs(finish.body)}<details><summary>See a way through</summary>${gallery(finish.cards)}</details></section>
+    <section id="plan-lesson">${sectionHead(planLesson)}${conceptSceneMarkup('plan-lesson', sectionById(content, 'scene-plan-lesson'))}${paragraphs(planLesson.body)}</section>
     <section id="deck">${sectionHead(deck)}
-      <div class="deck" role="img" aria-label="40 cards: start with 17 lands and 23 nonlands" data-motion>${deckCells}</div>
-      <div class="legend" data-motion><span><i style="--color:var(--mint)"></i>17 lands</span><span><i style="--color:var(--gold)"></i>23 nonlands</span></div>
+      ${deckLessonMarkup(sectionById(content, 'deck-example'))}
+      <details><summary>${esc(sectionById(content, 'deck-example')?.heading || 'Starting 40-card example')}</summary><div class="deck" role="img" aria-label="40 cards: start with 17 lands and 23 nonlands" data-motion>${deckCells}</div>
+      <div class="legend" data-motion><span><i style="--color:var(--mint)"></i>17 lands</span><span><i style="--color:var(--gold)"></i>23 nonlands</span></div></details>
       <div class="prompts" data-motion>${paragraphs(deck.body)}</div>
     </section>
     <section id="plans">${sectionHead(plans)}<div class="prompts" data-motion>${paragraphs(plans.body)}</div>
@@ -224,7 +233,7 @@ ${siteMotionCSS.trim()}
       </details>`).join('')}</div></details>
     </section>
     <section id="ready">${sectionHead(ready)}<div class="checklist" data-motion>${content.checklist.map(item => `<label><input type="checkbox">${esc(item)}</label>`).join('')}</div><div class="prompts" data-motion>${paragraphs(ready.body)}</div></section>
-    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples from cube snapshot v${esc(data.cube.version)}. No commanders required.</small><a class="practice" href="${esc(PRACTICE_URL)}" target="_blank" rel="noopener noreferrer">Practice drafting against bots and have fun!</a></footer>
+    <footer><a href="https://draft.coolasheck.com/?pick=last">Record a pick</a> · <a href="./motion-studies.html">Motion studies</a><details><summary>Sources and deeper reading</summary><div class="source-list">${content.sources.map(source => `<a href="${esc(source.url)}">${esc(source.label)}</a>`).join('')}</div></details><small>Card examples from cube snapshot v${esc(data.cube.version)}. No commanders required.</small><a class="practice" href="${esc(PRACTICE_URL)}" target="_blank" rel="noopener noreferrer">Practice drafting against bots and have fun!</a></footer>
   </main>
   ${siteMotionMarkup()}
 </body>

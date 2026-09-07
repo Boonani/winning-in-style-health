@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "documentVersion": 6,
-  "updatedAt": "2026-09-07T18:50:50.792Z",
+  "documentVersion": 7,
+  "updatedAt": "2026-09-07T22:14:16.041Z",
   "hero": {
     "eyebrow": "THE DRAFT PRIMER",
-    "title": "Draft cards you can cast.",
-    "lede": "Pick. Build. Play."
+    "title": "Winning in Style",
+    "lede": "Choose your cards. Build a deck. Play."
   },
   "sections": [
     {
       "id": "draft",
       "eyebrow": "01 · DRAFT",
-      "heading": "Pick one. Pass the rest.",
+      "heading": "Pick 1 card, pass the pack to the left",
       "body": [
-        "Your first pick is not a promise.",
-        "Strong cards coming late are clues about what is open."
+        "Keep one card, then pass the rest. Your next choice comes from the pack your neighbor passes you.",
+        "You don't have to settle on colors right away. Good cards coming late can help you see what's available."
       ],
       "cards": []
     },
@@ -23,7 +23,7 @@
       "eyebrow": "04 · INTERACT",
       "heading": "Answer their best card.",
       "body": [
-        "Take efficient interaction highly. Have several answers for their best threats."
+        "Your opponent will have strong cards too. Give yourself a few ways to deal with a creature you can't beat in combat."
       ],
       "cards": [
         {
@@ -46,7 +46,7 @@
       "heading": "Build a 40-card deck.",
       "body": [
         "Start with 17 lands + 23 nonlands.",
-        "Adjust for your curve and plan, not a fixed creature quota."
+        "Use your curve and game plan to adjust that balance. There isn't one creature count that fits every deck."
       ],
       "cards": []
     },
@@ -55,8 +55,8 @@
       "eyebrow": "03 · CURVE",
       "heading": "Play before turn four.",
       "body": [
-        "Have several real plays at two and three mana. Don't overload on expensive cards.",
-        "Two cards look equally good? Take the cheaper one."
+        "Two- and three-mana plays give you something to do while expensive cards are still waiting in your hand.",
+        "Count cards you'll actually want to play early. A cheap combat trick still needs a creature and the right moment."
       ],
       "cards": []
     },
@@ -87,7 +87,7 @@
       "eyebrow": "OPTIONAL · EXPLORE",
       "heading": "Find a strategy.",
       "body": [
-        "Ideas, not rules. Your fixing can connect several colors."
+        "These are starting points, not commitments. You can combine ideas when your cards and mana support them."
       ],
       "cards": []
     },
@@ -106,7 +106,7 @@
       "heading": "Fix first. Add colors later.",
       "body": [
         "Fixing gives you permission to play more colors.",
-        "Lands and mana fixing are real picks. More powerful spells only help when you can cast them."
+        "A great spell doesn't help much if it stays in your hand. Take the lands and fixing that let you cast the cards you want to play."
       ],
       "cards": []
     },
@@ -143,8 +143,72 @@
       "eyebrow": "06 · PLAN",
       "heading": "Draft a deck, not a pile.",
       "body": [
-        "What is your deck trying to do?",
-        "Each pick should support that plan or solve something your deck is missing. Stay flexible."
+        "Think about how your cards work together. Are you attacking early, building toward a big turn, or answering threats until you can take over?",
+        "You don't need a perfect combo. A deck with reliable mana and useful early plays can work well without much synergy."
+      ],
+      "cards": []
+    },
+    {
+      "id": "mana-example",
+      "eyebrow": "ONE CARD",
+      "heading": "Which colors can this card help with?",
+      "body": [
+        "A Forest gives you green mana.",
+        "Breeding Pool can give you green or blue. It is still one land and makes one mana per tap, not both colors at once. It enters tapped unless you pay 2 life.",
+        "Windswept Heath finds a Forest or Plains in your library. Breeding Pool has the Forest type, so it can be a target too. No target left means no mana from the fetch.",
+        "Llanowar Elves is not a land. You need green mana to cast it before it can help, and it cannot tap immediately unless it has haste."
+      ],
+      "cards": []
+    },
+    {
+      "id": "deck-example",
+      "eyebrow": "40 CARDS",
+      "heading": "Lands and nonlands",
+      "body": [
+        "Start with 17 lands + 23 nonlands.",
+        "Your curve and your fixing may call for a different balance. The deck stays at 40 cards in this illustration."
+      ],
+      "cards": []
+    },
+    {
+      "id": "scene-removal",
+      "eyebrow": "ILLUSTRATION",
+      "heading": "An answer for their threat",
+      "body": [
+        "Removal",
+        "Threat",
+        "Threat answered"
+      ],
+      "cards": []
+    },
+    {
+      "id": "scene-finish",
+      "eyebrow": "ILLUSTRATION",
+      "heading": "A way past ground blockers",
+      "body": [
+        "Flying attacker",
+        "Ground blocker",
+        "Past the blocker"
+      ],
+      "cards": []
+    },
+    {
+      "id": "scene-plan-lesson",
+      "eyebrow": "ILLUSTRATION",
+      "heading": "Cards working toward a plan",
+      "body": [
+        "Early play",
+        "Interaction",
+        "Finisher"
+      ],
+      "cards": []
+    },
+    {
+      "id": "quick-reference",
+      "eyebrow": "AT A GLANCE",
+      "heading": "Stuck on a pick?",
+      "body": [
+        "Need another color? Look for fixing. Missing early plays? Look for something cheaper. Can't handle their threats? Take an answer. Otherwise, choose a card that helps your plan."
       ],
       "cards": []
     }
@@ -158,7 +222,7 @@
         "W",
         "U"
       ],
-      "body": "Reuse enter-the-battlefield abilities with exile-and-return effects.",
+      "body": "You get more out of creatures whose abilities trigger when they enter. Blink them to use those abilities again.",
       "cards": [
         {
           "scryfallId": "7e520d49-f3d5-46b3-a941-c57936648a47",
@@ -182,7 +246,7 @@
         "W",
         "B"
       ],
-      "body": "Profit when your creatures die.",
+      "body": "Look for creatures you don't mind losing, and cards that reward you when they die.",
       "cards": [
         {
           "scryfallId": "d7efb10f-c760-431c-8ac6-904965d850dc",
@@ -206,7 +270,7 @@
         "G",
         "W"
       ],
-      "body": "Build wide, add counters, then attack.",
+      "body": "Make several creatures, then improve them together with counters. A small board can turn into a real attack.",
       "cards": [
         {
           "scryfallId": "d347caf8-0c12-401f-9e33-9978cb347f89",
@@ -230,7 +294,7 @@
         "B",
         "R"
       ],
-      "body": "Sacrifice artifacts for damage and value.",
+      "body": "An artifact can do a job twice: once when it enters, and again when you sacrifice it for another effect.",
       "cards": [
         {
           "scryfallId": "1ccdb407-ac8f-4736-89d3-ab0d086096ea",
@@ -254,7 +318,7 @@
         "U",
         "G"
       ],
-      "body": "Add counters. Grow your creatures.",
+      "body": "+1/+1 counters let your smaller creatures keep growing. Look for cards that add counters and cards that multiply them.",
       "cards": [
         {
           "scryfallId": "ce137910-0f0e-4f94-9b95-6e0eeeba164e",
@@ -278,7 +342,7 @@
         "R",
         "G"
       ],
-      "body": "Reach four power early. Claim the rewards.",
+      "body": "Creatures with at least four power turn on cards like The Earth King. Get that board in place, then attack.",
       "cards": [
         {
           "scryfallId": "e4775a26-0b66-40e9-8f64-41d9308ca032",
@@ -302,7 +366,7 @@
         "B",
         "G"
       ],
-      "body": "Load varied card types into your graveyard.",
+      "body": "Delirium needs four card types in your graveyard. Cards that mill you can help turn it on.",
       "cards": [
         {
           "scryfallId": "2edcde06-b326-476e-884d-770187c785fe",
@@ -326,7 +390,7 @@
         "W",
         "R"
       ],
-      "body": "Build a Human army. Attack early.",
+      "body": "Humans can make each other stronger. Cheap Humans let you build the board before cards like Thalia's Lieutenant reward you.",
       "cards": [
         {
           "scryfallId": "7cd21530-ca72-4986-a0f2-142b9f23c413",
@@ -350,7 +414,7 @@
         "U",
         "R"
       ],
-      "body": "Chain small damage into lethal rewards.",
+      "body": "Small damage adds up. Pair repeatable damage from cards like Firebrand Archer with effects that make each hit larger.",
       "cards": [
         {
           "scryfallId": "2d176b57-4793-485e-b033-7ba668634f62",
@@ -374,7 +438,7 @@
         "U",
         "B"
       ],
-      "body": "Disrupt them. Win with their best cards.",
+      "body": "You can use an opponent's spells as part of your own plan. Keep enough interaction to reach the turn when it matters.",
       "cards": [
         {
           "scryfallId": "8c3a4a44-5e75-42a4-8140-2105c2becff9",
@@ -424,6 +488,26 @@
     {
       "label": "Wizards · Reading signals",
       "url": "https://magic.wizards.com/en/news/feature/signals-booster-draft-2015-01-19"
+    },
+    {
+      "label": "Reid Duke · The basics of drafting",
+      "url": "https://magic.wizards.com/en/news/feature/basics-booster-draft-2014-11-03"
+    },
+    {
+      "label": "Reid Duke · Mana and colored sources",
+      "url": "https://magic.wizards.com/en/news/feature/basics-mana-2015-07-06"
+    },
+    {
+      "label": "Marshall Sutcliffe · How to Booster Draft",
+      "url": "https://magic.wizards.com/en/news/feature/how-booster-draft-2016-04-05"
+    },
+    {
+      "label": "Zach Barash · Drafting a cube",
+      "url": "https://magic.wizards.com/en/news/mtg-arena/planar-cube-draft"
+    },
+    {
+      "label": "David McDarby · Finding synergies in a cube",
+      "url": "https://magic.wizards.com/en/news/mtg-arena/tinkerers-cube-draft-mtg-arena"
     }
   ],
   "printingProvenance": [

@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { renderDashboard } from './dashboard.mjs';
 import { renderDraftPrimer, renderCubeCobraPrimer, PRIMER_REDIRECT } from './draft-primer.mjs';
 import { loadPrimerContent } from './primer-content.mjs';
+import { renderMotionLab } from './primer-motion-lab.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const deployRoot = path.resolve(root, process.env.DASHBOARD_DEPLOY_DIR ?? 'deploy-site');
@@ -32,6 +33,7 @@ if (checkOnly) {
   assert.equal(deployed, expectedHtml, 'deploy-site/index.html does not match the verified standalone dashboard');
   assert.deepEqual(deployedAdjacency, sourceAdjacency, 'Deployed CubeCobra adjacency matrix is stale');
   assert.equal(await fs.readFile(path.join(deployRoot, 'primer.html'), 'utf8'), expectedPrimer, 'Draft primer is stale');
+  assert.equal(await fs.readFile(path.join(deployRoot, 'motion-studies.html'), 'utf8'), renderMotionLab(), 'Motion studies are stale');
   assert.equal(await fs.readFile(path.join(deployRoot, 'draft-primer.html'), 'utf8'), PRIMER_REDIRECT, 'Legacy redirect is stale');
   assert.equal(await fs.readFile(path.join(root, 'reports', 'CUBE_COBRA_PRIMER.md'), 'utf8'), expectedAbout, 'Cube Cobra primer is stale');
   for (const symbol of manaSymbols) {
@@ -48,6 +50,7 @@ if (checkOnly) {
     fs.writeFile(path.join(root, 'dashboard.html'), expectedHtml),
     fs.writeFile(path.join(deployRoot, 'index.html'), expectedHtml),
     fs.writeFile(path.join(deployRoot, 'primer.html'), expectedPrimer),
+    fs.writeFile(path.join(deployRoot, 'motion-studies.html'), renderMotionLab()),
     fs.writeFile(path.join(deployRoot, 'draft-primer.html'), PRIMER_REDIRECT),
     fs.writeFile(path.join(root, 'reports', 'CUBE_COBRA_PRIMER.md'), expectedAbout),
     fs.copyFile(adjacencySource, adjacencyDeploy),

@@ -21,7 +21,7 @@ test('beginner research governs the published lesson and exact practice action',
 test('new lessons and multicolor metadata survive editor validation', () => {
   const copy = structuredClone(DEFAULT_PRIMER_CONTENT);
   const validated = validatePrimerContent(copy);
-  for (const id of ['mana','mana-detail','finish','plan-lesson'])
+  for (const id of ['mana','mana-detail','finish','plan-lesson','mana-example','deck-example'])
     assert.deepEqual(validated.sections.find(s => s.id === id), copy.sections.find(s => s.id === id));
   assert.equal(validated.plans.length, 11);
   copy.plans.at(-1).colors = ['W','W','B','R','G'];
